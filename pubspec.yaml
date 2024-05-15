@@ -1,0 +1,43 @@
+name: hele_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.6
+  # 屏幕适配
+  flutter_screenutil: ^5.9.0
+  # 网络请求
+  dio: ^5.4.3+1
+  # 状态，路由，依赖管理
+  get: ^4.6.6
+  # 分享
+  share_plus: ^9.0.0
+  # 时间日期
+  intl: ^0.19.0
+  # url跳转
+  url_launcher: ^6.2.6
+  # 倾斜视差
+  flutter_tilt: ^3.0.1
+  # svg显示
+  flutter_svg: ^2.0.10+1
+  # 图片缓存
+  cached_network_image: ^3.3.1
+  # 本地状态存储
+  shared_preferences: ^2.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true

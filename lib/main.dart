@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:hele_app/Application.dart';
+
+import 'common/flavors/build_config.dart';
+import 'common/flavors/env_config.dart';
+import 'common/flavors/environment.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  EnvConfig devConfig = EnvConfig(
+    appName: "Flutter",
+    baseUrl: "https://",
+    shouldCollectCrashLog: true,
+  );
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  BuildConfig.instantiate(
+    envType: Environment.DEVELOPMENT,
+    envConfig: devConfig,
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      // 屏幕适配
-        designSize: const Size(750.0, 1334.0),
-        minTextAdapt: false,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return GetMaterialApp(
-              title: 'Flutter',
-              theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
-                useMaterial3: true,
-              ),
-              initialRoute: "/",
-              defaultTransition: Transition.cupertino,
-              transitionDuration: const Duration(milliseconds: 450),
-              home: const Center(
-                  child: Text('Hello World', style: TextStyle(fontSize: 20))),
-              debugShowCheckedModeBanner: false
-          );
-        });
-  }
+  runApp(const Application());
 }

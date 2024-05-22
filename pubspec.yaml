@@ -9,16 +9,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   # 国际化
   flutter_localizations: # 国际化
     sdk: flutter
   intl: ^0.19.0 # 国际化
+
   # 界面UI
   cupertino_icons: ^1.0.6 # icon
   flutter_tilt: ^3.0.1 # 倾斜视差
   flutter_smart_dialog: ^4.9.6+1 # 弹窗
+
   # 网络请求
   dio: ^5.4.3+1 # 网络请求
+
   # 开发工具
   cached_network_image: ^3.3.1 # 图片缓存
   flutter_screenutil: ^5.9.0 # 屏幕适配
@@ -26,9 +30,11 @@ dependencies:
   url_launcher: ^6.2.6 # url跳转
   share_plus: ^9.0.0 # 分享
   logger: ^2.3.0 #log
+
   # 状态管理
   get: ^4.6.6 # 路由&状态管理
   provider: ^6.1.2 # 状态管理
+
   # 本地存储
   shared_preferences: ^2.2.3 # 本地状态存储
 
@@ -43,7 +49,24 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+# 应用图标生成
+flutter_launcher_icons:
+  android: "launcher_icon"
+  min_sdk_android: 21
+  ios: true
+  image_path: "assets/images/icon/hele.png"
+
 # 国际化配置
 flutter_intl:
   generate: true
 #  enabled: true
+  # 自定义生成配置
+  arb-dir: lib/l10n
+  format: true
+  output-class: S
+  output-dir: lib/l10n/gen
+  output-localization-file: app_g.dart
+  template-arb-file: app_en.arb
+  synthetic-package: false
+  nullable-getter: false
+  untranslated-messages-file: lib/l10n/gen/app_g_untranslated.json

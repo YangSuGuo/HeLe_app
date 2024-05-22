@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/application/application.dart';
 
 class Init extends StatefulWidget {
   const Init({super.key, required this.child});
@@ -19,13 +22,13 @@ class _InitState extends State<Init> {
 
     /// App 生命周期
     _appLifecycleListener = AppLifecycleListener(
-      onResume: () => print('App Resume'),
-      onInactive: () => print('App Inactive'),
-      onHide: () => print('App Hide'),
-      onShow: () => print('App Show'),
-      onPause: () => print('App Pause'),
-      onRestart: () => print('App Restart'),
-      onDetach: () => print('App Detach'),
+      onResume: () => print('App Resume'),    // 从后台回到前台时调用
+      onInactive: () => print('App Inactive'),// 进入后台但仍在活动状态时调用
+      onHide: () => print('App Hide'),        // 被隐藏时调用
+      onShow: () => print('App Show'),        // 从隐藏状态重新显示时调用
+      onPause: () => print('App Pause'),      // 即将进入后台时调用
+      onRestart: () => print('App Restart'),  // 重新启动时调用
+      onDetach: () => print('App Detach'),    // 完全退出时调用
     );
 
     /// 初始化
@@ -45,7 +48,6 @@ class _InitState extends State<Init> {
     /// 沉浸模式（全屏模式）
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChrome.setSystemUIOverlayStyle(
-      // bug 夜间模式状态栏颜色不更改
       // 夜间模式：Brightness.dark
       // 日间模式：Brightness.light : false
       View.of(context).platformDispatcher.platformBrightness == Brightness.dark
@@ -65,5 +67,16 @@ class _InitState extends State<Init> {
   }
 
   /// 应用初始化
-  void init() async {}
+  void init() async {
+    final ApplicationProvider applicationProvider = context.read<ApplicationProvider>();
+
+    // 获取APP主题深色模式
+    applicationProvider.loadThemeMode();
+    // 获取APP多主题模式
+    applicationProvider.loadMultipleThemesMode();
+    // 获取APP地区语言
+    applicationProvider.loadLocale();
+    // 获取APP地区语言是否跟随系统
+    applicationProvider.loadLocaleSystem();
+  }
 }

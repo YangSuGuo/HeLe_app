@@ -101,6 +101,12 @@ abstract class S {
   /// **'Hello World!'**
   String get hello_World;
 
+  /// No description provided for @bottomNavigationBar_title_home.
+  ///
+  /// In en, this message translates to:
+  /// **'home'**
+  String get bottomNavigationBar_title_home;
+
   /// No description provided for @widgets_will_pop_scope_route_toast.
   ///
   /// In en, this message translates to:

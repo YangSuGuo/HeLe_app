@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hele_app/pages/home/Home.dart';
+import 'package:hele_app/pages/index.dart';
 
 part 'app_routes.dart';
 
@@ -11,7 +11,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.MAIN,
-      page: () => const home()
+      page: () => const BottomNavigation()
     )
   ];
 }

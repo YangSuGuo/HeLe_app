@@ -8,5 +8,8 @@ class SZh extends S {
   String get hello_World => '你好 世界!';
 
   @override
+  String get bottomNavigationBar_title_home => '首页';
+
+  @override
   String get widgets_will_pop_scope_route_toast => '再按一次退出';
 }

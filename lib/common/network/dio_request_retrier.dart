@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'package:hele_app/common/network/dio_provider.dart';
-import 'package:hele_app/db/preference/preference_manager.dart';
+import 'package:hele_app/db/preference/preferences_db.dart';
 
 class DioRequestRetrier {
   final dioClient = DioProvider.tokenClient;
   final RequestOptions requestOptions;
 
-  final PreferenceManager _preferenceManager =
-      getx.Get.find(tag: (PreferenceManager).toString());
+  final PreferencesDB _preferenceManager =
+      getx.Get.find(tag: (PreferencesDB).toString());
 
   DioRequestRetrier({required this.requestOptions});
 
@@ -27,7 +27,7 @@ class DioRequestRetrier {
   }
 
   Future<Map<String, String>> getCustomHeaders() async {
-    final String accessToken = await _preferenceManager.getString(PreferenceManager.keyToken);
+    final String accessToken = await _preferenceManager.getToken();
     var customHeaders = {'content-type': 'application/json'};
     if (accessToken.trim().isNotEmpty) {
       customHeaders.addAll({

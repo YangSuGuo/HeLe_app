@@ -1,7 +1,10 @@
 {
   "@@locale": "en",
   "hello_World": "Hello World!",
-  "bottomNavigationBar_title_home": "home",
+
+  "navigationBar_title_home": "Home",
+  "navigationBar_title_rank_list": "Leaderboard",
+  "navigationBar_title_my": "My",
 
   "widgets_will_pop_scope_route_toast": "Press again to exit"
 }

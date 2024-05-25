@@ -8,7 +8,13 @@ class SEn extends S {
   String get hello_World => 'Hello World!';
 
   @override
-  String get bottomNavigationBar_title_home => 'home';
+  String get navigationBar_title_home => 'Home';
+
+  @override
+  String get navigationBar_title_rank_list => 'Leaderboard';
+
+  @override
+  String get navigationBar_title_my => 'My';
 
   @override
   String get widgets_will_pop_scope_route_toast => 'Press again to exit';

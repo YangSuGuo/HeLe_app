@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/doubleCheckConfirmation.dart';
 import 'package:hele_app/init.dart';
+import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/pages/main/controllers/main_controllers.dart';
 
 class MainApp extends StatefulWidget {
@@ -20,6 +22,7 @@ class _MainAppState extends State<MainApp> {
         child: Init(
             child: Scaffold(
       body: buildBody(),
+      bottomNavigationBar: buildBottomNavigationBar(),
     )));
   }
 
@@ -34,7 +37,33 @@ class _MainAppState extends State<MainApp> {
   }
 
   // MD3 底部导航栏
+  // todo 更新底部导航栏索引
   Widget buildBottomNavigationBar() {
-    return const Text('data');
+    return NavigationBar(
+          height: 100.h,
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          onDestinationSelected: (value) => _mainController.setIndex(value),
+          selectedIndex: _mainController.selectedIndex,
+          destinations: [
+            NavigationDestination(
+              icon: const Icon(Icons.image_outlined),
+              selectedIcon: const Icon(Icons.image),
+              label: S.of(context).navigationBar_title_home,
+              tooltip: S.of(context).navigationBar_title_home,
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.image_outlined),
+              selectedIcon: const Icon(Icons.image),
+              label: S.of(context).navigationBar_title_rank_list,
+              tooltip: S.of(context).navigationBar_title_rank_list,
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.image_outlined),
+              selectedIcon: const Icon(Icons.image),
+              label: S.of(context).navigationBar_title_my,
+              tooltip: S.of(context).navigationBar_title_my,
+            )
+          ],
+    );
   }
 }

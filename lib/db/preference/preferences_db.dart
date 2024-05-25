@@ -3,9 +3,12 @@ import 'package:hele_app/themes/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesDB {
+  // todo 抽象化
   PreferencesDB._();
+
   static final PreferencesDB db = PreferencesDB._();
   SharedPreferences? _db;
+
   Future<SharedPreferences> get database async =>
       _db ??= await SharedPreferences.getInstance();
 

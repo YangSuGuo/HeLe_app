@@ -7,6 +7,7 @@ import 'package:hele_app/common/flavors/env_config.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/routes/app_pages.dart';
+import 'package:hele_app/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class Application extends StatefulWidget {
@@ -19,7 +20,7 @@ class Application extends StatefulWidget {
 class _ApplicationState extends State<Application> {
   final EnvConfig _envConfig = BuildConfig.instance.config;
 
-  /// ToDo 状态管理，设置配置持久化，懒加载
+  /// ToDo 懒加载
   @override
   Widget build(BuildContext context) {
     // 状态管理
@@ -28,6 +29,8 @@ class _ApplicationState extends State<Application> {
           ChangeNotifierProvider(create: (_) => ApplicationProvider()),
         ],
         builder: (context, child) {
+          final watchApplicationProvider = context.watch<ApplicationProvider>();
+
           return ScreenUtilInit(
               // 屏幕适配
               designSize: const Size(750.0, 1334.0),
@@ -38,10 +41,11 @@ class _ApplicationState extends State<Application> {
                     // APP 配置
                     title: _envConfig.appName,
                     // 主题
-                    theme: ThemeData(
-                      colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
-                      useMaterial3: true,
-                    ),
+                    themeMode: watchApplicationProvider.themeMode,
+                    theme: AppTheme(getMultipleThemesMode(context))
+                        .multipleThemesLightMode(),
+                    darkTheme: AppTheme(getMultipleThemesMode(context))
+                        .multipleThemesDarkMode(),
                     // 路由
                     initialRoute: AppPages.INITIAL,
                     getPages: AppPages.routes,
@@ -50,7 +54,8 @@ class _ApplicationState extends State<Application> {
                     // 国际化
                     supportedLocales: S.supportedLocales,
                     localizationsDelegates: S.localizationsDelegates,
-                    locale: const Locale('zh'),
+                    locale: watchApplicationProvider.localeSystem ? null
+                        : watchApplicationProvider.locale,
                     localeListResolutionCallback: (locales, supportedLocales) {
                       print('当前地区语言$locales');
                       print('设备支持的地区语言$supportedLocales');
@@ -59,7 +64,6 @@ class _ApplicationState extends State<Application> {
                     // 弹框提示
                     navigatorObservers: [FlutterSmartDialog.observer],
                     builder: FlutterSmartDialog.init(),
-                    // home: const DoubleCheckConfirmation(child: Init(child: home())),
                     debugShowCheckedModeBanner: false);
               });
         });

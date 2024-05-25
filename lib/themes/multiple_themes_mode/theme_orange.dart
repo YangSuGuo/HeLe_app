@@ -7,7 +7,7 @@ class AppThemeOrange {
 
   /// 浅色主题
   static final lightTheme = ThemeData(
-    useMaterial3: false,
+    useMaterial3: true,
     brightness: Brightness.light,
     // 字体
     fontFamily: null,
@@ -68,7 +68,7 @@ class AppThemeOrange {
 
   /// 深色主题
   static final darkTheme = ThemeData(
-    useMaterial3: false,
+    useMaterial3: true,
     brightness: Brightness.dark,
     // 字体
     fontFamily: null,

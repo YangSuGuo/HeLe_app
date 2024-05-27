@@ -17,6 +17,7 @@ dependencies:
 
   # 界面UI
   cupertino_icons: ^1.0.6 # icon
+  fluentui_system_icons: any # icon
   flutter_tilt: ^3.0.1 # 倾斜视差
   flutter_smart_dialog: ^4.9.6+1 # 弹窗
 

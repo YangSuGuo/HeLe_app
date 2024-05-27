@@ -3,6 +3,7 @@ import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/themes/multiple_themes_mode/multiple_themes.dart';
 import 'package:provider/provider.dart';
 
+// todo bug 颜色不符合MD3颜色规范，待优化
 /// 是否深色模式
 bool isDarkMode(BuildContext context) {
   Theme.of(context);

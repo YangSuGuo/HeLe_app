@@ -7,6 +7,7 @@ class AppThemeCyan {
 
   /// 浅色主题
   static final lightTheme = ThemeData(
+    // colorScheme: ColorScheme.fromSeed(seedColor: primaryColor, brightness: Brightness.light),
     useMaterial3: true,
     brightness: Brightness.light,
     // 字体
@@ -68,6 +69,7 @@ class AppThemeCyan {
 
   /// 深色主题
   static final darkTheme = ThemeData(
+    // colorScheme: ColorScheme.fromSeed(seedColor: primaryColor,brightness: Brightness.dark),
     useMaterial3: true,
     brightness: Brightness.dark,
     // 字体

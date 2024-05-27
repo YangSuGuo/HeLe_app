@@ -31,19 +31,19 @@ class _MainAppState extends State<MainApp> {
     return PageView(
       physics: const NeverScrollableScrollPhysics(),
       controller: _mainController.pageController,
-      onPageChanged: (index) => _mainController.selectedIndex = index,
+      onPageChanged: (index) => _mainController.selectedIndex.value = index,
       children: _mainController.pages,
     );
   }
 
   // MD3 底部导航栏
-  // todo 更新底部导航栏索引
   Widget buildBottomNavigationBar() {
-    return NavigationBar(
+    return Obx(() => NavigationBar(
           height: 100.h,
+          animationDuration: const Duration(milliseconds: 300),
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           onDestinationSelected: (value) => _mainController.setIndex(value),
-          selectedIndex: _mainController.selectedIndex,
+          selectedIndex: _mainController.selectedIndex.value,
           destinations: [
             NavigationDestination(
               icon: const Icon(Icons.image_outlined),
@@ -64,6 +64,6 @@ class _MainAppState extends State<MainApp> {
               tooltip: S.of(context).navigationBar_title_my,
             )
           ],
-    );
+        ));
   }
 }

@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
+import 'package:hele_app/pages/home/controllers/home_controller.dart';
+import 'package:hele_app/pages/home/widget/search_appbar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,19 +15,41 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final HomeController _homeController = Get.put(HomeController());
+  // Get.find<HomeController>();
+
+  late Stream<bool> stream;
+
+  @override
+  void initState() {
+    super.initState();
+    stream = _homeController.searchBarStream.stream;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
-      children: [
-        // 渐变背景
-        gradientBackground(),
-        Center(
+          children: [
+            // 渐变背景
+            gradientBackground(),
+              Center(
             child: Text(S.of(context).hello_World,
-                style: TextStyle(fontSize: 50.sp)))
-      ],
-    ));
+                style: TextStyle(fontSize: 50.sp))),
+            Column(
+              children: [
+                CustomAppBar(
+                  stream: _homeController.hideSearchBar
+                      ? stream
+                      : StreamController<bool>.broadcast().stream,
+                  homeController: _homeController,
+                ),
+              ],
+            )
+          ],
+        ));
   }
+
 
   /// 渐变背景
   Widget gradientBackground() => Align(
@@ -46,4 +73,41 @@ class _HomeState extends State<Home> {
           ),
         ),
       );
+}
+
+// 顶部栏
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Stream<bool>? stream;
+  final HomeController? homeController;
+
+  const CustomAppBar({
+    super.key,
+    this.stream,
+    this.homeController,
+  });
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: stream,
+      initialData: true,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        final double top = MediaQuery.of(context).padding.top;
+        return AnimatedOpacity(
+          opacity: snapshot.data ? 1 : 0,
+          duration: const Duration(milliseconds: 300),
+          child: AnimatedContainer(
+            curve: Curves.easeInOutCubicEmphasized,
+            duration: const Duration(milliseconds: 500),
+            height: snapshot.data ? top + 52 : top,
+            padding: EdgeInsets.fromLTRB(14, top + 6, 14, 0),
+            child: SearchAppBar(homeController: homeController),
+          ),
+        );
+      },
+    );
+  }
 }

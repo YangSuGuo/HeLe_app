@@ -9,7 +9,6 @@ class ApplicationProvider extends ChangeNotifier {
   bool _localeSystem = true; // 语言是否跟随系统
   Locale _locale = const Locale('zh'); // 语言
 
-
   ThemeMode get themeMode => _themeMode;
   String get multipleThemesMode => _multipleThemesMode;
   Locale get locale => _locale;

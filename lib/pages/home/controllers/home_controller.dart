@@ -23,7 +23,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   void onInit() {
     super.onInit();
     hideSearchBar = true;
-    initialIndex.value = 1;
+    initialIndex.value = 0;
     tabbarSort = ['anime', 'manga', 'movie', 'series', 'lightNovel'];
     setTabConfig();
   }

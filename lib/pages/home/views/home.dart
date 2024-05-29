@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
+import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/home/widget/search_appbar.dart';
 
 class Home extends StatefulWidget {
@@ -15,9 +16,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final HomeController _homeController = Get.put(HomeController());
-
-  // Get.find<HomeController>();
-
   late Stream<bool> stream;
 
   @override
@@ -40,13 +38,16 @@ class _HomeState extends State<Home> {
         gradientBackground(),
         Column(
           children: [
+            // AppBar
             CustomAppBar(
               stream: _homeController.hideSearchBar
                   ? stream
                   : StreamController<bool>.broadcast().stream,
               homeController: _homeController,
             ),
-            SizedBox(
+            // TabBar
+            const CustomTabs(),
+/*            SizedBox(
                 width: double.infinity,
                 height: 60.h,
                 child: TabBar(
@@ -65,7 +66,7 @@ class _HomeState extends State<Home> {
                     }
                     _homeController.initialIndex.value = i;
                   },
-                )),
+                )),*/
             Expanded(
               child: TabBarView(
                 controller: _homeController.tabController,

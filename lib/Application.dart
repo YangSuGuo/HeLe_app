@@ -20,7 +20,6 @@ class Application extends StatefulWidget {
 class _ApplicationState extends State<Application> {
   final EnvConfig _envConfig = BuildConfig.instance.config;
 
-  /// ToDo 懒加载
   @override
   Widget build(BuildContext context) {
     // 状态管理

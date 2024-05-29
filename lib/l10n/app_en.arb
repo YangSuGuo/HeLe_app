@@ -6,5 +6,11 @@
   "navigationBar_title_rank_list": "Leaderboard",
   "navigationBar_title_my": "My",
 
+  "tabs_anime":"anime",
+  "tabs_manga":"manga",
+  "tabs_movie":"movie",
+  "tabs_series":"series",
+  "tabs_light_novel":"lightNovel",
+
   "widgets_will_pop_scope_route_toast": "Press again to exit"
 }

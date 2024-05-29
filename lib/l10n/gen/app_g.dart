@@ -119,6 +119,36 @@ abstract class S {
   /// **'My'**
   String get navigationBar_title_my;
 
+  /// No description provided for @tabs_anime.
+  ///
+  /// In en, this message translates to:
+  /// **'anime'**
+  String get tabs_anime;
+
+  /// No description provided for @tabs_manga.
+  ///
+  /// In en, this message translates to:
+  /// **'manga'**
+  String get tabs_manga;
+
+  /// No description provided for @tabs_movie.
+  ///
+  /// In en, this message translates to:
+  /// **'movie'**
+  String get tabs_movie;
+
+  /// No description provided for @tabs_series.
+  ///
+  /// In en, this message translates to:
+  /// **'series'**
+  String get tabs_series;
+
+  /// No description provided for @tabs_light_novel.
+  ///
+  /// In en, this message translates to:
+  /// **'lightNovel'**
+  String get tabs_light_novel;
+
   /// No description provided for @widgets_will_pop_scope_route_toast.
   ///
   /// In en, this message translates to:

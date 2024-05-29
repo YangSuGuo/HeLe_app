@@ -17,5 +17,20 @@ class SEn extends S {
   String get navigationBar_title_my => 'My';
 
   @override
+  String get tabs_anime => 'anime';
+
+  @override
+  String get tabs_manga => 'manga';
+
+  @override
+  String get tabs_movie => 'movie';
+
+  @override
+  String get tabs_series => 'series';
+
+  @override
+  String get tabs_light_novel => 'lightNovel';
+
+  @override
   String get widgets_will_pop_scope_route_toast => 'Press again to exit';
 }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
 import 'package:hele_app/pages/home/widget/search_appbar.dart';
 
@@ -16,6 +15,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final HomeController _homeController = Get.put(HomeController());
+
   // Get.find<HomeController>();
 
   late Stream<bool> stream;
@@ -27,29 +27,56 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(
+      children: [
+        // 渐变背景
+        gradientBackground(),
+        Column(
           children: [
-            // 渐变背景
-            gradientBackground(),
-              Center(
-            child: Text(S.of(context).hello_World,
-                style: TextStyle(fontSize: 50.sp))),
-            Column(
-              children: [
-                CustomAppBar(
-                  stream: _homeController.hideSearchBar
-                      ? stream
-                      : StreamController<bool>.broadcast().stream,
-                  homeController: _homeController,
-                ),
-              ],
-            )
+            CustomAppBar(
+              stream: _homeController.hideSearchBar
+                  ? stream
+                  : StreamController<bool>.broadcast().stream,
+              homeController: _homeController,
+            ),
+            SizedBox(
+                width: double.infinity,
+                height: 60.h,
+                child: TabBar(
+                  controller: _homeController.tabController,
+                  tabAlignment: TabAlignment.center,
+                  isScrollable: true,
+                  dividerColor: Colors.transparent,
+                  enableFeedback: true,
+                  splashBorderRadius: BorderRadius.circular(10),
+                  tabs: [
+                    for (var i in _homeController.tabs) Tab(text: i['label'])
+                  ],
+                  onTap: (i) {
+                    if (_homeController.initialIndex.value == i) {
+                      _homeController.tabsCtrList[i]().animateToTop();
+                    }
+                    _homeController.initialIndex.value = i;
+                  },
+                )),
+            Expanded(
+              child: TabBarView(
+                controller: _homeController.tabController,
+                children: _homeController.tabsPageList,
+              ),
+            ),
           ],
-        ));
+        )
+      ],
+    ));
   }
-
 
   /// 渐变背景
   Widget gradientBackground() => Align(

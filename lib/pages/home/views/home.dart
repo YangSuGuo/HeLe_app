@@ -45,9 +45,10 @@ class _HomeState extends State<Home> {
                   : StreamController<bool>.broadcast().stream,
               homeController: _homeController,
             ),
+            SizedBox(height: 8.h,),
             // TabBar
             const CustomTabs(),
-/*            SizedBox(
+            /*SizedBox(
                 width: double.infinity,
                 height: 60.h,
                 child: TabBar(

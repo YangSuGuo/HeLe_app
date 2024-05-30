@@ -1,42 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:hele_app/themes/multiple_themes_mode/theme_cyan.dart';
-import 'package:hele_app/themes/multiple_themes_mode/theme_default.dart';
-import 'package:hele_app/themes/multiple_themes_mode/theme_green.dart';
-import 'package:hele_app/themes/multiple_themes_mode/theme_orange.dart';
-import 'package:hele_app/themes/multiple_themes_mode/theme_purple.dart';
-import 'package:hele_app/themes/multiple_themes_mode/theme_red.dart';
-import 'package:hele_app/themes/multiple_themes_mode/theme_yellow.dart';
+import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
+import 'package:hele_app/themes/multiple_themes_mode/material_scheme.dart';
 
 enum AppMultipleThemesMode { light, dark }
 
 /// 多主题
 Map<String, Map<AppMultipleThemesMode, ThemeData>> appMultipleThemesMode = {
   'default': {
-    AppMultipleThemesMode.light: AppThemeDefault.lightTheme,
-    AppMultipleThemesMode.dark: AppThemeDefault.darkTheme,
+    AppMultipleThemesMode.light:
+    AppThemeUtils.themeUtils(AppThemeColorScheme.lightDefaultScheme()),
+    AppMultipleThemesMode.dark:
+    AppThemeUtils.themeUtils(AppThemeColorScheme.darkDefaultScheme()),
   },
   'red': {
-    AppMultipleThemesMode.light: AppThemeRed.lightTheme,
-    AppMultipleThemesMode.dark: AppThemeRed.darkTheme,
+    // AppMultipleThemesMode.light: AppTheme,
+    // AppMultipleThemesMode.dark: AppTheme,
   },
   'orange': {
-    AppMultipleThemesMode.light: AppThemeOrange.lightTheme,
-    AppMultipleThemesMode.dark: AppThemeOrange.darkTheme,
+    // AppMultipleThemesMode.light: AppTheme,
+    // AppMultipleThemesMode.dark: AppTheme,
   },
   'yellow': {
-    AppMultipleThemesMode.light: AppThemeYellow.lightTheme,
-    AppMultipleThemesMode.dark: AppThemeYellow.darkTheme,
+    // AppMultipleThemesMode.light: AppTheme,
+    // AppMultipleThemesMode.dark: AppTheme,
   },
   'green': {
-    AppMultipleThemesMode.light: AppThemeGreen.lightTheme,
-    AppMultipleThemesMode.dark: AppThemeGreen.darkTheme,
+    // AppMultipleThemesMode.light: AppTheme,
+    // AppMultipleThemesMode.dark: AppTheme,
   },
   'cyan': {
-    AppMultipleThemesMode.light: AppThemeCyan.lightTheme,
-    AppMultipleThemesMode.dark: AppThemeCyan.darkTheme,
+    // AppMultipleThemesMode.light: AppTheme,
+    // AppMultipleThemesMode.dark: AppTheme,
   },
   'purple': {
-    AppMultipleThemesMode.light: AppThemePurple.lightTheme,
-    AppMultipleThemesMode.dark: AppThemePurple.darkTheme,
+    // AppMultipleThemesMode.light: AppTheme,
+    // AppMultipleThemesMode.dark: AppTheme,
   },
 };

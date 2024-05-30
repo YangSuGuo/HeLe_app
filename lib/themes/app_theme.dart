@@ -3,7 +3,6 @@ import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/themes/multiple_themes_mode/multiple_themes.dart';
 import 'package:provider/provider.dart';
 
-// todo bug 颜色不符合MD3颜色规范，待优化
 /// 是否深色模式
 bool isDarkMode(BuildContext context) {
   Theme.of(context);
@@ -38,18 +37,6 @@ class AppTheme {
   AppTheme(this.multipleThemesMode);
 
   String multipleThemesMode = 'default';
-
-  /// 设备参考大小
-  static const double wdp = 360.0;
-  static const double hdp = 690.0;
-
-  /// 次要颜色
-  static const subColor = Color(0xFFAFB8BF);
-
-  /// 背景色系列
-  static const backgroundColor1 = Color(0xFFE8ECF0);
-  static const backgroundColor2 = Color(0xFFFCFBFC);
-  static const backgroundColor3 = Color(0xFFF3F2F3);
 
   /// 多主题 light
   ThemeData? multipleThemesLightMode() {

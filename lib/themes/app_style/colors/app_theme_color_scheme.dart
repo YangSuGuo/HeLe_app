@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+import 'package:hele_app/themes/multiple_themes_mode/material_scheme.dart';
+
+class AppThemeColorScheme {
+  /// 次要颜色
+  static const subColor = Color(0xFFAFB8BF);
+
+  /// 背景色系列
+  static const backgroundColor1 = Color(0xFFE8ECF0);
+  static const backgroundColor2 = Color(0xFFFCFBFC);
+  static const backgroundColor3 = Color(0xFFF3F2F3);
+
+  /// default
+  static MaterialScheme lightDefaultScheme() {
+    return const MaterialScheme(
+      brightness: Brightness.light,
+      primary: Color(4283194514),
+      surfaceTint: Color(4283194514),
+      onPrimary: Color(4294967295),
+      primaryContainer: Color(4292665855),
+      onPrimaryContainer: Color(4278327115),
+      secondary: Color(4284046962),
+      onSecondary: Color(4294967295),
+      secondaryContainer: Color(4292731385),
+      onSecondaryContainer: Color(4279638828),
+      tertiary: Color(4285813872),
+      onTertiary: Color(4294967295),
+      tertiaryContainer: Color(4294957046),
+      onTertiaryContainer: Color(4281078314),
+      error: Color(4290386458),
+      onError: Color(4294967295),
+      errorContainer: Color(4294957782),
+      onErrorContainer: Color(4282449922),
+      background: Color(4294637823),
+      onBackground: Color(4279900961),
+      surface: Color(4294637823),
+      onSurface: Color(4279900961),
+      surfaceVariant: Color(4293059052),
+      onSurfaceVariant: Color(4282730063),
+      outline: Color(4285953664),
+      outlineVariant: Color(4291217104),
+      shadow: Color(4278190080),
+      scrim: Color(4278190080),
+      inverseSurface: Color(4281282614),
+      inverseOnSurface: Color(4294045943),
+      inversePrimary: Color(4290102527),
+      primaryFixed: Color(4292665855),
+      onPrimaryFixed: Color(4278327115),
+      primaryFixedDim: Color(4290102527),
+      onPrimaryFixedVariant: Color(4281615481),
+      secondaryFixed: Color(4292731385),
+      onSecondaryFixed: Color(4279638828),
+      secondaryFixedDim: Color(4290889181),
+      onSecondaryFixedVariant: Color(4282467929),
+      tertiaryFixed: Color(4294957046),
+      onTertiaryFixed: Color(4281078314),
+      tertiaryFixedDim: Color(4293114587),
+      onTertiaryFixedVariant: Color(4284169559),
+      surfaceDim: Color(4292532704),
+      surfaceBright: Color(4294637823),
+      surfaceContainerLowest: Color(4294967295),
+      surfaceContainerLow: Color(4294243322),
+      surfaceContainer: Color(4293848564),
+      surfaceContainerHigh: Color(4293519343),
+      surfaceContainerHighest: Color(4293124585),
+    );
+  }
+
+  static MaterialScheme darkDefaultScheme() {
+    return const MaterialScheme(
+      brightness: Brightness.dark,
+      primary: Color(4290102527),
+      surfaceTint: Color(4290102527),
+      onPrimary: Color(4280036705),
+      primaryContainer: Color(4281615481),
+      onPrimaryContainer: Color(4292665855),
+      secondary: Color(4290889181),
+      onSecondary: Color(4281020482),
+      secondaryContainer: Color(4282467929),
+      onSecondaryContainer: Color(4292731385),
+      tertiary: Color(4293114587),
+      onTertiary: Color(4282591040),
+      tertiaryContainer: Color(4284169559),
+      onTertiaryContainer: Color(4294957046),
+      error: Color(4294948011),
+      onError: Color(4285071365),
+      errorContainer: Color(4287823882),
+      onErrorContainer: Color(4294957782),
+      background: Color(4279374616),
+      onBackground: Color(4293124585),
+      surface: Color(4279374616),
+      onSurface: Color(4293124585),
+      surfaceVariant: Color(4282730063),
+      onSurfaceVariant: Color(4291217104),
+      outline: Color(4287598746),
+      outlineVariant: Color(4282730063),
+      shadow: Color(4278190080),
+      scrim: Color(4278190080),
+      inverseSurface: Color(4293124585),
+      inverseOnSurface: Color(4281282614),
+      inversePrimary: Color(4283194514),
+      primaryFixed: Color(4292665855),
+      onPrimaryFixed: Color(4278327115),
+      primaryFixedDim: Color(4290102527),
+      onPrimaryFixedVariant: Color(4281615481),
+      secondaryFixed: Color(4292731385),
+      onSecondaryFixed: Color(4279638828),
+      secondaryFixedDim: Color(4290889181),
+      onSecondaryFixedVariant: Color(4282467929),
+      tertiaryFixed: Color(4294957046),
+      onTertiaryFixed: Color(4281078314),
+      tertiaryFixedDim: Color(4293114587),
+      onTertiaryFixedVariant: Color(4284169559),
+      surfaceDim: Color(4279374616),
+      surfaceBright: Color(4281874751),
+      surfaceContainerLowest: Color(4279045651),
+      surfaceContainerLow: Color(4279900961),
+      surfaceContainer: Color(4280164133),
+      surfaceContainerHigh: Color(4280887855),
+      surfaceContainerHighest: Color(4281611322),
+    );
+  }
+}

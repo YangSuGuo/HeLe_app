@@ -48,9 +48,9 @@ class _CustomTabsState extends State<CustomTabs> {
     );
   }
 }
-// todo 标签切换动画
 
-class CustomChip extends StatelessWidget {
+// todo 标签切换动画
+class CustomChip extends StatelessWidget  {
   final Function onTap;
   final String label;
   final bool selected;
@@ -65,31 +65,30 @@ class CustomChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    final Color secondaryContainer = colorScheme.secondaryContainer;
     final Color selectedColor = colorScheme.secondaryContainer;
     final TextStyle chipTextStyle = selected
         ? const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)
         : const TextStyle(fontSize: 13);
 
     return InputChip(
-      side: const BorderSide(
-        color: Colors.transparent,
-      ),
-      shape: selected
-          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
-          : RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      // backgroundColor: secondaryContainer,
-      selectedColor: selectedColor,
-      // color: WidgetStateColor.transparent,
-      padding: selected
-          ? const EdgeInsets.fromLTRB(20, 1, 20, 1)
-          : const EdgeInsets.fromLTRB(7, 1, 7, 1),
-      label: Text(label),
-      labelStyle: chipTextStyle,
-      onPressed: () => onTap(),
-      selected: selected,
-      showCheckmark: false,
-      visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
-    );
+          side: const BorderSide(
+            color: Colors.transparent,
+          ),
+          shape: selected
+              ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
+              : RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          // backgroundColor: secondaryContainer,
+          selectedColor: selectedColor,
+          // color: WidgetStateColor.transparent,
+          padding: selected
+              ? const EdgeInsets.fromLTRB(20, 1, 20, 1)
+              : const EdgeInsets.fromLTRB(7, 1, 7, 1),
+          label: Text(label),
+          labelStyle: chipTextStyle,
+          onPressed: () => onTap(),
+          selected: selected,
+          showCheckmark: false,
+          visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
+        );
   }
 }

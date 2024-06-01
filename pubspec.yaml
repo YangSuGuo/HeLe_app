@@ -18,7 +18,7 @@ dependencies:
   # 界面UI
   cupertino_icons: ^1.0.6 # icon
   fluentui_system_icons: any # icon
-  flutter_tilt: ^3.0.1 # 倾斜视差
+  flutter_tilt: ^3.0.0 # 倾斜视差
   flutter_smart_dialog: ^4.9.6+1 # 弹窗
 
   # 网络请求
@@ -28,6 +28,7 @@ dependencies:
   cached_network_image: ^3.3.1 # 图片缓存
   flutter_screenutil: ^5.9.0 # 屏幕适配
   flutter_svg: ^2.0.10+1 # svg显示
+  easy_refresh: ^3.4.0 # 下拉刷新
   url_launcher: ^6.2.6 # url跳转
   share_plus: ^9.0.0 # 分享
   logger: ^2.3.0 #log

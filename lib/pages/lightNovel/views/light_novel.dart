@@ -14,6 +14,6 @@ class _LightNovelState extends State<LightNovel> {
   Widget build(BuildContext context) {
     return Center(
         child:
-        Text(S.of(context).tabs_light_novel, style: TextStyle(fontSize: 50.sp)));
+        Text(S.of(context).tabs_light_novel, style: TextStyle(fontSize: 25.sp)));
   }
 }

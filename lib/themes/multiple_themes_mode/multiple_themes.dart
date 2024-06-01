@@ -8,32 +8,32 @@ enum AppMultipleThemesMode { light, dark }
 Map<String, Map<AppMultipleThemesMode, ThemeData>> appMultipleThemesMode = {
   'default': {
     AppMultipleThemesMode.light:
-    AppThemeUtils.themeUtils(AppThemeColorScheme.lightDefaultScheme()),
+        AppThemeUtils.themeUtils(AppThemeColorScheme.lightDefaultScheme()),
     AppMultipleThemesMode.dark:
-    AppThemeUtils.themeUtils(AppThemeColorScheme.darkDefaultScheme()),
+        AppThemeUtils.themeUtils(AppThemeColorScheme.darkDefaultScheme()),
   },
   'red': {
-    // AppMultipleThemesMode.light: AppTheme,
-    // AppMultipleThemesMode.dark: AppTheme,
+    AppMultipleThemesMode.light:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.lightRedScheme()),
+    AppMultipleThemesMode.dark:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.darkRedScheme()),
   },
   'orange': {
-    // AppMultipleThemesMode.light: AppTheme,
-    // AppMultipleThemesMode.dark: AppTheme,
+    AppMultipleThemesMode.light:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.lightOrangeScheme()),
+    AppMultipleThemesMode.dark:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.darkOrangeScheme()),
   },
   'yellow': {
-    // AppMultipleThemesMode.light: AppTheme,
-    // AppMultipleThemesMode.dark: AppTheme,
-  },
-  'green': {
-    // AppMultipleThemesMode.light: AppTheme,
-    // AppMultipleThemesMode.dark: AppTheme,
+    AppMultipleThemesMode.light:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.lightYellowScheme()),
+    AppMultipleThemesMode.dark:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.darkYellowScheme()),
   },
   'cyan': {
-    // AppMultipleThemesMode.light: AppTheme,
-    // AppMultipleThemesMode.dark: AppTheme,
-  },
-  'purple': {
-    // AppMultipleThemesMode.light: AppTheme,
-    // AppMultipleThemesMode.dark: AppTheme,
-  },
+    AppMultipleThemesMode.light:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.lightCyanScheme()),
+    AppMultipleThemesMode.dark:
+        AppThemeUtils.themeUtils(AppThemeColorScheme.darkCyanScheme()),
+  }
 };

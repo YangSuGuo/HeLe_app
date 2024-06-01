@@ -21,13 +21,13 @@ class _MainAppState extends State<MainApp> {
     return DoubleCheckConfirmation(
         child: Init(
             child: Scaffold(
-      body: buildBody(),
-      bottomNavigationBar: buildBottomNavigationBar(),
+      body: _buildBody(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     )));
   }
 
   // 主页面
-  Widget buildBody() {
+  Widget _buildBody() {
     return PageView(
       physics: const NeverScrollableScrollPhysics(),
       controller: _mainController.pageController,
@@ -37,9 +37,10 @@ class _MainAppState extends State<MainApp> {
   }
 
   // MD3 底部导航栏
-  Widget buildBottomNavigationBar() {
+  Widget _buildBottomNavigationBar() {
     return Obx(() => NavigationBar(
-          height: 100.h,
+          height: 80.h,
+          // backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.05),
           animationDuration: const Duration(milliseconds: 300),
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           onDestinationSelected: (value) => _mainController.setIndex(value),

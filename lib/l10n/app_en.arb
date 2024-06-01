@@ -12,5 +12,7 @@
   "tabs_series":"series",
   "tabs_light_novel":"lightNovel",
 
+  "tab_anime_calendar": "calendar",
+
   "widgets_will_pop_scope_route_toast": "Press again to exit"
 }

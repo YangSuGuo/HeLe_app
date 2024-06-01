@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,7 +41,10 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     tabsCtrList = tabs.map((e) => e['controller']).toList();
     tabsPageList = tabs.map<Widget>((e) => e['page']).toList();
 
-    print(tabs.map((e)=>e['label']).toList());
+    if (kDebugMode) {
+      print(tabs.map((e)=>e['label']).toList());
+    }
+
     tabController = TabController(
       initialIndex: initialIndex.value,
       length: tabs.length,

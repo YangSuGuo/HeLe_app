@@ -14,6 +14,6 @@ class _MangaState extends State<Manga> {
   Widget build(BuildContext context) {
     return Center(
         child:
-        Text(S.of(context).tabs_manga, style: TextStyle(fontSize: 50.sp)));
+        Text(S.of(context).tabs_manga, style: TextStyle(fontSize: 25.sp)));
   }
 }

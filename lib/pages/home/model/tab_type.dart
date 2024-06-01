@@ -14,7 +14,13 @@ import 'package:hele_app/pages/series/views/series.dart';
 enum TabType { anime, manga, movie, series, lightNovel }
 
 extension TabTypeDesc on TabType {
-  String get description => ['动漫', '漫画', '电影', '电视剧', '轻小说'][index];
+  String get description => [
+        S.of(Get.context!).tabs_anime,
+        S.of(Get.context!).tabs_manga,
+        S.of(Get.context!).tabs_movie,
+        S.of(Get.context!).tabs_series,
+        S.of(Get.context!).tabs_light_novel
+      ][index];
 
   String get id => ['anime', 'manga', 'movie', 'series', 'lightNovel'][index];
 }

@@ -24,17 +24,14 @@ class SearchAppBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
           child: Material(
-            color: colorScheme.onSecondaryContainer.withOpacity(0.05),
+            color: colorScheme.primary.withOpacity(0.1),
             child: InkWell(
-              splashColor: colorScheme.primaryContainer.withOpacity(0.3),
+              splashColor: colorScheme.primary.withOpacity(0.05),
               onTap: () => {},
               child: Row(
                 children: [
                   const SizedBox(width: 14),
-                  Icon(
-                    Icons.search_outlined,
-                    color: colorScheme.onSecondaryContainer,
-                  ),
+                  const Icon(Icons.search_outlined),
                   const SizedBox(width: 10),
                   Obx(
                     () => Expanded(

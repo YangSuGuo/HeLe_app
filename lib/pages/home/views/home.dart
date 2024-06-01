@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final HomeController _homeController = Get.put(HomeController());
+  final HomeController _homeController = Get.find<HomeController>();
   late Stream<bool> stream;
 
   @override
@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: const [0, 0.0034, 0.34]),
+                  stops: const [0, 0.0034 , 0.34]),
             ),
           ),
         ),

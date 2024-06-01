@@ -7,7 +7,7 @@ class ApplicationProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system; // 主题模式
   String _multipleThemesMode = 'default'; // 多主题模式
   bool _localeSystem = true; // 语言是否跟随系统
-  Locale _locale = const Locale('zh'); // 语言
+  Locale _locale = const Locale('zh_CH'); // 语言
 
   ThemeMode get themeMode => _themeMode;
   String get multipleThemesMode => _multipleThemesMode;

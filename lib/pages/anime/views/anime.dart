@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
-import 'package:hele_app/pages/anime/widget/filter_bottom.dart';
+import 'package:hele_app/pages/anime/controllers/anime_controller.dart';
 
 class Anime extends StatefulWidget {
   const Anime({super.key});
@@ -11,6 +12,8 @@ class Anime extends StatefulWidget {
 }
 
 class _AnimeState extends State<Anime> {
+  final AnimeController _animeController = Get.put(AnimeController());
+
   @override
   Widget build(BuildContext context) {
     return _buildBody();
@@ -36,7 +39,7 @@ class _AnimeState extends State<Anime> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      "今日推荐",
+                      "推荐",
                       style: TextStyle(
                         fontSize: 48.sp,
                         fontWeight: FontWeight.bold,
@@ -59,26 +62,7 @@ class _AnimeState extends State<Anime> {
                       semanticsLabel: S.of(context).tab_anime_calendar,
                     ),
                     Row(mainAxisSize: MainAxisSize.min, children: [
-                      FilterBottom(
-                        "周一",
-                        checked: true,
-                        width: 80.w,
-                        height: 80.h,
-                        fontSize: 25.sp,
-                        radius: 14.sp,
-                        semanticsLabel: '今日追番',
-                        onTap: () {},
-                      ),
-                      FilterBottom(
-                        "周二",
-                        checked: false,
-                        width: 80.w,
-                        height: 80.h,
-                        fontSize: 25.sp,
-                        radius: 14.sp,
-                        semanticsLabel: '明日追番',
-                        onTap: () {},
-                      ),
+
                     ])
                   ]),
             ),

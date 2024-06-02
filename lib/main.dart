@@ -9,8 +9,6 @@ void main() {
   // 开发环境配置
   EnvConfig devConfig = EnvConfig(
     appName: "Flutter",
-    baseUrl: "https://",
-    shouldCollectCrashLog: true,
   );
 
   // 设置环境配置

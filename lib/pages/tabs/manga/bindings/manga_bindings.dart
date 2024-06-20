@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hele_app/pages/manga/controllers/manga_controller.dart';
+import 'package:hele_app/pages/tabs/manga/controllers/manga_controller.dart';
 
 class MangaBindings extends Bindings {
   @override

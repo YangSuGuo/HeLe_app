@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:hele_app/pages/anime/bindings/anime_bindings.dart';
-import 'package:hele_app/pages/lightNovel/bindings/lightNovel_bindings.dart';
-import 'package:hele_app/pages/manga/bindings/manga_bindings.dart';
-import 'package:hele_app/pages/movie/bindings/movie_bindings.dart';
-import 'package:hele_app/pages/series/bindings/series_bindings.dart';
+import 'package:hele_app/pages/tabs/anime/bindings/anime_bindings.dart';
+import 'package:hele_app/pages/tabs/lightNovel/bindings/lightNovel_bindings.dart';
+import 'package:hele_app/pages/tabs/manga/bindings/manga_bindings.dart';
+import 'package:hele_app/pages/tabs/movie/bindings/movie_bindings.dart';
+import 'package:hele_app/pages/tabs/series/bindings/series_bindings.dart';
 
 import '../controllers/home_controller.dart';
 

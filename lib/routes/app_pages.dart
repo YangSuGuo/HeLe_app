@@ -1,18 +1,19 @@
 import 'package:get/get.dart';
-import 'package:hele_app/pages/anime/bindings/anime_bindings.dart';
-import 'package:hele_app/pages/anime/views/anime.dart';
 import 'package:hele_app/pages/home/bindings/home_binding.dart';
 import 'package:hele_app/pages/home/views/home.dart';
-import 'package:hele_app/pages/lightNovel/bindings/lightNovel_bindings.dart';
-import 'package:hele_app/pages/lightNovel/views/light_novel.dart';
 import 'package:hele_app/pages/main/bindings/main_binding.dart';
 import 'package:hele_app/pages/main/views/main.dart';
-import 'package:hele_app/pages/manga/bindings/manga_bindings.dart';
-import 'package:hele_app/pages/manga/views/manga.dart';
-import 'package:hele_app/pages/movie/bindings/movie_bindings.dart';
-import 'package:hele_app/pages/movie/views/movie.dart';
-import 'package:hele_app/pages/series/bindings/series_bindings.dart';
-import 'package:hele_app/pages/series/views/series.dart';
+import 'package:hele_app/pages/tabs/anime/bindings/anime_bindings.dart';
+import 'package:hele_app/pages/tabs/anime/views/anime.dart';
+import 'package:hele_app/pages/tabs/lightNovel/bindings/lightNovel_bindings.dart';
+import 'package:hele_app/pages/tabs/lightNovel/views/light_novel.dart';
+import 'package:hele_app/pages/tabs/manga/bindings/manga_bindings.dart';
+import 'package:hele_app/pages/tabs/manga/views/manga.dart';
+import 'package:hele_app/pages/tabs/movie/bindings/movie_bindings.dart';
+import 'package:hele_app/pages/tabs/movie/views/movie.dart';
+import 'package:hele_app/pages/tabs/series/bindings/series_bindings.dart';
+import 'package:hele_app/pages/tabs/series/views/series.dart';
+
 part 'app_routes.dart';
 
 class AppPages {

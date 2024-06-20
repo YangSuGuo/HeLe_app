@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
-import 'package:hele_app/pages/anime/controllers/anime_controller.dart';
+import 'package:hele_app/pages/tabs/anime/controllers/anime_controller.dart';
 
 class Anime extends StatefulWidget {
   const Anime({super.key});
@@ -13,6 +13,11 @@ class Anime extends StatefulWidget {
 
 class _AnimeState extends State<Anime> {
   final AnimeController _animeController = Get.put(AnimeController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +66,35 @@ class _AnimeState extends State<Anime> {
                       ),
                       semanticsLabel: S.of(context).tab_anime_calendar,
                     ),
-                    Row(mainAxisSize: MainAxisSize.min, children: [
-
-                    ])
                   ]),
             ),
+
+            Obx(
+              () => SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 7,
+                  crossAxisSpacing: 5,
+                  childAspectRatio: 0.7,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    // todo 追番表列表
+                    // todo 追番表可切换
+                    return Card(
+                      color: Colors.transparent,
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Text(index.toString()),
+                      ),
+                    );
+                  },
+                  childCount: _animeController.bangumiItemsLength.value,
+                ),
+              ),
+            ),
+
+            // SliverAnimatedGrid(itemBuilder: itemBuilder, gridDelegate: gridDelegate)
           ]),
     );
   }

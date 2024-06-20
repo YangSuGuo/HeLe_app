@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hele_app/pages/movie/controllers/movie_controller.dart';
+import 'package:hele_app/pages/tabs/movie/controllers/movie_controller.dart';
 
 class MovieBindings extends Bindings {
   @override

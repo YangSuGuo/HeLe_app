@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
-import 'package:hele_app/pages/anime/controllers/anime_controller.dart';
-import 'package:hele_app/pages/anime/views/anime.dart';
-import 'package:hele_app/pages/lightNovel/controllers/lightNovel_controller.dart';
-import 'package:hele_app/pages/lightNovel/views/light_novel.dart';
-import 'package:hele_app/pages/manga/controllers/manga_controller.dart';
-import 'package:hele_app/pages/manga/views/manga.dart';
-import 'package:hele_app/pages/movie/controllers/movie_controller.dart';
-import 'package:hele_app/pages/movie/views/movie.dart';
-import 'package:hele_app/pages/series/controllers/series_controller.dart';
-import 'package:hele_app/pages/series/views/series.dart';
+import 'package:hele_app/pages/tabs/anime/controllers/anime_controller.dart';
+import 'package:hele_app/pages/tabs/anime/views/anime.dart';
+import 'package:hele_app/pages/tabs/lightNovel/controllers/lightNovel_controller.dart';
+import 'package:hele_app/pages/tabs/lightNovel/views/light_novel.dart';
+import 'package:hele_app/pages/tabs/manga/controllers/manga_controller.dart';
+import 'package:hele_app/pages/tabs/manga/views/manga.dart';
+import 'package:hele_app/pages/tabs/movie/controllers/movie_controller.dart';
+import 'package:hele_app/pages/tabs/movie/views/movie.dart';
+import 'package:hele_app/pages/tabs/series/controllers/series_controller.dart';
+import 'package:hele_app/pages/tabs/series/views/series.dart';
 
 enum TabType { anime, manga, movie, series, lightNovel }
 

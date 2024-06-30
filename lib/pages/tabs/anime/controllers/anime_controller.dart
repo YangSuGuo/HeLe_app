@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:hele_app/common/utils/date_utils.dart';
 import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/model/calendar.dart';
@@ -18,9 +17,7 @@ class AnimeController extends GetxController {
     super.onInit();
     queryBangumiCalendarFeed();
 
-
     dayOfWeekIndex.value = DateUtils.getDayOfWeekIndex() - 1; // 星期几 id
-
 
     // log(todayOfWeek.toString());
     log(dayOfWeekIndex.toString());
@@ -30,6 +27,7 @@ class AnimeController extends GetxController {
   Future queryBangumiCalendarFeed() async {
     var result = await BangumiNet.bangumiCalendar();
     bangumiCalendar.value = result;
+
     // todo 长度 开发测试
     bangumiItemsLength.value = result[dayOfWeekIndex.value].items!.length;
     log(bangumiCalendar[dayOfWeekIndex.value].items![0].nameCn.toString());

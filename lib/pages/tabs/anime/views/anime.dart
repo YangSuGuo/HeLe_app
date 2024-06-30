@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
+import 'package:hele_app/model/calendar.dart';
 import 'package:hele_app/pages/tabs/anime/controllers/anime_controller.dart';
+import 'package:hele_app/pages/tabs/anime/widget/bangumu_card.dart';
+import 'package:nil/nil.dart';
 
 class Anime extends StatefulWidget {
   const Anime({super.key});
@@ -13,18 +16,16 @@ class Anime extends StatefulWidget {
 
 class _AnimeState extends State<Anime> {
   final AnimeController _animeController = Get.put(AnimeController());
+  late Future? _futureBuilderFuture;
 
   @override
   void initState() {
     super.initState();
+    _futureBuilderFuture = _animeController.queryBangumiCalendarFeed();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _buildBody();
-  }
-
-  Widget _buildBody() {
     return Container(
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.symmetric(horizontal: 40.w),
@@ -68,34 +69,47 @@ class _AnimeState extends State<Anime> {
                     ),
                   ]),
             ),
-
-            Obx(
-              () => SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 7,
-                  crossAxisSpacing: 5,
-                  childAspectRatio: 0.7,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    // todo 追番表列表
-                    // todo 追番表可切换
-                    return Card(
-                      color: Colors.transparent,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(index.toString()),
-                      ),
-                    );
-                  },
-                  childCount: _animeController.bangumiItemsLength.value,
-                ),
+            SliverPadding(
+              padding: EdgeInsets.zero,
+              sliver: FutureBuilder(
+                future: _futureBuilderFuture,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    // Map data = snapshot.data as Map;
+                    return Obx(() => contentGrid(
+                        _animeController,
+                        _animeController
+                            .bangumiCalendar[
+                                _animeController.dayOfWeekIndex.value]
+                            .items!));
+                  } else {
+                    return contentGrid(_animeController, []);
+                  }
+                },
               ),
             ),
-
             // SliverAnimatedGrid(itemBuilder: itemBuilder, gridDelegate: gridDelegate)
           ]),
+    );
+  }
+
+  Widget contentGrid(ctr, List<LegacySubjectSmall> bangumiList) {
+    return SliverGrid(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        mainAxisSpacing: 7,
+        crossAxisSpacing: 5,
+        crossAxisCount: 3,
+        mainAxisExtent: Get.size.width / 3 / 0.65 +
+            MediaQuery.textScalerOf(context).scale(32.0),
+      ),
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return bangumiList.isNotEmpty
+              ? BangumiCard(bangumiItem: bangumiList[index])
+              : nil;
+        },
+        childCount: bangumiList.isNotEmpty ? bangumiList.length : 10,
+      ),
     );
   }
 }

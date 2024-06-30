@@ -37,7 +37,8 @@ dependencies:
   easy_refresh: ^3.4.0 # 下拉刷新
   url_launcher: ^6.2.6 # url跳转
   share_plus: ^9.0.0 # 分享
-  logger: ^2.3.0 #log
+  logger: ^2.3.0 # log
+  nil: ^1.1.1 # 占位符
 
   # 状态管理
   get: ^4.6.6 # 路由&状态管理

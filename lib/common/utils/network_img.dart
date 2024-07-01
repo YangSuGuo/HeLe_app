@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class NetworkImg extends StatelessWidget {
   const NetworkImg({
@@ -25,10 +28,8 @@ class NetworkImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String imageUrl = src!.startsWith('//')
-        ? 'https:${src!}'
-        : src!;
-    print(imageUrl);
+    final String imageUrl = src!.startsWith('//') ? 'https:${src!}' : src!;
+    log(imageUrl);
     int? memCacheWidth, memCacheHeight;
     double aspectRatio = (width / height).toDouble();
 
@@ -55,11 +56,11 @@ class NetworkImg extends StatelessWidget {
       memCacheWidth = width.toInt();
     }
 
-    return src != '' && src != null ?
-    ClipRRect(
+    return src != '' && src != null
+        ? ClipRRect(
             clipBehavior: Clip.antiAlias,
             borderRadius: BorderRadius.circular(
-              type == 'avatar' ? 50 : type == 'emote' ? 0 : const Radius.circular(10).x,
+              const Radius.circular(10).x,
             ),
             child: CachedNetworkImage(
               imageUrl: imageUrl,
@@ -89,29 +90,17 @@ class NetworkImg extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onInverseSurface.withOpacity(0.4),
-        borderRadius: BorderRadius.circular(type == 'avatar'
-            ? 50
-            : type == 'emote'
-                ? 0
-                : const Radius.circular(10).x),
+        borderRadius: BorderRadius.circular(const Radius.circular(10).x),
       ),
-      child: type == 'bg'
-          ? const SizedBox()
-          : Center(
-              child: Image.asset(
-                type == 'avatar'
-                    ? 'assets/images/noface.jpeg'
-                    : 'assets/images/loading.png',
-                width: width,
-                height: height,
-                cacheWidth: width.cacheSize(context),
-                cacheHeight: height.cacheSize(context),
-              ),
-            ),
+      child: Center(
+        child: SvgPicture.asset(
+         "assets/images/svg/defaultPageNoImage.svg",
+          width: width,
+          height: height
+        ),
+      ),
     );
   }
-
-
 }
 
 extension ImageExtension on num {

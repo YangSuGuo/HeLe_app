@@ -35,5 +35,14 @@ class SEn extends S {
   String get tab_anime_calendar => 'calendar';
 
   @override
+  String get tab_anime_calendar_yesterday => 'yesterday';
+
+  @override
+  String get tab_anime_calendar_today => 'today';
+
+  @override
+  String get tab_anime_calendar_tomorrow => 'tomorrow';
+
+  @override
   String get widgets_will_pop_scope_route_toast => 'Press again to exit';
 }

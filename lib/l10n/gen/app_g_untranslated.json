@@ -1,9 +1,21 @@
 {
+  "zh_CN": [
+    "tab_anime_calendar_yesterday",
+    "tab_anime_calendar_today",
+    "tab_anime_calendar_tomorrow"
+  ],
+
   "zh_HK": [
-    "tab_anime_calendar"
+    "tab_anime_calendar",
+    "tab_anime_calendar_yesterday",
+    "tab_anime_calendar_today",
+    "tab_anime_calendar_tomorrow"
   ],
 
   "zh_TW": [
-    "tab_anime_calendar"
+    "tab_anime_calendar",
+    "tab_anime_calendar_yesterday",
+    "tab_anime_calendar_today",
+    "tab_anime_calendar_tomorrow"
   ]
 }

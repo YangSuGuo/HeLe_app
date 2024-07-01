@@ -20,6 +20,7 @@ dependencies:
   fluentui_system_icons: any # icon
   flutter_tilt: ^3.0.0 # 倾斜视差
   flutter_smart_dialog: ^4.9.6+1 # 弹窗
+  custom_sliding_segmented_control: ^1.8.3 # 分段器
   gap: ^3.0.1 # 间隔
   skeletonizer: ^1.2.0 # 骨架屏
 
@@ -57,6 +58,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/svg/
 
 # 应用图标生成
 flutter_launcher_icons:

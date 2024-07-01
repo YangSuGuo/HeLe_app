@@ -14,5 +14,9 @@
 
   "tab_anime_calendar": "calendar",
 
+  "tab_anime_calendar_yesterday": "yesterday",
+  "tab_anime_calendar_today": "today",
+  "tab_anime_calendar_tomorrow": "tomorrow",
+
   "widgets_will_pop_scope_route_toast": "Press again to exit"
 }

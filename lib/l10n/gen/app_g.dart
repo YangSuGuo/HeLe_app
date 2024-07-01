@@ -158,6 +158,24 @@ abstract class S {
   /// **'calendar'**
   String get tab_anime_calendar;
 
+  /// No description provided for @tab_anime_calendar_yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'yesterday'**
+  String get tab_anime_calendar_yesterday;
+
+  /// No description provided for @tab_anime_calendar_today.
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get tab_anime_calendar_today;
+
+  /// No description provided for @tab_anime_calendar_tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'tomorrow'**
+  String get tab_anime_calendar_tomorrow;
+
   /// No description provided for @widgets_will_pop_scope_route_toast.
   ///
   /// In en, this message translates to:

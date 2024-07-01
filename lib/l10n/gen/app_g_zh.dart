@@ -35,6 +35,15 @@ class SZh extends S {
   String get tab_anime_calendar => '追番表';
 
   @override
+  String get tab_anime_calendar_yesterday => '昨天';
+
+  @override
+  String get tab_anime_calendar_today => '今天';
+
+  @override
+  String get tab_anime_calendar_tomorrow => '明天';
+
+  @override
   String get widgets_will_pop_scope_route_toast => '再按一次退出';
 }
 

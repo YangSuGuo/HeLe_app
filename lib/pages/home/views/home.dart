@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
@@ -45,7 +46,7 @@ class _HomeState extends State<Home> {
                   : StreamController<bool>.broadcast().stream,
               homeController: _homeController,
             ),
-            SizedBox(height: 8.h,),
+            Gap(8.h),
             // TabBar
             const CustomTabs(),
             /*SizedBox(

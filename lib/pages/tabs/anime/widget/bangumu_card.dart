@@ -1,30 +1,17 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hele_app/common/Widget/badge.dart';
 import 'package:hele_app/common/utils/network_img.dart';
 import 'package:hele_app/model/calendar.dart';
 
 // 卡片 - 垂直布局
 class BangumiCard extends StatelessWidget {
-  const BangumiCard({
-    super.key,
-    required this.bangumiItem,
-    this.longPress,
-    this.longPressEnd,
-  });
+  const BangumiCard({super.key, required this.bangumiItem});
 
   final LegacySubjectSmall bangumiItem;
-  final Function()? longPress;
-  final Function()? longPressEnd;
-
-  static String makeHeroTag(v) {
-    return v.toString() + Random().nextInt(9999).toString();
-  }
 
   @override
   Widget build(BuildContext context) {
-    String heroTag = makeHeroTag(bangumiItem.id);
     return Card(
       elevation: 0,
       clipBehavior: Clip.hardEdge,
@@ -42,16 +29,35 @@ class BangumiCard extends StatelessWidget {
                   final double maxHeight = boxConstraints.maxHeight;
                   return Stack(
                     children: [
-                      Hero(
-                        tag: heroTag,
-                        child: NetworkImg(
-                          src: bangumiItem.images!.large,
-                          width: maxWidth,
-                          height: maxHeight,
+                      if (bangumiItem.images != null)
+                        Hero(
+                          tag: bangumiItem.id.toString(),
+                          child: NetworkImg(
+                            src: bangumiItem.images?.common ??
+                                'https://img.picui.cn/free/2024/07/01/66824a43e0e23.png',
+                            width: maxWidth,
+                            height: maxHeight,
+                          ),
                         ),
-                      ),
+                      if (bangumiItem.images == null)
+                        Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onInverseSurface
+                                .withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(
+                                const Radius.circular(10).x),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              "assets/images/svg/defaultPageNoImage.svg",
+                            ),
+                          ),
+                        ),
                       // 评分
-                      if (bangumiItem.rating!.score != null)
+                      if (bangumiItem.rating?.score != null)
                         PBadge(
                             text: bangumiItem.rating!.score.toString(),
                             top: 6,
@@ -76,7 +82,6 @@ class BangumiCard extends StatelessWidget {
           ],
         ),
       ),
-      // ),
     );
   }
 }
@@ -84,7 +89,6 @@ class BangumiCard extends StatelessWidget {
 class BangumiContent extends StatelessWidget {
   const BangumiContent({super.key, required this.bangumiItem});
 
-  // ignore: prefer_typing_uninitialized_variables
   final LegacySubjectSmall bangumiItem;
 
   @override
@@ -93,11 +97,8 @@ class BangumiContent extends StatelessWidget {
       child: Padding(
         // 多列
         padding: const EdgeInsets.fromLTRB(4, 5, 0, 3),
-        // 单列
-        // padding: const EdgeInsets.fromLTRB(14, 10, 4, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
@@ -111,30 +112,11 @@ class BangumiContent extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.3,
                   ),
-                  maxLines: 1,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 )),
               ],
-            ),
-           /* const SizedBox(height: 1),
-            if (bangumiItem.indexShow != null)
-              Text(
-                bangumiItem.indexShow,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
-                  color: Theme.of(context).colorScheme.outline,
-                ),
-              ),
-            if (bangumiItem.progress != null)
-              Text(
-                bangumiItem.progress,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.labelMedium!.fontSize,
-                  color: Theme.of(context).colorScheme.outline,
-                ),
-              ),*/
+            )
           ],
         ),
       ),

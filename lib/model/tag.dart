@@ -1,7 +1,6 @@
 ///标签
 ///Tag
 class Tag {
-
   ///Count
   int count;
 
@@ -14,12 +13,12 @@ class Tag {
   });
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
-    count: json["count"],
-    name: json["name"],
-  );
+        count: json["count"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "count": count,
-    "name": name,
-  };
+        "count": count,
+        "name": name,
+      };
 }

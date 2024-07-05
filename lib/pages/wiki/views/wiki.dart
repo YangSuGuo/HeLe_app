@@ -41,14 +41,15 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            _wikiController.title,
-                            style: TextStyle(
+                          Text(_wikiController.title,
+                              style: TextStyle(
                                 fontSize: 40.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.8),
-                            )
-                          ),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(0.8),
+                              )),
                           // Text(_wikiController.subjects.value.id.toString())
                         ],
                       ),

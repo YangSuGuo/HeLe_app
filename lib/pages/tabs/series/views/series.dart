@@ -14,6 +14,6 @@ class _SeriesState extends State<Series> {
   Widget build(BuildContext context) {
     return Center(
         child:
-        Text(S.of(context).tabs_series, style: TextStyle(fontSize: 25.sp)));
+            Text(S.of(context).tabs_series, style: TextStyle(fontSize: 25.sp)));
   }
 }

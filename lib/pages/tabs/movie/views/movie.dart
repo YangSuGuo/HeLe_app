@@ -14,6 +14,6 @@ class _MovieState extends State<Movie> {
   Widget build(BuildContext context) {
     return Center(
         child:
-        Text(S.of(context).tabs_movie, style: TextStyle(fontSize: 25.sp)));
+            Text(S.of(context).tabs_movie, style: TextStyle(fontSize: 25.sp)));
   }
 }

@@ -93,11 +93,8 @@ class NetworkImg extends StatelessWidget {
         borderRadius: BorderRadius.circular(const Radius.circular(10).x),
       ),
       child: Center(
-        child: SvgPicture.asset(
-         "assets/images/svg/defaultPageNoImage.svg",
-          width: width,
-          height: height
-        ),
+        child: SvgPicture.asset("assets/images/svg/defaultPageNoImage.svg",
+            width: width, height: height),
       ),
     );
   }

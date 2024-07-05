@@ -8,7 +8,8 @@ import '../model/tab_type.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
   // late bool hideSearchBar; // 是否隐藏搜索栏
-  late final StreamController<bool> searchBarStream = StreamController<bool>.broadcast();
+  late final StreamController<bool> searchBarStream =
+      StreamController<bool>.broadcast();
   RxString defaultSearch = '推荐搜索'.obs; // 默认搜索内容
 
   late TabController tabController;
@@ -41,7 +42,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     tabsPageList = tabs.map<Widget>((e) => e['page']).toList();
 
     if (kDebugMode) {
-      print(tabs.map((e)=>e['label']).toList());
+      print(tabs.map((e) => e['label']).toList());
     }
 
     tabController = TabController(

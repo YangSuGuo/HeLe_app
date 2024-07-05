@@ -7,7 +7,8 @@ class ApiInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.headers = {
       'Host': 'api.bgm.tv',
-      'User-Agent': 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
+      'User-Agent':
+          'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'app-id': 'bgm3063662e1d8747988',

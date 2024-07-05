@@ -6,7 +6,7 @@ class LightNovelBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<LightNovelController>(
-          () => LightNovelController(),
+      () => LightNovelController(),
     );
   }
 }

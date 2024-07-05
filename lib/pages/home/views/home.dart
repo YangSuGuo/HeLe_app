@@ -8,7 +8,6 @@ import 'package:hele_app/common/Widget/gradient_background.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/home/widget/search_appbar.dart';
-import 'package:nil/nil.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -81,16 +80,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         final double top = MediaQuery.of(context).padding.top;
         return AnimatedOpacity(
-                opacity: snapshot.data ? 1 : 0,
-                duration: const Duration(milliseconds: 300),
-                child: AnimatedContainer(
-                  curve: Curves.easeInOutCubicEmphasized,
-                  duration: const Duration(milliseconds: 500),
-                  height: snapshot.data ? top + 52 : top,
-                  padding: EdgeInsets.fromLTRB(14, top + 6, 14, 0),
-                  child: SearchAppBar(homeController: homeController),
-                ),
-              );
+          opacity: snapshot.data ? 1 : 0,
+          duration: const Duration(milliseconds: 300),
+          child: AnimatedContainer(
+            curve: Curves.easeInOutCubicEmphasized,
+            duration: const Duration(milliseconds: 500),
+            height: snapshot.data ? top + 52 : top,
+            padding: EdgeInsets.fromLTRB(14, top + 6, 14, 0),
+            child: SearchAppBar(homeController: homeController),
+          ),
+        );
       },
     );
   }

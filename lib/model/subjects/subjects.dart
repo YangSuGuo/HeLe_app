@@ -11,7 +11,6 @@ Subjects requestFromJson(String str) => Subjects.fromJson(json.decode(str));
 String requestToJson(Subjects data) => json.encode(data.toJson());
 
 class Subjects {
-
   ///条目收藏人数
   Collection collection;
 
@@ -84,42 +83,46 @@ class Subjects {
   });
 
   factory Subjects.fromJson(Map<String, dynamic> json) => Subjects(
-    collection: Collection.fromJson(json["collection"]),
-    date: json["date"],
-    eps: json["eps"],
-    id: json["id"],
-    images: Images.fromJson(json["images"]),
-    infobox: json["infobox"] == null ? [] : List<Item>.from(json["infobox"]!.map((x) => Item.fromJson(x))),
-    locked: json["locked"],
-    name: json["name"],
-    nameCn: json["name_cn"],
-    nsfw: json["nsfw"],
-    platform: json["platform"],
-    rating: Rating.fromJson(json["rating"]),
-    summary: json["summary"],
-    tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
-    totalEpisodes: json["total_episodes"],
-    type: json["type"],
-    volumes: json["volumes"],
-  );
+        collection: Collection.fromJson(json["collection"]),
+        date: json["date"],
+        eps: json["eps"],
+        id: json["id"],
+        images: Images.fromJson(json["images"]),
+        infobox: json["infobox"] == null
+            ? []
+            : List<Item>.from(json["infobox"]!.map((x) => Item.fromJson(x))),
+        locked: json["locked"],
+        name: json["name"],
+        nameCn: json["name_cn"],
+        nsfw: json["nsfw"],
+        platform: json["platform"],
+        rating: Rating.fromJson(json["rating"]),
+        summary: json["summary"],
+        tags: List<Tag>.from(json["tags"].map((x) => Tag.fromJson(x))),
+        totalEpisodes: json["total_episodes"],
+        type: json["type"],
+        volumes: json["volumes"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "collection": collection.toJson(),
-    "date": date,
-    "eps": eps,
-    "id": id,
-    "images": images.toJson(),
-    "infobox": infobox == null ? [] : List<dynamic>.from(infobox!.map((x) => x.toJson())),
-    "locked": locked,
-    "name": name,
-    "name_cn": nameCn,
-    "nsfw": nsfw,
-    "platform": platform,
-    "rating": rating.toJson(),
-    "summary": summary,
-    "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
-    "total_episodes": totalEpisodes,
-    "type": type,
-    "volumes": volumes,
-  };
+        "collection": collection.toJson(),
+        "date": date,
+        "eps": eps,
+        "id": id,
+        "images": images.toJson(),
+        "infobox": infobox == null
+            ? []
+            : List<dynamic>.from(infobox!.map((x) => x.toJson())),
+        "locked": locked,
+        "name": name,
+        "name_cn": nameCn,
+        "nsfw": nsfw,
+        "platform": platform,
+        "rating": rating.toJson(),
+        "summary": summary,
+        "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
+        "total_episodes": totalEpisodes,
+        "type": type,
+        "volumes": volumes,
+      };
 }

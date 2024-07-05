@@ -20,7 +20,7 @@ class BangumiCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: InkWell(
         onTap: () async {
-          Get.toNamed(Routes.WIKI,arguments: {"bangumiItem": bangumiItem});
+          Get.toNamed(Routes.WIKI, arguments: {"bangumiItem": bangumiItem});
         },
         child: Column(
           children: [

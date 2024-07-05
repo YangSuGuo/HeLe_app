@@ -73,5 +73,7 @@ class AnimeController extends GetxController {
     bangumiItemsLength.value = result[dayOfWeekIndex.value].items!.length;
     log(bangumiCalendar[dayOfWeekIndex.value].items![0].nameCn.toString());
     log(bangumiItemsLength.toString());
+
+    return result;
   }
 }

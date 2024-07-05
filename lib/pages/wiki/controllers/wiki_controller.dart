@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 
@@ -21,7 +20,7 @@ class WikiController extends GetxController {
         'https://img.picui.cn/free/2024/07/01/66824a43e0e23.png';
   }
 
-  // 请求番剧详情
+// 请求番剧详情
 /*  Future querySubjectDetails(int subjectId) async {
     var result = await BangumiNet.bangumiSubject(subjectId);
     subjects.value = result;

@@ -29,7 +29,8 @@ class Request {
       //Http请求头.
       headers: {
         'Host': 'api.bgm.tv',
-        'User-Agent': 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
+        'User-Agent':
+            'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'app-id': 'bgm3063662e1d8747988',
@@ -70,7 +71,8 @@ class Request {
     }
     options.headers = {
       'Host': 'api.bgm.tv',
-      'User-Agent': 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
+      'User-Agent':
+          'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
       'Accept': 'application/json',
       // 'app-id': 'bgm3063662e1d8747988',
       // 'app-secret': '427cfed140895351b35c06d45c1ef6e6',
@@ -79,7 +81,6 @@ class Request {
     options.responseType = resType;
 
     print(options.headers.toString());
-
 
     try {
       response = await dio.get(
@@ -168,8 +169,7 @@ class Request {
             'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
       }
     } else {
-      headerUa =
-          'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
+      headerUa = 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
     }
     return headerUa;
   }

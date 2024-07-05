@@ -14,25 +14,30 @@ class Calendar {
     this.weekday,
   });
 
-  factory Calendar.fromRawJson(String str) => Calendar.fromJson(json.decode(str));
+  factory Calendar.fromRawJson(String str) =>
+      Calendar.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Calendar.fromJson(Map<String, dynamic> json) => Calendar(
-    items: json["items"] == null ? [] : List<LegacySubjectSmall>.from(json["items"]!.map((x) => LegacySubjectSmall.fromJson(x))),
-    weekday: json["weekday"] == null ? null : Weekday.fromJson(json["weekday"]),
-  );
+        items: json["items"] == null
+            ? []
+            : List<LegacySubjectSmall>.from(
+                json["items"]!.map((x) => LegacySubjectSmall.fromJson(x))),
+        weekday:
+            json["weekday"] == null ? null : Weekday.fromJson(json["weekday"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "items": items == null ? [] : List<dynamic>.from(items!.map((x) => x.toJson())),
-    "weekday": weekday?.toJson(),
-  };
+        "items": items == null
+            ? []
+            : List<dynamic>.from(items!.map((x) => x.toJson())),
+        "weekday": weekday?.toJson(),
+      };
 }
-
 
 ///Legacy_SubjectSmall
 class LegacySubjectSmall {
-
   ///放送开始日期
   String? airDate;
 
@@ -99,43 +104,47 @@ class LegacySubjectSmall {
     this.url,
   });
 
-  factory LegacySubjectSmall.fromRawJson(String str) => LegacySubjectSmall.fromJson(json.decode(str));
+  factory LegacySubjectSmall.fromRawJson(String str) =>
+      LegacySubjectSmall.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory LegacySubjectSmall.fromJson(Map<String, dynamic> json) => LegacySubjectSmall(
-    airDate: json["air_date"],
-    airWeekday: json["air_weekday"],
-    collection: json["collection"] == null ? null : Collection.fromJson(json["collection"]),
-    eps: json["eps"],
-    epsCount: json["eps_count"],
-    id: json["id"],
-    images: json["images"] == null ? null : Images.fromJson(json["images"]),
-    name: json["name"],
-    nameCn: json["name_cn"],
-    rank: json["rank"],
-    rating: json["rating"] == null ? null : Rating.fromJson(json["rating"]),
-    summary: json["summary"],
-    type: json["type"],
-    url: json["url"],
-  );
+  factory LegacySubjectSmall.fromJson(Map<String, dynamic> json) =>
+      LegacySubjectSmall(
+        airDate: json["air_date"],
+        airWeekday: json["air_weekday"],
+        collection: json["collection"] == null
+            ? null
+            : Collection.fromJson(json["collection"]),
+        eps: json["eps"],
+        epsCount: json["eps_count"],
+        id: json["id"],
+        images: json["images"] == null ? null : Images.fromJson(json["images"]),
+        name: json["name"],
+        nameCn: json["name_cn"],
+        rank: json["rank"],
+        rating: json["rating"] == null ? null : Rating.fromJson(json["rating"]),
+        summary: json["summary"],
+        type: json["type"],
+        url: json["url"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "air_date": airDate,
-    "air_weekday": airWeekday,
-    "collection": collection?.toJson(),
-    "eps": eps,
-    "eps_count": epsCount,
-    "id": id,
-    "images": images?.toJson(),
-    "name": name,
-    "name_cn": nameCn,
-    "rank": rank,
-    "rating": rating?.toJson(),
-    "summary": summary,
-    "type": type,
-    "url": url,
-  };
+        "air_date": airDate,
+        "air_weekday": airWeekday,
+        "collection": collection?.toJson(),
+        "eps": eps,
+        "eps_count": epsCount,
+        "id": id,
+        "images": images?.toJson(),
+        "name": name,
+        "name_cn": nameCn,
+        "rank": rank,
+        "rating": rating?.toJson(),
+        "summary": summary,
+        "type": type,
+        "url": url,
+      };
 }
 
 class Weekday {
@@ -156,16 +165,16 @@ class Weekday {
   String toRawJson() => json.encode(toJson());
 
   factory Weekday.fromJson(Map<String, dynamic> json) => Weekday(
-    cn: json["cn"],
-    en: json["en"],
-    id: json["id"],
-    ja: json["ja"],
-  );
+        cn: json["cn"],
+        en: json["en"],
+        id: json["id"],
+        ja: json["ja"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "cn": cn,
-    "en": en,
-    "id": id,
-    "ja": ja,
-  };
+        "cn": cn,
+        "en": en,
+        "id": id,
+        "ja": ja,
+      };
 }

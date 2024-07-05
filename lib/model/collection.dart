@@ -2,7 +2,6 @@ import 'dart:convert';
 
 ///收藏人数
 class Collection {
-
   ///做过
   int? collect;
 
@@ -26,23 +25,24 @@ class Collection {
     this.wish,
   });
 
-  factory Collection.fromRawJson(String str) => Collection.fromJson(json.decode(str));
+  factory Collection.fromRawJson(String str) =>
+      Collection.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Collection.fromJson(Map<String, dynamic> json) => Collection(
-    collect: json["collect"],
-    doing: json["doing"],
-    dropped: json["dropped"],
-    onHold: json["on_hold"],
-    wish: json["wish"],
-  );
+        collect: json["collect"],
+        doing: json["doing"],
+        dropped: json["dropped"],
+        onHold: json["on_hold"],
+        wish: json["wish"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "collect": collect,
-    "doing": doing,
-    "dropped": dropped,
-    "on_hold": onHold,
-    "wish": wish,
-  };
+        "collect": collect,
+        "doing": doing,
+        "dropped": dropped,
+        "on_hold": onHold,
+        "wish": wish,
+      };
 }

@@ -20,11 +20,14 @@ class Anime extends StatefulWidget {
   State<Anime> createState() => _AnimeState();
 }
 
-class _AnimeState extends State<Anime> {
+class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   final AnimeController _animeController = Get.put(AnimeController());
   StreamController<bool> searchBarStream =
       Get.find<HomeController>().searchBarStream;
   late Future? _futureBuilderFuture;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -89,23 +92,19 @@ class _AnimeState extends State<Anime> {
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
               sliver: FutureBuilder(
-                future: _futureBuilderFuture,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    // Map data = snapshot.data as Map;
-                    return Obx(() => contentGrid(
-                        _animeController,
-                        _animeController
-                            .bangumiCalendar[
-                                _animeController.dayOfWeekIndex.value]
-                            .items!));
-                  } else {
-                    // todo 骨架屏加载
-                    return nil;
-                  }
-                },
-              ),
+                  future: _futureBuilderFuture,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      List<Calendar> data = snapshot.data;
+
+                      return Obx(() => contentGrid(_animeController,
+                          data[_animeController.dayOfWeekIndex.value].items!));
+                    } else {
+                      return nil;
+                    }
+                  }),
             ),
+
             // todo 推荐
             SliverToBoxAdapter(
               child: Wrap(

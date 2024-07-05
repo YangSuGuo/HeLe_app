@@ -1,6 +1,5 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 
@@ -11,7 +10,8 @@ class DoubleCheckConfirmation extends StatefulWidget {
   const DoubleCheckConfirmation({super.key, required this.child});
 
   @override
-  State<DoubleCheckConfirmation> createState() => _DoubleCheckConfirmationState();
+  State<DoubleCheckConfirmation> createState() =>
+      _DoubleCheckConfirmationState();
 }
 
 class _DoubleCheckConfirmationState extends State<DoubleCheckConfirmation> {

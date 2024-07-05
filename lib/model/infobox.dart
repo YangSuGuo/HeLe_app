@@ -1,7 +1,6 @@
 ///条目详细信息
 ///Item
 class Item {
-
   ///Key
   String key;
 
@@ -14,12 +13,12 @@ class Item {
   });
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
-    key: json["key"],
-    value: json["value"],
-  );
+        key: json["key"],
+        value: json["value"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "key": key,
-    "value": value,
-  };
+        "key": key,
+        "value": value,
+      };
 }

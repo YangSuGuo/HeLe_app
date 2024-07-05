@@ -5,7 +5,7 @@ class MangaBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<MangaController>(
-          () => MangaController(),
+      () => MangaController(),
     );
   }
 }

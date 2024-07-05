@@ -53,7 +53,8 @@ class _ApplicationState extends State<Application> {
                     // 国际化
                     supportedLocales: S.supportedLocales,
                     localizationsDelegates: S.localizationsDelegates,
-                    locale: watchApplicationProvider.localeSystem ? null
+                    locale: watchApplicationProvider.localeSystem
+                        ? null
                         : watchApplicationProvider.locale,
                     localeListResolutionCallback: (locales, supportedLocales) {
                       print('当前地区语言$locales');

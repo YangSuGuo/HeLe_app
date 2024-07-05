@@ -13,56 +13,105 @@ class AppThemeColorScheme {
   // default
   static MaterialScheme lightDefaultScheme() {
     return const MaterialScheme(
-    brightness: Brightness.light, // 亮度模式：亮色
-    primary: Color(4281352308), // 主色：#FF3F51B5
-    surfaceTint: Color(4283194514), // 表面色调：#FF5C6BC0
-    onPrimary: Color(4294967295), // 在主色上的颜色：#FFFFFFFF
-    primaryContainer: Color(4284641962), // 主色容器：#FF7986CB
-    onPrimaryContainer: Color(4294967295), // 在主色容器上的颜色：#FFFFFFFF
-    secondary: Color(4282204757), // 次要颜色：#FF4DB6AC
-    onSecondary: Color(4294967295), // 在次要颜色上的颜色：#FFFFFFFF
-    secondaryContainer: Color(4285494408), // 次要颜色容器：#FF80CBC4
-    onSecondaryContainer: Color(4294967295), // 在次要颜色容器上的颜色：#FFFFFFFF
-    tertiary: Color(4283906387), // 第三颜色：#FF64B5F6
-    onTertiary: Color(4294967295), // 在第三颜色上的颜色：#FFFFFFFF
-    tertiaryContainer: Color(4287392391), // 第三颜色容器：#FF90CAF9
-    onTertiaryContainer: Color(4294967295), // 在第三颜色容器上的颜色：#FFFFFFFF
-    error: Color(4287365129), // 错误颜色：#FFE57373
-    onError: Color(4294967295), // 在错误颜色上的颜色：#FFFFFFFF
-    errorContainer: Color(4292490286), // 错误颜色容器：#FFFFCDD2
-    onErrorContainer: Color(4294967295), // 在错误颜色容器上的颜色：#FFFFFFFF
-    background: Color(4294637823), // 背景颜色：#FFF5F5F5
-    onBackground: Color(4279900961), // 在背景颜色上的颜色：#FF212121
-    surface: Color(4294637823), // 表面颜色：#FFF5F5F5
-    onSurface: Color(4279900961), // 在表面颜色上的颜色：#FF212121
-    surfaceVariant: Color(4293059052), // 表面变体颜色：#FFE0E0E0
-    onSurfaceVariant: Color(4282466891), // 在表面变体颜色上的颜色：#FF37474F
-    outline: Color(4284309095), // 轮廓颜色：#FF757575
-    outlineVariant: Color(4286151299), // 轮廓变体颜色：#FF9E9E9E
-    shadow: Color(4278190080), // 阴影颜色：#FF000000
-    scrim: Color(4278190080), // 幕布颜色：#FF000000
-    inverseSurface: Color(4281282614), // 反向表面颜色：#FF303F9F
-    inverseOnSurface: Color(4294045943), // 在反向表面颜色上的颜色：#FFECEFF1
-    inversePrimary: Color(4290102527), // 反向主色：#FFC5CAE9
-    primaryFixed: Color(4284641962), // 固定主色：#FF7986CB
-    onPrimaryFixed: Color(4294967295), // 在固定主色上的颜色：#FFFFFFFF
-    primaryFixedDim: Color(4282997391), // 固定主色暗色：#FF5C6BC0
-    onPrimaryFixedVariant: Color(4294967295), // 在固定主色变体上的颜色：#FFFFFFFF
-    secondaryFixed: Color(4285494408), // 固定次要颜色：#FF80CBC4
-    onSecondaryFixed: Color(4294967295), // 在固定次要颜色上的颜色：#FFFFFFFF
-    secondaryFixedDim: Color(4283915119), // 固定次要颜色暗色：#FF64B5F6
-    onSecondaryFixedVariant: Color(4294967295), // 在固定次要颜色变体上的颜色：#FFFFFFFF
-    tertiaryFixed: Color(4287392391), // 固定第三颜色：#FF90CAF9
-    onTertiaryFixed: Color(4294967295), // 在固定第三颜色上的颜色：#FFFFFFFF
-    tertiaryFixedDim: Color(4285682285), // 固定第三颜色暗色：#FF73A9F4
-    onTertiaryFixedVariant: Color(4294967295), // 在固定第三颜色变体上的颜色：#FFFFFFFF
-    surfaceDim: Color(4292532704), // 表面暗色：#FFE0E0E0
-    surfaceBright: Color(4294637823), // 表面亮色：#FFF5F5F5
-    surfaceContainerLowest: Color(4294967295), // 表面容器最低颜色：#FFFFFFFF
-    surfaceContainerLow: Color(4294243322), // 表面容器低颜色：#FFEEEEEE
-    surfaceContainer: Color(4293848564), // 表面容器颜色：#FFE5E5E5
-    surfaceContainerHigh: Color(4293519343), // 表面容器高颜色：#FFE0E0E0
-    surfaceContainerHighest: Color(4293124585), // 表面容器最高颜色：#FFD6D6D6
+      brightness: Brightness.light,
+      // 亮度模式：亮色
+      primary: Color(4281352308),
+      // 主色：#FF3F51B5
+      surfaceTint: Color(4283194514),
+      // 表面色调：#FF5C6BC0
+      onPrimary: Color(4294967295),
+      // 在主色上的颜色：#FFFFFFFF
+      primaryContainer: Color(4284641962),
+      // 主色容器：#FF7986CB
+      onPrimaryContainer: Color(4294967295),
+      // 在主色容器上的颜色：#FFFFFFFF
+      secondary: Color(4282204757),
+      // 次要颜色：#FF4DB6AC
+      onSecondary: Color(4294967295),
+      // 在次要颜色上的颜色：#FFFFFFFF
+      secondaryContainer: Color(4285494408),
+      // 次要颜色容器：#FF80CBC4
+      onSecondaryContainer: Color(4294967295),
+      // 在次要颜色容器上的颜色：#FFFFFFFF
+      tertiary: Color(4283906387),
+      // 第三颜色：#FF64B5F6
+      onTertiary: Color(4294967295),
+      // 在第三颜色上的颜色：#FFFFFFFF
+      tertiaryContainer: Color(4287392391),
+      // 第三颜色容器：#FF90CAF9
+      onTertiaryContainer: Color(4294967295),
+      // 在第三颜色容器上的颜色：#FFFFFFFF
+      error: Color(4287365129),
+      // 错误颜色：#FFE57373
+      onError: Color(4294967295),
+      // 在错误颜色上的颜色：#FFFFFFFF
+      errorContainer: Color(4292490286),
+      // 错误颜色容器：#FFFFCDD2
+      onErrorContainer: Color(4294967295),
+      // 在错误颜色容器上的颜色：#FFFFFFFF
+      background: Color(4294637823),
+      // 背景颜色：#FFF5F5F5
+      onBackground: Color(4279900961),
+      // 在背景颜色上的颜色：#FF212121
+      surface: Color(4294637823),
+      // 表面颜色：#FFF5F5F5
+      onSurface: Color(4279900961),
+      // 在表面颜色上的颜色：#FF212121
+      surfaceVariant: Color(4293059052),
+      // 表面变体颜色：#FFE0E0E0
+      onSurfaceVariant: Color(4282466891),
+      // 在表面变体颜色上的颜色：#FF37474F
+      outline: Color(4284309095),
+      // 轮廓颜色：#FF757575
+      outlineVariant: Color(4286151299),
+      // 轮廓变体颜色：#FF9E9E9E
+      shadow: Color(4278190080),
+      // 阴影颜色：#FF000000
+      scrim: Color(4278190080),
+      // 幕布颜色：#FF000000
+      inverseSurface: Color(4281282614),
+      // 反向表面颜色：#FF303F9F
+      inverseOnSurface: Color(4294045943),
+      // 在反向表面颜色上的颜色：#FFECEFF1
+      inversePrimary: Color(4290102527),
+      // 反向主色：#FFC5CAE9
+      primaryFixed: Color(4284641962),
+      // 固定主色：#FF7986CB
+      onPrimaryFixed: Color(4294967295),
+      // 在固定主色上的颜色：#FFFFFFFF
+      primaryFixedDim: Color(4282997391),
+      // 固定主色暗色：#FF5C6BC0
+      onPrimaryFixedVariant: Color(4294967295),
+      // 在固定主色变体上的颜色：#FFFFFFFF
+      secondaryFixed: Color(4285494408),
+      // 固定次要颜色：#FF80CBC4
+      onSecondaryFixed: Color(4294967295),
+      // 在固定次要颜色上的颜色：#FFFFFFFF
+      secondaryFixedDim: Color(4283915119),
+      // 固定次要颜色暗色：#FF64B5F6
+      onSecondaryFixedVariant: Color(4294967295),
+      // 在固定次要颜色变体上的颜色：#FFFFFFFF
+      tertiaryFixed: Color(4287392391),
+      // 固定第三颜色：#FF90CAF9
+      onTertiaryFixed: Color(4294967295),
+      // 在固定第三颜色上的颜色：#FFFFFFFF
+      tertiaryFixedDim: Color(4285682285),
+      // 固定第三颜色暗色：#FF73A9F4
+      onTertiaryFixedVariant: Color(4294967295),
+      // 在固定第三颜色变体上的颜色：#FFFFFFFF
+      surfaceDim: Color(4292532704),
+      // 表面暗色：#FFE0E0E0
+      surfaceBright: Color(4294637823),
+      // 表面亮色：#FFF5F5F5
+      surfaceContainerLowest: Color(4294967295),
+      // 表面容器最低颜色：#FFFFFFFF
+      surfaceContainerLow: Color(4294243322),
+      // 表面容器低颜色：#FFEEEEEE
+      surfaceContainer: Color(4293848564),
+      // 表面容器颜色：#FFE5E5E5
+      surfaceContainerHigh: Color(4293519343),
+      // 表面容器高颜色：#FFE0E0E0
+      surfaceContainerHighest: Color(4293124585), // 表面容器最高颜色：#FFD6D6D6
     );
   }
 

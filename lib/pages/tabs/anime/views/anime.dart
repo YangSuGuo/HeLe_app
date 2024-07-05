@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
-import 'package:hele_app/model/calendar.dart';
+import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/pages/home/controllers/home_controller.dart';
 import 'package:hele_app/pages/tabs/anime/controllers/anime_controller.dart';
 import 'package:hele_app/pages/tabs/anime/widget/bangumu_card.dart';
 import 'package:nil/nil.dart';
@@ -18,12 +22,27 @@ class Anime extends StatefulWidget {
 
 class _AnimeState extends State<Anime> {
   final AnimeController _animeController = Get.put(AnimeController());
+  StreamController<bool> searchBarStream =
+      Get.find<HomeController>().searchBarStream;
   late Future? _futureBuilderFuture;
 
   @override
   void initState() {
     super.initState();
     _futureBuilderFuture = _animeController.queryBangumiCalendarFeed();
+    ScrollController scrollController = _animeController.scrollController;
+
+    scrollController.addListener(
+      () async {
+        final ScrollDirection direction =
+            scrollController.position.userScrollDirection;
+        if (direction == ScrollDirection.forward) {
+          searchBarStream.add(true);
+        } else if (direction == ScrollDirection.reverse) {
+          searchBarStream.add(false);
+        }
+      },
+    );
   }
 
   @override
@@ -42,6 +61,7 @@ class _AnimeState extends State<Anime> {
           shrinkWrap: false,
           slivers: [
             SliverGap(12.h),
+            // 追番表
             SliverToBoxAdapter(
               child: Wrap(
                   alignment: WrapAlignment.spaceBetween,
@@ -86,6 +106,7 @@ class _AnimeState extends State<Anime> {
                 },
               ),
             ),
+            // todo 推荐
             SliverToBoxAdapter(
               child: Wrap(
                   alignment: WrapAlignment.spaceBetween,
@@ -109,11 +130,11 @@ class _AnimeState extends State<Anime> {
   Widget contentGrid(ctr, List<LegacySubjectSmall> bangumiList) {
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: 7,
-        crossAxisSpacing: 12,
+        mainAxisSpacing: 6,
+        crossAxisSpacing: 6,
         crossAxisCount: 3,
-        mainAxisExtent: Get.size.width / 3 / 0.65 +
-            MediaQuery.textScalerOf(context).scale(40.0),
+        mainAxisExtent:
+            Get.size.width / 2 + MediaQuery.textScalerOf(context).scale(16),
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {

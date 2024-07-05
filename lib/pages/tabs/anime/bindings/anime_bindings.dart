@@ -5,8 +5,6 @@ import '../controllers/anime_controller.dart';
 class AnimeBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AnimeController>(
-          () => AnimeController(),
-    );
+    Get.lazyPut<AnimeController>(() => AnimeController());
   }
 }

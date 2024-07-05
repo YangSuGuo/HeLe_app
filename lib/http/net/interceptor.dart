@@ -5,12 +5,15 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // 在请求之前添加头部或认证信息
-    options.headers['app-id'] = 'bgm3063662e1d8747988';
-    options.headers['app-secret'] = '427cfed140895351b35c06d45c1ef6e6';
-    options.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1Y2MxNWI5YzY5YjczOWZkYTliOWNjMzA2NmEwYTRmZiIsInN1YiI6IjY2M2IxMGE1OWE0YjliZGFmN2I1NzRiMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rfH00EfVJMJGiMhox6rJxL0zlDFXQmUJfONdNxeihxA';
-    options.headers['Content-Type'] = 'application/json';
+    options.headers = {
+      'Host': 'api.bgm.tv',
+      'User-Agent': 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'app-id': 'bgm3063662e1d8747988',
+      'app-secret': '427cfed140895351b35c06d45c1ef6e6',
+      // 'Authorization': 'Bearer ',
+    };
     handler.next(options);
   }
 

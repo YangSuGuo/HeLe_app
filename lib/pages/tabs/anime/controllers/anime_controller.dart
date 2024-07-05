@@ -1,14 +1,17 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/date_utils.dart';
 import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
-import 'package:hele_app/model/calendar.dart';
+import 'package:hele_app/model/calendar/calendar.dart';
 
 class AnimeController extends GetxController {
+  final ScrollController scrollController = ScrollController();
   DateTime dateTime = DateTime.now();
-  RxList<Calendar> bangumiCalendar = <Calendar>[].obs;
+  RxList<Calendar> bangumiCalendar = <Calendar>[].obs; // 追番表
   RxInt bangumiItemsLength = 0.obs; // 追番表长度
 
   final RxInt TODAY_ID = 0.obs;
@@ -67,7 +70,6 @@ class AnimeController extends GetxController {
     var result = await BangumiNet.bangumiCalendar();
     bangumiCalendar.value = result;
 
-    // todo 长度 开发测试
     bangumiItemsLength.value = result[dayOfWeekIndex.value].items!.length;
     log(bangumiCalendar[dayOfWeekIndex.value].items![0].nameCn.toString());
     log(bangumiItemsLength.toString());

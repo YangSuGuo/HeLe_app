@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/Widget/gradient_background.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/home/widget/search_appbar.dart';
+import 'package:nil/nil.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -36,39 +38,14 @@ class _HomeState extends State<Home> {
         body: Stack(
       children: [
         // 渐变背景
-        gradientBackground(),
+        const GradientBackground(),
         Column(
           children: [
             // AppBar
-            CustomAppBar(
-              stream: _homeController.hideSearchBar
-                  ? stream
-                  : StreamController<bool>.broadcast().stream,
-              homeController: _homeController,
-            ),
+            CustomAppBar(stream: stream, homeController: _homeController),
             Gap(8.h),
             // TabBar
             const CustomTabs(),
-            /*SizedBox(
-                width: double.infinity,
-                height: 60.h,
-                child: TabBar(
-                  controller: _homeController.tabController,
-                  tabAlignment: TabAlignment.center,
-                  isScrollable: true,
-                  dividerColor: Colors.transparent,
-                  enableFeedback: true,
-                  splashBorderRadius: BorderRadius.circular(10),
-                  tabs: [
-                    for (var i in _homeController.tabs) Tab(text: i['label'])
-                  ],
-                  onTap: (i) {
-                    if (_homeController.initialIndex.value == i) {
-                      _homeController.tabsCtrList[i]().animateToTop();
-                    }
-                    _homeController.initialIndex.value = i;
-                  },
-                )),*/
             Expanded(
               child: TabBarView(
                 controller: _homeController.tabController,
@@ -80,29 +57,6 @@ class _HomeState extends State<Home> {
       ],
     ));
   }
-
-  /// 渐变背景
-  Widget gradientBackground() => Align(
-        alignment: Alignment.topLeft,
-        child: Opacity(
-          opacity: 0.6,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                    Theme.of(context).colorScheme.surface
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: const [0, 0.0034 , 0.34]),
-            ),
-          ),
-        ),
-      );
 }
 
 // 顶部栏
@@ -127,16 +81,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         final double top = MediaQuery.of(context).padding.top;
         return AnimatedOpacity(
-          opacity: snapshot.data ? 1 : 0,
-          duration: const Duration(milliseconds: 300),
-          child: AnimatedContainer(
-            curve: Curves.easeInOutCubicEmphasized,
-            duration: const Duration(milliseconds: 500),
-            height: snapshot.data ? top + 52 : top,
-            padding: EdgeInsets.fromLTRB(14, top + 6, 14, 0),
-            child: SearchAppBar(homeController: homeController),
-          ),
-        );
+                opacity: snapshot.data ? 1 : 0,
+                duration: const Duration(milliseconds: 300),
+                child: AnimatedContainer(
+                  curve: Curves.easeInOutCubicEmphasized,
+                  duration: const Duration(milliseconds: 500),
+                  height: snapshot.data ? top + 52 : top,
+                  padding: EdgeInsets.fromLTRB(14, top + 6, 14, 0),
+                  child: SearchAppBar(homeController: homeController),
+                ),
+              );
       },
     );
   }

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:hele_app/model/rating.dart';
 
-import 'collection.dart';
-import 'images.dart';
+import '../collection.dart';
+import '../images.dart';
 
 class Calendar {
   List<LegacySubjectSmall>? items;

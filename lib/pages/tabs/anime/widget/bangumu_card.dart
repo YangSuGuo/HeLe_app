@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/badge.dart';
 import 'package:hele_app/common/utils/network_img.dart';
-import 'package:hele_app/model/calendar.dart';
+import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/routes/app_pages.dart';
 
 // 卡片 - 垂直布局
 class BangumiCard extends StatelessWidget {
@@ -17,13 +19,15 @@ class BangumiCard extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.zero,
       child: InkWell(
-        onTap: () async {},
+        onTap: () async {
+          Get.toNamed(Routes.WIKI,arguments: {"bangumiItem": bangumiItem});
+        },
         child: Column(
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: AspectRatio(
-                aspectRatio: 0.65,
+                aspectRatio: 0.7,
                 child: LayoutBuilder(builder: (context, boxConstraints) {
                   final double maxWidth = boxConstraints.maxWidth;
                   final double maxHeight = boxConstraints.maxHeight;
@@ -112,7 +116,7 @@ class BangumiContent extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.3,
                   ),
-                  maxLines: 3,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 )),
               ],

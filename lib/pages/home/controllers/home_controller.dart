@@ -7,9 +7,8 @@ import 'package:get/get.dart';
 import '../model/tab_type.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
-  late bool hideSearchBar; // 是否隐藏搜索栏
-  late final StreamController<bool> searchBarStream =
-      StreamController<bool>.broadcast();
+  // late bool hideSearchBar; // 是否隐藏搜索栏
+  late final StreamController<bool> searchBarStream = StreamController<bool>.broadcast();
   RxString defaultSearch = '推荐搜索'.obs; // 默认搜索内容
 
   late TabController tabController;
@@ -23,7 +22,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   @override
   void onInit() {
     super.onInit();
-    hideSearchBar = true;
+    // hideSearchBar = true;
     initialIndex.value = 0;
     tabbarSort = ['anime', 'manga', 'movie', 'series', 'lightNovel'];
     setTabConfig();

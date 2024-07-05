@@ -11,24 +11,8 @@ class Request {
   static final Request _instance = Request._internal();
   static late CookieManager cookieManager;
   static late final Dio dio;
+
   factory Request() => _instance;
-
-  /// 设置cookie
-  static setCookie() async {
-    setOptionsHeaders();
-  }
-
-  static setOptionsHeaders() {
-    dio.options.headers['env'] = 'prod';
-    dio.options.headers = {
-      'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1Y2MxNWI5YzY5YjczOWZkYTliOWNjMzA2NmEwYTRmZiIsInN1YiI6IjY2M2IxMGE1OWE0YjliZGFmN2I1NzRiMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rfH00EfVJMJGiMhox6rJxL0zlDFXQmUJfONdNxeihxA',
-      'accept': 'application/json',
-    };
-    dio.options.headers['app-id'] = 'bgm3063662e1d8747988';
-    dio.options.headers['app-secret'] = '427cfed140895351b35c06d45c1ef6e6';
-    dio.options.headers['app-key'] = 'android64';
-  }
 
   /*
    * config it and create
@@ -38,12 +22,20 @@ class Request {
     BaseOptions options = BaseOptions(
       //请求基地址,可以包含子路径
       baseUrl: HttpString.apiBaseUrl,
-      //连接服务器超时时间，单位是毫秒.
+      //连接服务器超时时间
       connectTimeout: const Duration(milliseconds: 12000),
-      //响应流上前后两次接受到数据的间隔，单位为毫秒。
+      //响应流上前后两次接受到数据的间隔
       receiveTimeout: const Duration(milliseconds: 12000),
       //Http请求头.
-      headers: {},
+      headers: {
+        'Host': 'api.bgm.tv',
+        'User-Agent': 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'app-id': 'bgm3063662e1d8747988',
+        'app-secret': '427cfed140895351b35c06d45c1ef6e6',
+        // 'Authorization': 'Bearer 427cfed140895351b35c06d45c1ef6e6',
+      },
     );
     dio = Dio(options);
     //添加拦截器
@@ -51,9 +43,9 @@ class Request {
 
     // 日志拦截器 输出请求、响应内容
     dio.interceptors.add(LogInterceptor(
-      request: false,
-      requestHeader: false,
-      responseHeader: false,
+      request: true,
+      requestHeader: true,
+      responseHeader: true,
     ));
 
     dio.transformer = BackgroundTransformer();
@@ -73,10 +65,21 @@ class Request {
     if (extra != null) {
       resType = extra!['resType'] ?? ResponseType.json;
       if (extra['ua'] != null) {
-        options.headers = {'user-agent': headerUa(type: extra['ua'])};
+        options.headers = {'User-Agent': headerUa(type: extra['ua'])};
       }
     }
+    options.headers = {
+      'Host': 'api.bgm.tv',
+      'User-Agent': 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
+      'Accept': 'application/json',
+      // 'app-id': 'bgm3063662e1d8747988',
+      // 'app-secret': '427cfed140895351b35c06d45c1ef6e6',
+      // 'Authorization': 'Bearer 427cfed140895351b35c06d45c1ef6e6',
+    };
     options.responseType = resType;
+
+    print(options.headers.toString());
+
 
     try {
       response = await dio.get(
@@ -88,9 +91,7 @@ class Request {
       return response;
     } on DioException catch (e) {
       Response errResponse = Response(
-        data: {
-          'message': await ApiInterceptor.dioError(e)
-        }, // 将自定义 Map 数据赋值给 Response 的 data 属性
+        data: {'message': await ApiInterceptor.dioError(e)},
         statusCode: 200,
         requestOptions: RequestOptions(),
       );
@@ -161,14 +162,14 @@ class Request {
     if (type == 'mob') {
       if (Platform.isIOS) {
         headerUa =
-            'Mozilla/5.0 (iPhone; CPU iPhone OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1 Mobile/15E148 Safari/604.1';
+            'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
       } else {
         headerUa =
-            'Mozilla/5.0 (Linux; Android 10; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Mobile Safari/537.36';
+            'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
       }
     } else {
       headerUa =
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.2 Safari/605.1.15';
+          'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
     }
     return headerUa;
   }

@@ -49,7 +49,7 @@ class _ApplicationState extends State<Application> {
                     initialRoute: AppPages.INITIAL,
                     getPages: AppPages.routes,
                     defaultTransition: Transition.cupertino,
-                    transitionDuration: const Duration(milliseconds: 450),
+                    transitionDuration: const Duration(milliseconds: 500),
                     // 国际化
                     supportedLocales: S.supportedLocales,
                     localizationsDelegates: S.localizationsDelegates,

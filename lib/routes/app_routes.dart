@@ -14,4 +14,7 @@ abstract class Routes {
   static const MOVIE = '/movie';
   static const SERIES = '/series';
   static const LIGHT_NOVEL = '/lightNovel';
+
+  // WIKI
+  static const WIKI = '/wiki';
 }

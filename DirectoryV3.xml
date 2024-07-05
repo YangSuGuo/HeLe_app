@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trees>
+    <tree path="/lib/providers" title="状态管理"/>
+    <tree path="/lib/db/preference" title="持久化存储"/>
+    <tree path="/lib/db/database" title="数据库"/>
+    <tree path="/lib/l10n" title="国际化"/>
+    <tree path="/lib/pages" title="页面"/>
+    <tree path="/lib/themes" title="主题"/>
+    <tree path="/lib/db" title="持久化"/>
+    <tree path="/lib/common/network" title="请求封装"/>
+    <tree path="/lib/common/flavors" title="环境配置"/>
+    <tree path="/lib/common/Widget" title="通用组件"/>
+    <tree path="/lib/l10n/app_en.arb" title="英文"/>
+    <tree path="/lib/l10n/app_zh.arb" title="中文"/>
+    <tree path="/lib/init.dart" title="初始化"/>
+    <tree path="/lib/Application.dart" title="应用配置"/>
+    <tree path="/lib/routes" title="路由"/>
+    <tree path="/lib/common" title="通用工具类"/>
+    <tree path="/assets" title="本地资源"/>
+    <tree path="/l10n.yaml" title="国际化配置文件"/>
+    <tree path="/lib/common/Widget/doubleCheckConfirmation.dart" title="二次返回确认"/>
+    <tree path="/lib/common/utils" title="通用工具类"/>
+    <tree path="/lib/themes/multiple_themes_mode/multiple_themes.dart" title="主题表配置"/>
+    <tree path="/lib/themes/multiple_themes_mode/theme_cyan.dart" title="蓝色"/>
+    <tree path="/lib/themes/multiple_themes_mode/theme_green.dart" title="浅绿色" extension=""
+          presentableText="" tooltipTitle="" icon="" textColor="" backgroundColor=""/>
+    <tree path="/lib/themes/multiple_themes_mode/theme_orange.dart" title="粉色"/>
+    <tree path="/lib/themes/multiple_themes_mode/theme_purple.dart" title="紫色"/>
+    <tree path="/lib/themes/multiple_themes_mode/theme_red.dart" title="红色"/>
+    <tree path="/lib/themes/multiple_themes_mode/theme_yellow.dart" title="黄色"/>
+    <tree path="/lib/themes/multiple_themes_mode/theme_default.dart" title="默认"/>
+    <tree path="/pubspec.yaml" title="依赖管理"/>
+    <tree path="/lib/pages/main" title="底部导航栏" extension="" presentableText="" tooltipTitle=""
+          icon="" textColor="" backgroundColor=""/>
+    <tree path="/lib/pages/anime" title="tab动漫"/>
+    <tree path="/lib/pages/lightNovel" title="tab轻小说"/>
+    <tree path="/lib/pages/manga" title="tab漫画"/>
+    <tree path="/lib/pages/movie" title="tab电影"/>
+    <tree path="/lib/pages/my" title="我的"/>
+    <tree path="/lib/pages/rank_list" title="排行榜"/>
+    <tree path="/lib/pages/home" title="首页"/>
+    <tree path="/lib/pages/series" title="tab电视剧" extension="" presentableText="" tooltipTitle="" icon=""
+          textColor="" backgroundColor=""/>
+    <tree path="/lib/pages/settings" title="设置"/>
+    <tree path="/lib/pages/wiki" title="百科"/>
+    <tree path="/lib/pages/home/widget/search_appbar.dart" title="AppBar"/>
+    <tree path="/lib/pages/home/widget/custom_tabs.dart" title="TabBar"/>
+    <tree path="/lib/themes/multiple_themes_mode/material_scheme.dart" title="主题工具类"/>
+    <tree path="/lib/model/calendar.dart" title="追番表"/>
+    <tree path="/lib/model/collection.dart" title="收藏人数"/>
+    <tree path="/lib/model/images.dart" title="图片集合"/>
+    <tree path="/lib/model/rating.dart" title="评分"/>
+    <tree path="/lib/pages/tabs" title="首页Tags"/>
+    <tree path="/lib/pages/tabs/anime" title="动漫"/>
+    <tree path="/lib/pages/tabs/lightNovel" title="轻小说"/>
+    <tree path="/lib/common/utils/badge.dart" title="标签"/>
+    <tree path="/lib/common/utils/network_img.dart" title="图片封装"/>
+    <tree path="/lib/common/Widget/badge.dart" title="标签"/>
+    <tree path="/lib/pages/tabs/anime/widget/bangumu_card.dart" title="卡片"/>
+    <tree path="/lib/common/Widget/gradient_background.dart" title="渐变背景"/>
+    <tree path="/lib/model/infobox.dart" title="详细信息"/>
+    <tree path="/lib/model/tag.dart" title="标签"/>
+    <tree path="/lib/model/calendar" title="追番表"/>
+    <tree path="/lib/model/subjects" title="条目"/>
+</trees>

@@ -65,13 +65,21 @@ class _IntroductionState extends State<Introduction> {
                     color: colorScheme.secondary,
                   ))),
 
-          // 播放平台
-          Subheading(
-            title: s.platform,
-            minFontSize: 12,
-            icon: FontAwesomeIcons.circlePlay,
-            isOverflow: false,
-          ),
+          s.eps != 0
+              // 剧集
+              ? Subheading(
+                  title: "${s.eps} 集",
+                  minFontSize: 12,
+                  icon: FontAwesomeIcons.circlePlay,
+                  isOverflow: false,
+                )
+              // 播放平台
+              : Subheading(
+                  title: s.platform,
+                  minFontSize: 12,
+                  icon: FontAwesomeIcons.circlePlay,
+                  isOverflow: false,
+                ),
 
           // 播出日期
           Subheading(

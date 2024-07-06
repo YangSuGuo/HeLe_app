@@ -26,7 +26,7 @@ class Subheading extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.fromLTRB(0, 8.h, 0, 0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FaIcon(
               icon,

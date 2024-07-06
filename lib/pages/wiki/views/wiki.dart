@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -48,7 +49,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
       _buildBackgroundImage(),
 
       // Body
-      Column(children: [
+      ListView(children: [
         _buildAppBar(),
         Padding(
             padding: EdgeInsets.fromLTRB(40.w, 10.h, 40.w, 0.h),
@@ -59,6 +60,13 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                     Subjects s = snapshot.data;
                     return Column(children: [
                       Introduction(data: s),
+                      Gap(12.h),
+                      ExpandText(
+                        s.summary,
+                        maxLines: 4,
+                        style: TextStyle(
+                            color: colorScheme.secondary.withOpacity(0.85)),
+                      ),
                     ]);
                   } else {
                     return nil;

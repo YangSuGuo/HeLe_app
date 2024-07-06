@@ -44,5 +44,8 @@ class SEn extends S {
   String get tab_anime_calendar_tomorrow => 'tomorrow';
 
   @override
+  String get wiki_track => 'Track';
+
+  @override
   String get widgets_will_pop_scope_route_toast => 'Press again to exit';
 }

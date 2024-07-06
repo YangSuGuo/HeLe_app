@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nil/nil.dart';
 
 class PBadge extends StatelessWidget {
   final String? text;
@@ -6,8 +7,6 @@ class PBadge extends StatelessWidget {
   final double? right;
   final double? bottom;
   final double? left;
-  final String? type;
-  final String? size;
   final String? stack;
   final double? fs;
 
@@ -18,8 +17,6 @@ class PBadge extends StatelessWidget {
     this.right,
     this.bottom,
     this.left,
-    this.type = 'primary',
-    this.size = 'medium',
     this.stack = 'position',
     this.fs = 11,
   });
@@ -33,30 +30,10 @@ class PBadge extends StatelessWidget {
     Color color = t.onPrimary;
     // 边框色
     Color borderColor = Colors.transparent;
-    if (type == 'gray') {
-      bgColor = Colors.black54.withOpacity(0.4);
-      color = Colors.white;
-    }
-    if (type == 'color') {
-      bgColor = t.primaryContainer.withOpacity(0.6);
-      color = t.primary;
-    }
-    if (type == 'line') {
-      bgColor = Colors.transparent;
-      color = t.primary;
-      borderColor = t.primary;
-    }
 
     EdgeInsets paddingStyle =
         const EdgeInsets.symmetric(vertical: 1, horizontal: 6);
-    double fontSize = 11;
     BorderRadius br = BorderRadius.circular(4);
-
-    if (size == 'small') {
-      paddingStyle = const EdgeInsets.symmetric(vertical: 0, horizontal: 3);
-      fontSize = 11;
-      br = BorderRadius.circular(3);
-    }
 
     Widget content = Container(
       padding: paddingStyle,
@@ -67,11 +44,11 @@ class PBadge extends StatelessWidget {
       ),
       child: Text(
         text!,
-        style: TextStyle(fontSize: fs ?? fontSize, color: color),
+        style: TextStyle(fontSize: fs, color: color),
       ),
     );
 
-    if (stack == 'position') {
+    if (stack == 'position' && text != "") {
       return Positioned(
         top: top,
         left: left,
@@ -80,9 +57,9 @@ class PBadge extends StatelessWidget {
         child: content,
       );
     } else {
-      return Padding(
-        padding: const EdgeInsets.only(right: 5),
-        child: content,
+      return const Padding(
+        padding: EdgeInsets.only(right: 5),
+        child: nil,
       );
     }
   }

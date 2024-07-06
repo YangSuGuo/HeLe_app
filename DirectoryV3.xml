@@ -62,4 +62,5 @@
     <tree path="/lib/model/tag.dart" title="标签"/>
     <tree path="/lib/model/calendar" title="追番表"/>
     <tree path="/lib/model/subjects" title="条目"/>
+    <tree path="/lib/pages/wiki/widget/subheading.dart" title="副标题"/>
 </trees>

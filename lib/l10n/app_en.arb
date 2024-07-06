@@ -1,17 +1,22 @@
 {
   "@@locale": "en",
   "hello_World": "Hello World!",
+
   "navigationBar_title_home": "Home",
   "navigationBar_title_rank_list": "Leaderboard",
   "navigationBar_title_my": "My",
+
   "tabs_anime": "anime",
   "tabs_manga": "manga",
   "tabs_movie": "movie",
   "tabs_series": "series",
   "tabs_light_novel": "lightNovel",
+
   "tab_anime_calendar": "calendar",
   "tab_anime_calendar_yesterday": "yesterday",
   "tab_anime_calendar_today": "today",
   "tab_anime_calendar_tomorrow": "tomorrow",
+  "wiki_track": "Track",
+
   "widgets_will_pop_scope_route_toast": "Press again to exit"
 }

@@ -25,6 +25,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.11.0"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -233,14 +241,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0"
-  fluentui_system_icons:
-    dependency: "direct main"
-    description:
-      name: fluentui_system_icons
-      sha256: b4e0054ffa198073d2eef6009e79cb7ab770c049f553c39a67ae62523d7286fe
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.1.246"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -317,6 +317,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  font_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: font_awesome_flutter
+      sha256: "275ff26905134bcb59417cf60ad979136f1f8257f2f449914b2c3e05bbb4cd6f"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "10.7.0"
   gap:
     dependency: "direct main"
     description:

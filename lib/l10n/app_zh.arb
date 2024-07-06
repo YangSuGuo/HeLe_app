@@ -1,18 +1,23 @@
 {
   "@@locale": "zh",
   "hello_World": "你好 世界!",
+
   "navigationBar_title_home": "首页",
   "navigationBar_title_rank_list": "排行榜",
   "navigationBar_title_my": "我的",
+
   "tabs_anime": "动漫",
   "tabs_manga": "漫画",
   "tabs_movie": "电影",
   "tabs_series": "电视剧",
   "tabs_light_novel": "轻小说",
+
   "tab_anime_calendar": "追番表",
   "tab_anime_calendar_yesterday": "昨天",
   "tab_anime_calendar_today": "今天",
   "tab_anime_calendar_tomorrow": "明天",
   "tab_anime_recommend": "推荐",
+  "wiki_track": "标记",
+
   "widgets_will_pop_scope_route_toast": "再按一次退出"
 }

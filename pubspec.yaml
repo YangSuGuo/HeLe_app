@@ -17,7 +17,8 @@ dependencies:
 
   # 界面UI
   cupertino_icons: ^1.0.6 # icon
-  fluentui_system_icons: any # icon
+  font_awesome_flutter: ^10.7.0 # icon
+  auto_size_text: ^3.0.0 # 文本自适应
   flutter_tilt: ^3.0.0 # 倾斜视差
   flutter_smart_dialog: ^4.9.6+1 # 弹窗
   custom_sliding_segmented_control: ^1.8.3 # 分段器

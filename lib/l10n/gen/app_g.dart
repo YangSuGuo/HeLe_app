@@ -176,6 +176,12 @@ abstract class S {
   /// **'tomorrow'**
   String get tab_anime_calendar_tomorrow;
 
+  /// No description provided for @wiki_track.
+  ///
+  /// In en, this message translates to:
+  /// **'Track'**
+  String get wiki_track;
+
   /// No description provided for @widgets_will_pop_scope_route_toast.
   ///
   /// In en, this message translates to:

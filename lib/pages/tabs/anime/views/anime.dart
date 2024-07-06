@@ -27,6 +27,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   late Future? _futureBuilderFuture;
 
   @override
+  // 页面保活
   bool get wantKeepAlive => true;
 
   @override

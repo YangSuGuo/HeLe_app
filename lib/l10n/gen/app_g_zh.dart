@@ -44,6 +44,9 @@ class SZh extends S {
   String get tab_anime_calendar_tomorrow => '明天';
 
   @override
+  String get wiki_track => '标记';
+
+  @override
   String get widgets_will_pop_scope_route_toast => '再按一次退出';
 }
 

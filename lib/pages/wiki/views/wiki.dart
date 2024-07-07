@@ -47,157 +47,50 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
         body: Stack(children: [
       // 背景图片
       _buildBackgroundImage(),
+      Padding(
+          padding: EdgeInsets.fromLTRB(40.w, 10.h, 40.w, 0.h),
+          child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics(),
+              ),
+              primary: false,
+              shrinkWrap: false,
+              slivers: [
+                _buildAppBar(),
+                SliverToBoxAdapter(
+                    child: FutureBuilder(
+                        future: _futureBuilder,
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            Subjects s = snapshot.data;
 
-      // Body
-      ListView(children: [
-        _buildAppBar(),
-        Padding(
-            padding: EdgeInsets.fromLTRB(40.w, 10.h, 40.w, 0.h),
-            child: FutureBuilder(
-                future: _futureBuilder,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    Subjects s = snapshot.data;
-                    return Column(children: [
-                      // 封面介绍页
-                      Introduction(data: s),
-                      Gap(12.h),
-                      // 可展开的文本框
-                      ExpandText(
-                        s.summary,
-                        maxLines: 4,
-                        style: TextStyle(
-                            color: colorScheme.secondary.withOpacity(0.85)),
-                      ),
-                      // 集数瓷砖
-                      SizedBox(
-                          height: 100,
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 6,
-                              crossAxisSpacing: 6,
-                              crossAxisCount: 10,
-                              mainAxisExtent: 28,
-                            ),
-                            itemBuilder: (BuildContext context, int index) =>
-                                CustomChip(
-                              onTap: () {},
-                              label: "1",
-                              selected: false,
-                              isTranslucent: true,
-                            ),
-                          ))
-                    ]);
-                  } else {
-                    return nil;
-                  }
-                }))
-      ])
+                            return Column(
+                              children: [
+                                Introduction(data: s),
+                                Gap(12.h),
+                                // 可展开的文本框
+                                ExpandText(
+                                  s.summary,
+                                  maxLines: 4,
+                                  style: TextStyle(
+                                      color: colorScheme.secondary
+                                          .withOpacity(0.85)),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return nil;
+                          }
+                        })),
+              ]))
     ]));
   }
 
-  // 封面介绍页
-  Widget introduction(Subjects s, ColorScheme colorScheme) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      return Row(children: [
-        // 封面图片
-        Stack(children: [
-          NetworkImg(
-            src: _wikiController.imgUrl,
-            width: 210.w,
-            height: 240.h,
-          ),
-          if (s.rating.score != 0.0 && s.rating.score != null)
-            PBadge(
-                text: s.rating.score.toString(),
-                top: 6,
-                right: 6,
-                bottom: null,
-                left: null),
-        ]),
-        Gap(25.w),
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          // 标题
-          SizedBox(
-              width: constraints.maxWidth - 235.w,
-              child: Text(_wikiController.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 40.sp,
-                    fontWeight: FontWeight.bold,
-                    color: colorScheme.secondary,
-                  ))),
-
-          // 播放平台
-          Subheading(
-            title: s.platform,
-            minFontSize: 12,
-            icon: FontAwesomeIcons.circlePlay,
-            isOverflow: false,
-          ),
-
-          // 播出日期
-          Subheading(
-            title: s.date.toString(),
-            minFontSize: 12,
-            icon: FontAwesomeIcons.clock,
-            isOverflow: false,
-          ),
-
-          // 制作
-          if (_wikiController.production != "")
-            Subheading(
-              title: _wikiController.production.value,
-              icon: FontAwesomeIcons.user,
-              isOverflow: true,
-              width: constraints.maxWidth - 267.5.w,
-            ),
-
-          // 标签列表
-          SizedBox(
-              width: constraints.maxWidth - 235.w,
-              height: 80.h,
-              child: ListView.separated(
-                  padding: EdgeInsets.zero,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _wikiController.tags.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Gap(12.w);
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return CustomChip(
-                      onTap: () {},
-                      label: _wikiController.tags[index],
-                      selected: false,
-                      isTranslucent: true,
-                    );
-                  })),
-
-          // 按钮
-          if (false)
-            Padding(
-              padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0),
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: colorScheme.onPrimary,
-                    backgroundColor: colorScheme.primary.withOpacity(0.6),
-                    // overlayColor: colorScheme.tertiary,
-                    minimumSize: Size(constraints.maxWidth - 267.w, 60.h),
-                  ),
-                  onPressed: () {},
-                  child: Text(S.of(context).wiki_track)),
-            )
-        ])
-      ]);
-    });
-  }
-
   // AppBar
-  AppBar _buildAppBar() {
-    return AppBar(
+  SliverAppBar _buildAppBar() {
+    return SliverAppBar(
       titleSpacing: 0,
       centerTitle: false,
       elevation: 0,

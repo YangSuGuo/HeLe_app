@@ -3,7 +3,6 @@ import 'dart:convert';
 ///评分
 ///评分信息
 class Rating {
-
   ///各分段的评分次数
   Count count;
 
@@ -28,18 +27,18 @@ class Rating {
   String toRawJson() => json.encode(toJson());
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-    count: Count.fromJson(json["count"]),
-    rank: json["rank"],
-    score: json["score"]?.toDouble(),
-    total: json["total"],
-  );
+        count: Count.fromJson(json["count"]),
+        rank: json["rank"],
+        score: json["score"]?.toDouble(),
+        total: json["total"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "count": count.toJson(),
-    "rank": rank,
-    "score": score,
-    "total": total,
-  };
+        "count": count.toJson(),
+        "rank": rank,
+        "score": score,
+        "total": total,
+      };
 }
 
 ///各分值评分人数
@@ -74,7 +73,6 @@ class Count {
 
   factory Count.fromJson(Map<String, dynamic> json) => Count(
         the1: json["1"],
-        the10: json["10"],
         the2: json["2"],
         the3: json["3"],
         the4: json["4"],
@@ -83,11 +81,24 @@ class Count {
         the7: json["7"],
         the8: json["8"],
         the9: json["9"],
+        the10: json["10"],
       );
+
+  List<int> toList() => [
+        the1 ?? 0,
+        the2 ?? 0,
+        the3 ?? 0,
+        the4 ?? 0,
+        the5 ?? 0,
+        the6 ?? 0,
+        the7 ?? 0,
+        the8 ?? 0,
+        the9 ?? 0,
+        the10 ?? 0,
+      ];
 
   Map<String, dynamic> toJson() => {
         "1": the1,
-        "10": the10,
         "2": the2,
         "3": the3,
         "4": the4,
@@ -96,5 +107,6 @@ class Count {
         "7": the7,
         "8": the8,
         "9": the9,
+        "10": the10,
       };
 }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
 import 'package:hele_app/pages/wiki/widget/introduction.dart';
+import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 import 'package:nil/nil.dart';
 
@@ -62,6 +64,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         // 封面介绍
                         SliverToBoxAdapter(child: Introduction(data: s)),
                         SliverGap(16.h),
+
                         // 可展开的文本框
                         if (s.summary != "")
                           SliverToBoxAdapter(
@@ -70,7 +73,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                             maxLines: 4,
                             style: TextStyle(color: colorScheme.secondary.withOpacity(0.85)),
                           )),
-                        // SliverGap(0.h),
 
                         // 剧集展示  0 < x < 60
                         // todo 点击跳转到剧集详情
@@ -90,6 +92,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         SliverGap(24.h),
 
                         // 评分信息
+                        if(s.rating.total >= 10)
                         SliverToBoxAdapter(
                           child: Wrap(
                               alignment: WrapAlignment.spaceBetween,
@@ -101,37 +104,64 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                       text: '评分',
                                       style: TextStyle(
                                           fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
-                                  if(s.rating.score != 0)
-                                  TextSpan(
-                                      text: " ${s.rating.score}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: AppThemeColorScheme.top,
-                                          fontSize: 40.sp)),
+                                  if (s.rating.score != 0)
+                                    TextSpan(
+                                        text: " ${s.rating.score}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: AppThemeColorScheme.top,
+                                            fontSize: 40.sp)),
                                 ])),
-                                if(s.rating.rank != 0)
-                                Container(
-                                  padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                    gradient: const LinearGradient(
-                                      begin: Alignment.bottomLeft,
-                                      end: Alignment.topRight,
-                                      colors: [
-                                        AppThemeColorScheme.top3,
-                                        AppThemeColorScheme.top,
-                                        AppThemeColorScheme.top2,
-                                      ],
+                                if (s.rating.rank != 0)
+                                  Container(
+                                    padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      gradient: const LinearGradient(
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
+                                        colors: [
+                                          AppThemeColorScheme.top3,
+                                          AppThemeColorScheme.top,
+                                          AppThemeColorScheme.top2,
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  child: Text(
-                                    "${s.rating.rank} 名",
-                                    style: TextStyle(color: colorScheme.onPrimary, fontSize: 28.sp , fontWeight: FontWeight.bold),
-                                  ),
-                                )
+                                    child: Text(
+                                      "${s.rating.rank} 名",
+                                      style: TextStyle(
+                                          color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
+                                    ),
+                                  )
                               ]),
                         ),
                         SliverGap(16.h),
+                        if(s.rating.total >= 10)
+                        SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
+                        if(s.rating.total >= 10)
+                        SliverGap(8.h),
+                        if(s.rating.total >= 10)
+                        SliverToBoxAdapter(
+                            child: Wrap(
+                                alignment: WrapAlignment.spaceBetween,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                              AutoSizeText(
+                                "共计 ${s.rating.total} 条评分",
+                                style: TextStyle(
+                                  fontSize: 27.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.secondaryContainer.withOpacity(0.85),
+                                ),
+                              ),
+                              AutoSizeText("当前评价：${_wikiController.dispute}",
+                                  style: TextStyle(
+                                    fontSize: 26.5.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme.secondaryContainer.withOpacity(0.85),
+                                  ))
+                            ])),
+
 
                       ]);
                 } else {

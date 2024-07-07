@@ -10,6 +10,9 @@ class AppThemeColorScheme {
   static const backgroundColor2 = Color(0xFFFCFBFC);
   static const backgroundColor3 = Color(0xFFF3F2F3);
 
+  // Top 颜色
+  static const top = Color(0xFFFEBE58);
+
   // default
   static MaterialScheme lightDefaultScheme() {
     return const MaterialScheme(

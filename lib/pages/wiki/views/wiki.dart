@@ -3,17 +3,14 @@ import 'dart:ui';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/common/Widget/badge.dart';
 import 'package:hele_app/common/utils/network_img.dart';
-import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
 import 'package:hele_app/pages/wiki/widget/introduction.dart';
-import 'package:hele_app/pages/wiki/widget/subheading.dart';
+import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 import 'package:nil/nil.dart';
 
 class Wiki extends StatefulWidget {
@@ -30,13 +27,12 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _futureBuilder = _wikiController
-        .querySubjectDetails(_wikiController.legacySubjectSmall.id!);
+    _futureBuilder = _wikiController.querySubjectDetails(_wikiController.legacySubjectSmall.id!);
   }
 
   @override
   void dispose() {
-    _wikiController.dispose();
+    // _wikiController.dispose();
     super.dispose();
   }
 
@@ -47,50 +43,114 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
         body: Stack(children: [
       // 背景图片
       _buildBackgroundImage(),
+      _buildAppBar(),
       Padding(
-          padding: EdgeInsets.fromLTRB(40.w, 10.h, 40.w, 0.h),
-          child: CustomScrollView(
-              physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics(),
-              ),
-              primary: false,
-              shrinkWrap: false,
-              slivers: [
-                _buildAppBar(),
-                SliverToBoxAdapter(
-                    child: FutureBuilder(
-                        future: _futureBuilder,
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            Subjects s = snapshot.data;
+          padding: EdgeInsets.fromLTRB(40.w, 162.h, 40.w, 0.h),
+          child: FutureBuilder(
+              future: _futureBuilder,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  Subjects s = snapshot.data;
+                  return CustomScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      primary: false,
+                      shrinkWrap: false,
+                      slivers: [
+                        /* _buildAppBar(),*/
+                        // 封面介绍
+                        SliverToBoxAdapter(child: Introduction(data: s)),
+                        SliverGap(16.h),
+                        // 可展开的文本框
+                        if (s.summary != "")
+                          SliverToBoxAdapter(
+                              child: ExpandText(
+                            s.summary,
+                            maxLines: 4,
+                            style: TextStyle(color: colorScheme.secondary.withOpacity(0.85)),
+                          )),
+                        // SliverGap(0.h),
 
-                            return Column(
+                        // 剧集展示  0 < x < 60
+                        // todo 点击跳转到剧集详情
+                        SliverToBoxAdapter(
+                          child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                                Introduction(data: s),
-                                Gap(12.h),
-                                // 可展开的文本框
-                                ExpandText(
-                                  s.summary,
-                                  maxLines: 4,
-                                  style: TextStyle(
-                                      color: colorScheme.secondary
-                                          .withOpacity(0.85)),
-                                ),
-                              ],
-                            );
-                          } else {
-                            return nil;
-                          }
-                        })),
-              ]))
+                                Text("剧集",
+                                    style: TextStyle(
+                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary))
+                              ]),
+                        ),
+                        SliverGap(16.h),
+                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
+                          contentGrid(s.totalEpisodes != 0 ? s.totalEpisodes : s.eps),
+                        SliverGap(16.h),
+                        SliverToBoxAdapter(
+                          child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                      text: '评分',
+                                      style: TextStyle(
+                                          fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                  TextSpan(
+                                      text: " ${s.rating.score}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold, color: AppThemeColorScheme.top, fontSize: 40.sp)),
+                                ])),
+
+                                Container(
+                                  padding: EdgeInsets.symmetric(vertical: 0.h,horizontal: 0.w),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.r)
+                                  ),
+                                    child: Text(s.rating.rank.toString(),style: TextStyle(color: AppThemeColorScheme.top,fontSize: 32.sp),),
+                                )
+
+                              ]),
+                        ),
+                        SliverGap(16.h),
+                      ]);
+                } else {
+                  return nil;
+                }
+              }))
     ]));
   }
 
+  // 剧集列表
+  Widget contentGrid(int eps) {
+    return SliverGrid(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        mainAxisSpacing: 20.h,
+        crossAxisSpacing: 5.w,
+        crossAxisCount: 6,
+        mainAxisExtent: 52.h,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return CustomChip(
+            onTap: () {},
+            label: (index + 1).toString(),
+            selected: false,
+            isPadding: false,
+            isTranslucent: true,
+          );
+        },
+        childCount: eps,
+      ),
+    );
+  }
+
   // AppBar
-  SliverAppBar _buildAppBar() {
-    return SliverAppBar(
+  Widget _buildAppBar() {
+    return AppBar(
       titleSpacing: 0,
       centerTitle: false,
       elevation: 0,
@@ -108,7 +168,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
             const PopupMenuItem<String>(
               value: 'pause',
-              child: Text('1'),
+              child: Text("1"),
             ),
             const PopupMenuItem<String>(
               value: 'clear',

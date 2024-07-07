@@ -20,10 +20,12 @@ dependencies:
   font_awesome_flutter: ^10.7.0 # icon
   auto_size_text: ^3.0.0 # 文本自适应
   expand_widget: ^3.1.1 # 文本折叠
-  flutter_tilt: ^3.0.0 # 倾斜视差
+  fl_chart: ^0.68.0 # 图表
   flutter_smart_dialog: ^4.9.6+1 # 弹窗
   custom_sliding_segmented_control: ^1.8.3 # 分段器
   gap: ^3.0.1 # 间隔
+
+  flutter_tilt: ^3.0.0 # 倾斜视差
   skeletonizer: ^1.2.0 # 骨架屏
 
   # 网络请求
@@ -39,13 +41,13 @@ dependencies:
   flutter_svg: ^2.0.10+1 # svg显示
   easy_refresh: ^3.4.0 # 下拉刷新
   url_launcher: ^6.2.6 # url跳转
+  easy_debounce: ^2.0.3 # 防抖
   share_plus: ^9.0.0 # 分享
   logger: ^2.3.0 # log
-  easy_debounce: ^2.0.3 # 防抖
   nil: ^1.1.1 # 占位符
 
   # 状态管理
-  get: ^4.6.6 # 路由&状态管理
+  get: ^4.6.6 # 路由 & 状态管理
   provider: ^6.1.2 # 状态管理
 
   # 本地存储

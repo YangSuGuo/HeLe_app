@@ -19,7 +19,11 @@ class WikiController extends GetxController {
     legacySubjectSmall = Get.arguments['bangumiItem'];
     querySubjectDetails(legacySubjectSmall.id!);
 
-    title = (legacySubjectSmall.nameCn ?? legacySubjectSmall.name)!;
+    title = legacySubjectSmall.nameCn != "" || legacySubjectSmall.name != ""
+        ? legacySubjectSmall.nameCn != ""
+            ? legacySubjectSmall.nameCn!
+            : legacySubjectSmall.name!
+        : "获取失败！";
     imgUrl = legacySubjectSmall.images?.large ??
         'https://img.picui.cn/free/2024/07/01/66824a43e0e23.png';
   }

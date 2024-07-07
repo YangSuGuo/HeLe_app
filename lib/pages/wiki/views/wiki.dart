@@ -59,14 +59,35 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                   if (snapshot.connectionState == ConnectionState.done) {
                     Subjects s = snapshot.data;
                     return Column(children: [
+                      // 封面介绍页
                       Introduction(data: s),
                       Gap(12.h),
+                      // 可展开的文本框
                       ExpandText(
                         s.summary,
                         maxLines: 4,
                         style: TextStyle(
                             color: colorScheme.secondary.withOpacity(0.85)),
                       ),
+                      // 集数瓷砖
+                      SizedBox(
+                          height: 100,
+                          child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              mainAxisSpacing: 6,
+                              crossAxisSpacing: 6,
+                              crossAxisCount: 10,
+                              mainAxisExtent: 28,
+                            ),
+                            itemBuilder: (BuildContext context, int index) =>
+                                CustomChip(
+                              onTap: () {},
+                              label: "1",
+                              selected: false,
+                              isTranslucent: true,
+                            ),
+                          ))
                     ]);
                   } else {
                     return nil;

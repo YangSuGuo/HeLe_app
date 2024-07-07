@@ -65,10 +65,11 @@ class _IntroductionState extends State<Introduction> {
                     color: colorScheme.secondary,
                   ))),
 
-          s.eps != 0
+          if(s.type == 2)
+          s.totalEpisodes != 0 || s.eps != 0
               // 剧集
               ? Subheading(
-                  title: "${s.eps} 集",
+                  title: "${s.totalEpisodes != 0 ? s.totalEpisodes : s.eps} 集",
                   minFontSize: 12,
                   icon: FontAwesomeIcons.circlePlay,
                   isOverflow: false,

@@ -161,8 +161,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                     color: colorScheme.secondaryContainer.withOpacity(0.85),
                                   ))
                             ])),
-
-
                       ]);
                 } else {
                   return nil;

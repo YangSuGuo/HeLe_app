@@ -56,12 +56,14 @@ class CustomChip extends StatelessWidget {
   final String label;
   final bool selected;
   final bool isTranslucent;
+  final bool? isPadding;
 
   const CustomChip({
     super.key,
     required this.onTap,
     required this.label,
     required this.selected,
+    this.isPadding = true,
     this.isTranslucent = false,
   });
 
@@ -69,38 +71,36 @@ class CustomChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final Color selectedColor = colorScheme.secondaryContainer;
-    final TextStyle chipTextStyle = selected
-        ? TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp)
-        : TextStyle(fontSize: 24.sp);
+    final TextStyle chipTextStyle =
+        selected ? TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp) : TextStyle(fontSize: 24.sp);
 
     return isTranslucent
         ? InputChip(
             side: const BorderSide(
               color: Colors.transparent,
             ),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
             selectedColor: colorScheme.primary.withAlpha(120),
             backgroundColor: colorScheme.primary.withAlpha(40),
-            padding: selected
-                ? EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.h)
-                : EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.h),
+            padding:
+                isPadding ?? true ? EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.h) : EdgeInsets.fromLTRB(20.w, 0.h, 20.w, 0.h),
             label: Text(label),
-            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp),
+            labelStyle: isPadding ?? true
+                ? TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp)
+                : TextStyle(fontSize: 26.sp),
             onPressed: () => onTap(),
             selected: selected,
             showCheckmark: false,
-            visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
+            visualDensity: isPadding ?? true
+                ? const VisualDensity(horizontal: 0.0, vertical: -2.0)
+                : const VisualDensity(horizontal: 0.0, vertical: 0.0),
           )
         : InputChip(
             side: const BorderSide(
               color: Colors.transparent,
             ),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r)),
-            padding: selected
-                ? EdgeInsets.fromLTRB(24.w, 5.h, 24.w, 5.h)
-                : EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.w),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+            padding: selected ? EdgeInsets.fromLTRB(24.w, 5.h, 24.w, 5.h) : EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.w),
             label: Text(label),
             labelStyle: chipTextStyle,
             onPressed: () => onTap(),

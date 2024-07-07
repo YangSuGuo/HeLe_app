@@ -10,6 +10,12 @@ class AppThemeColorScheme {
   static const backgroundColor2 = Color(0xFFFCFBFC);
   static const backgroundColor3 = Color(0xFFF3F2F3);
 
+  // Top 颜色
+  // background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  static const top = Color(0xFFFEBE58);
+  static const top2 = Color(0xFFf6D365);
+  static const top3 = Color(0xFFFDA085);
+
   // default
   static MaterialScheme lightDefaultScheme() {
     return const MaterialScheme(

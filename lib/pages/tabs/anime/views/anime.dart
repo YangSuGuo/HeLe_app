@@ -115,7 +115,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                     Text(
                       "推荐",
                       style: TextStyle(
-                        fontSize: 48.sp,
+                        fontSize: 36.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       semanticsLabel: S.of(context).tab_anime_calendar,

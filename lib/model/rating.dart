@@ -1,20 +1,26 @@
 import 'dart:convert';
 
 ///评分
+///评分信息
 class Rating {
-  ///各分值评分人数
-  Count? count;
 
-  ///评分
-  double? score;
+  ///各分段的评分次数
+  Count count;
 
-  ///总评分人数
-  int? total;
+  ///排名
+  int? rank;
+
+  ///平均分
+  double score;
+
+  ///总评分人
+  int total;
 
   Rating({
-    this.count,
-    this.score,
-    this.total,
+    required this.count,
+    this.rank,
+    required this.score,
+    required this.total,
   });
 
   factory Rating.fromRawJson(String str) => Rating.fromJson(json.decode(str));
@@ -22,16 +28,18 @@ class Rating {
   String toRawJson() => json.encode(toJson());
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        count: json["count"] == null ? null : Count.fromJson(json["count"]),
-        score: json["score"]?.toDouble(),
-        total: json["total"],
-      );
+    count: Count.fromJson(json["count"]),
+    rank: json["rank"],
+    score: json["score"]?.toDouble(),
+    total: json["total"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "count": count?.toJson(),
-        "score": score,
-        "total": total,
-      };
+    "count": count.toJson(),
+    "rank": rank,
+    "score": score,
+    "total": total,
+  };
 }
 
 ///各分值评分人数

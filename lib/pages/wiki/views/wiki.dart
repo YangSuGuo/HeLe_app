@@ -87,7 +87,9 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         SliverGap(16.h),
                         if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
                           contentGrid(s.totalEpisodes != 0 ? s.totalEpisodes : s.eps),
-                        SliverGap(16.h),
+                        SliverGap(24.h),
+
+                        // 评分信息
                         SliverToBoxAdapter(
                           child: Wrap(
                               alignment: WrapAlignment.spaceBetween,
@@ -99,23 +101,38 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                       text: '评分',
                                       style: TextStyle(
                                           fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                  if(s.rating.score != 0)
                                   TextSpan(
                                       text: " ${s.rating.score}",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold, color: AppThemeColorScheme.top, fontSize: 40.sp)),
+                                          fontWeight: FontWeight.bold,
+                                          color: AppThemeColorScheme.top,
+                                          fontSize: 40.sp)),
                                 ])),
-
+                                if(s.rating.rank != 0)
                                 Container(
-                                  padding: EdgeInsets.symmetric(vertical: 0.h,horizontal: 0.w),
+                                  padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.r)
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.bottomLeft,
+                                      end: Alignment.topRight,
+                                      colors: [
+                                        AppThemeColorScheme.top3,
+                                        AppThemeColorScheme.top,
+                                        AppThemeColorScheme.top2,
+                                      ],
+                                    ),
                                   ),
-                                    child: Text(s.rating.rank.toString(),style: TextStyle(color: AppThemeColorScheme.top,fontSize: 32.sp),),
+                                  child: Text(
+                                    "${s.rating.rank} 名",
+                                    style: TextStyle(color: colorScheme.onPrimary, fontSize: 28.sp , fontWeight: FontWeight.bold),
+                                  ),
                                 )
-
                               ]),
                         ),
                         SliverGap(16.h),
+
                       ]);
                 } else {
                   return nil;
@@ -210,7 +227,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
             // 模糊滤镜
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-              child: SizedBox(height: 0),
+              child: const SizedBox(),
             ),
 
             // 渐变遮罩

@@ -1,8 +1,7 @@
-import 'dart:developer';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NetworkImg extends StatelessWidget {
   const NetworkImg({
@@ -15,23 +14,26 @@ class NetworkImg extends StatelessWidget {
     this.fadeInDuration,
     this.quality,
     this.origAspectRatio,
+    this.radius,
+    this.fit = BoxFit.cover,
   });
 
   final String? src;
   final double width;
   final double height;
+  final double? radius;
   final String? type;
   final Duration? fadeOutDuration;
   final Duration? fadeInDuration;
   final int? quality;
   final double? origAspectRatio;
+  final BoxFit? fit;
 
   @override
   Widget build(BuildContext context) {
-    final String imageUrl = src!.startsWith('//') ? 'https:${src!}' : src!;
-    log(imageUrl);
     int? memCacheWidth, memCacheHeight;
     double aspectRatio = (width / height).toDouble();
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     void setMemCacheSizes() {
       if (aspectRatio > 1) {
@@ -56,34 +58,32 @@ class NetworkImg extends StatelessWidget {
       memCacheWidth = width.toInt();
     }
 
-    return src != '' && src != null
+    return src != "" && src != null
         ? ClipRRect(
             clipBehavior: Clip.antiAlias,
             borderRadius: BorderRadius.circular(
-              const Radius.circular(10).x,
+              Radius.circular(radius ?? 10).x,
             ),
             child: CachedNetworkImage(
-              imageUrl: imageUrl,
+              imageUrl: src!,
               width: width,
               height: height,
               memCacheWidth: memCacheWidth,
               memCacheHeight: memCacheHeight,
-              fit: BoxFit.cover,
-              fadeOutDuration:
-                  fadeOutDuration ?? const Duration(milliseconds: 120),
-              fadeInDuration:
-                  fadeInDuration ?? const Duration(milliseconds: 120),
+              fit: fit,
+              fadeOutDuration: fadeOutDuration ?? const Duration(milliseconds: 120),
+              fadeInDuration: fadeInDuration ?? const Duration(milliseconds: 120),
               filterQuality: FilterQuality.low,
-              errorWidget: (BuildContext context, String url, Object error) =>
-                  placeholder(context),
-              placeholder: (BuildContext context, String url) =>
-                  placeholder(context),
+              errorWidget: (BuildContext context, String url, Object error) => placeholder(context, colorScheme),
+              // todo 加载动画
+              placeholder: (BuildContext context, String url) => placeholder(context, colorScheme),
             ),
           )
-        : placeholder(context);
+        : placeholder(context, colorScheme);
   }
 
-  Widget placeholder(BuildContext context) {
+  // todo 错误 点击事件
+  Widget placeholder(BuildContext context, ColorScheme colorScheme) {
     return Container(
       width: width,
       height: height,
@@ -93,8 +93,10 @@ class NetworkImg extends StatelessWidget {
         borderRadius: BorderRadius.circular(const Radius.circular(10).x),
       ),
       child: Center(
-        child: SvgPicture.asset("assets/images/svg/defaultPageNoImage.svg",
-            width: width, height: height),
+        child: TextButton(
+          onPressed: () {},
+          child: AutoSizeText(":(", style: TextStyle(fontSize: 100.sp, color: colorScheme.secondary)),
+        ),
       ),
     );
   }

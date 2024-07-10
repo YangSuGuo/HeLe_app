@@ -44,8 +44,8 @@ class Request {
 
     // 日志拦截器 输出请求、响应内容
     dio.interceptors.add(LogInterceptor(
-      request: true,
-      requestHeader: true,
+      request: false,
+      requestHeader: false,
       responseHeader: true,
     ));
 
@@ -79,8 +79,6 @@ class Request {
       // 'Authorization': 'Bearer 427cfed140895351b35c06d45c1ef6e6',
     };
     options.responseType = resType;
-
-    print(options.headers.toString());
 
     try {
       response = await dio.get(

@@ -2,13 +2,19 @@ import 'package:get/get.dart';
 import 'package:hele_app/common/utils/math_utils.dart';
 import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/model/character_list/character_list.dart';
+import 'package:hele_app/model/derivation/related_works_query.dart';
 import 'package:hele_app/model/infobox.dart';
+import 'package:hele_app/model/person_career/person_career.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 
 class WikiController extends GetxController {
   late LegacySubjectSmall legacySubjectSmall; // 番剧信息
-  Rxn<Subjects> subjects = Rxn<Subjects>(); // 条目信息
-  RxList tags = [].obs; // Tabs列表
+  // Rxn<Subjects> subjects = Rxn<Subjects>(); // 条目信息
+  // RxList<CharacterList> characterList = <CharacterList>[].obs; // 角色列表
+  // RxList<PersonCareer> person = <PersonCareer>[].obs; // 演员信息
+  // RxList<RelatedWorksQuery> derivation = <RelatedWorksQuery>[].obs; // 衍生相关作品
+  RxList tags = [].obs; // 标签列表
 
   String title = '';
   String imgUrl = '';
@@ -29,7 +35,7 @@ class WikiController extends GetxController {
             ? legacySubjectSmall.nameCn!
             : legacySubjectSmall.name!
         : "获取失败！";
-    imgUrl = legacySubjectSmall.images?.large ?? 'https://img.picui.cn/free/2024/07/01/66824a43e0e23.png';
+    imgUrl = legacySubjectSmall.images?.large ?? "" /*?? 'https://img.picui.cn/free/2024/07/01/66824a43e0e23.png'*/;
   }
 
   // 获取infobox
@@ -59,10 +65,10 @@ class WikiController extends GetxController {
     return '厨黑大战';
   }
 
-  // 请求番剧详情
-  Future querySubjectDetails(int subjectId) async {
+  // 请求条目详情
+  Future<Subjects> querySubjectDetails(int subjectId) async {
     Subjects result = await BangumiNet.bangumiSubject(subjectId);
-    subjects.value = result;
+    // subjects.value = result;
     production.value = getInfobox(result.infobox!, '製作');
     // 标签列表
     tags.value = result.tags.map((tag) => tag.name).toList();
@@ -71,5 +77,29 @@ class WikiController extends GetxController {
         MathUtils.calculateStandardDeviation(result.rating.total, result.rating.count, result.rating.score);
     dispute.value = getDispute(deviation.value);
     return result;
+  }
+
+  // 请求条目人物信息列表
+  Future<List<CharacterList>> querySubjectCharacterList(int subjectId) async {
+    List<CharacterList> resultCharacterList = await BangumiNet.bangumiSubjectCharacterList(subjectId);
+
+    // characterList.value = resultCharacterList;
+    return resultCharacterList;
+  }
+
+  // 请求条目演员信息列表
+  Future<List<PersonCareer>> querySubjectPersons(int subjectId) async {
+    List<PersonCareer> resultPersons = await BangumiNet.bangumiSubjectPersons(subjectId);
+
+    // person.value = resultPersons;
+    return resultPersons;
+  }
+
+  // 请求条目演员信息列表
+  Future<List<RelatedWorksQuery>> querySubjectDerivation(int subjectId) async {
+    List<RelatedWorksQuery> resultDerivation = await BangumiNet.bangumiSubjectDerivation(subjectId);
+
+    // derivation.value = resultDerivation;
+    return resultDerivation;
   }
 }

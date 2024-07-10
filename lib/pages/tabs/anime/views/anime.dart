@@ -101,22 +101,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                       return nil;
                     }
                   }),
-            ),
-
-            // todo 推荐
-            SliverToBoxAdapter(
-              child:
-                  Wrap(alignment: WrapAlignment.spaceBetween, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                Text(
-                  "推荐",
-                  style: TextStyle(
-                    fontSize: 36.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  semanticsLabel: S.of(context).tab_anime_calendar,
-                )
-              ]),
-            ),
+            )
           ]),
     );
   }

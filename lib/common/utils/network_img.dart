@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class NetworkImg extends StatelessWidget {
   const NetworkImg({
@@ -75,11 +76,28 @@ class NetworkImg extends StatelessWidget {
               fadeInDuration: fadeInDuration ?? const Duration(milliseconds: 120),
               filterQuality: FilterQuality.low,
               errorWidget: (BuildContext context, String url, Object error) => placeholder(context, colorScheme),
-              // todo 加载动画
-              placeholder: (BuildContext context, String url) => placeholder(context, colorScheme),
+              placeholder: (BuildContext context, String url) => loading(context, colorScheme),
             ),
           )
         : placeholder(context, colorScheme);
+  }
+
+  Widget loading (BuildContext context, ColorScheme colorScheme) {
+    return Container(
+      width: width,
+      height: height,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.onInverseSurface.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(const Radius.circular(10).x),
+      ),
+      child: Center(
+        child: LoadingAnimationWidget.staggeredDotsWave(
+          color: colorScheme.onPrimary,
+          size: 100.sp,
+        ),
+      ),
+    );
   }
 
   // todo 错误 点击事件

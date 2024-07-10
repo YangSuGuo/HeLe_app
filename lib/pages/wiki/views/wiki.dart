@@ -4,7 +4,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/network_img.dart';
@@ -19,6 +18,7 @@ import 'package:hele_app/pages/wiki/widget/introduction.dart';
 import 'package:hele_app/pages/wiki/widget/more_information.dart';
 import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nil/nil.dart';
 
 class Wiki extends StatefulWidget {
@@ -50,7 +50,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  // todo 评论吐槽 HTML解析转实体
+  // todo 评论吐槽（无接口） HTML解析转实体
+  // todo 剧中相关地点，景点展示
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -228,8 +229,29 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
                         // 相关景点，地点
                       ]);
+                } else if (snapshot.hasError) {
+                  // todo 网络重试点击事件
+                  return Center(
+                      child: InkWell(
+                          onTap: () {},
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AutoSizeText("网络异常，请稍后重试！",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 40.sp, color: colorScheme.secondary)),
+                              Gap(8.w),
+                              AutoSizeText(":(", style: TextStyle(fontSize: 70.sp, color: colorScheme.secondary)),
+                            ],
+                          )));
                 } else {
-                  return nil;
+                  return Center(
+                    child: LoadingAnimationWidget.stretchedDots(
+                      color: colorScheme.primary,
+                      size: 140.sp,
+                    ),
+                  );
                 }
               }))
     ]));

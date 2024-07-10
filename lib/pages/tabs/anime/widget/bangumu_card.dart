@@ -33,31 +33,11 @@ class BangumiCard extends StatelessWidget {
                   final double maxHeight = boxConstraints.maxHeight;
                   return Stack(
                     children: [
-                        Hero(
-                          tag: bangumiItem.id.toString(),
-                          child: NetworkImg(
+                      NetworkImg(
                             src: bangumiItem.images?.common,
                             width: maxWidth,
                             height: maxHeight,
                           ),
-                        ),
-                      /*if (bangumiItem.images == null)
-                        Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onInverseSurface
-                                .withOpacity(0.4),
-                            borderRadius: BorderRadius.circular(
-                                const Radius.circular(10).x),
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              "assets/images/svg/defaultPageNoImage.svg",
-                            ),
-                          ),
-                        ),*/
                       // 评分
                       if (bangumiItem.rating?.score != null)
                         PBadge(

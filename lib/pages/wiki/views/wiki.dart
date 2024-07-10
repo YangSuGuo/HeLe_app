@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/network_img.dart';
@@ -15,6 +16,7 @@ import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
 import 'package:hele_app/pages/wiki/widget/info_subitem.dart';
 import 'package:hele_app/pages/wiki/widget/introduction.dart';
+import 'package:hele_app/pages/wiki/widget/more_information.dart';
 import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 import 'package:nil/nil.dart';
@@ -186,6 +188,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                 Text("角色",
                                     style: TextStyle(
                                         fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                const MoreInformation()
                               ]),
                         ),
                         SliverGap(16.h),
@@ -200,7 +203,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                               children: [
                                 Text("制作人员",
                                     style: TextStyle(
-                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary))
+                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                const MoreInformation()
                               ]),
                         ),
                         SliverGap(16.h),
@@ -215,11 +219,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                               children: [
                                 Text("相关作品",
                                     style: TextStyle(
-                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary))
+                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                const MoreInformation()
                               ]),
                         ),
                         SliverGap(16.h),
                         futureRelatedWorksBuilder(colorScheme),
+
+                        // 相关景点，地点
                       ]);
                 } else {
                   return nil;

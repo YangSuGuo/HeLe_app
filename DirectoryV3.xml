@@ -72,4 +72,5 @@
     <tree path="/lib/model/derivation" title="衍生"/>
     <tree path="/lib/model/derivation/related_works_query.dart" title="相关作品"/>
     <tree path="/lib/pages/wiki/widget/info_subitem.dart" title="横向小卡片"/>
+    <tree path="/lib/pages/wiki/widget/more_information.dart" title="更多"/>
 </trees>

@@ -22,8 +22,7 @@ class Anime extends StatefulWidget {
 
 class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   final AnimeController _animeController = Get.put(AnimeController());
-  StreamController<bool> searchBarStream =
-      Get.find<HomeController>().searchBarStream;
+  StreamController<bool> searchBarStream = Get.find<HomeController>().searchBarStream;
   late Future? _futureBuilderFuture;
 
   @override
@@ -38,8 +37,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
 
     scrollController.addListener(
       () async {
-        final ScrollDirection direction =
-            scrollController.position.userScrollDirection;
+        final ScrollDirection direction = scrollController.position.userScrollDirection;
         if (direction == ScrollDirection.forward) {
           searchBarStream.add(true);
         } else if (direction == ScrollDirection.reverse) {
@@ -67,28 +65,26 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
             SliverGap(12.h),
             // 追番表
             SliverToBoxAdapter(
-              child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      S.of(context).tab_anime_calendar,
-                      style: TextStyle(
-                        fontSize: 48.sp,
-                        fontWeight: FontWeight.bold,
+              child:
+                  Wrap(alignment: WrapAlignment.spaceBetween, crossAxisAlignment: WrapCrossAlignment.center, children: [
+                Text(
+                  S.of(context).tab_anime_calendar,
+                  style: TextStyle(
+                    fontSize: 48.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  semanticsLabel: S.of(context).tab_anime_calendar,
+                ),
+                SizedBox(
+                  height: 50.h,
+                  child: Theme(
+                      data: ThemeData(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                       ),
-                      semanticsLabel: S.of(context).tab_anime_calendar,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                      child: Theme(
-                          data: ThemeData(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                          ),
-                          child: segmentControl(_animeController)),
-                    ),
-                  ]),
+                      child: segmentControl(_animeController)),
+                ),
+              ]),
             ),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
@@ -97,9 +93,10 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       List<Calendar> data = snapshot.data;
-
-                      return Obx(() => contentGrid(_animeController,
-                          data[_animeController.dayOfWeekIndex.value].items!));
+                      return Obx(
+                          () => contentGrid(_animeController, data[_animeController.dayOfWeekIndex.value].items!));
+                    } else if (snapshot.hasError) {
+                      return const SliverToBoxAdapter(child: Text("5409"));
                     } else {
                       return nil;
                     }
@@ -108,19 +105,17 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
 
             // todo 推荐
             SliverToBoxAdapter(
-              child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Text(
-                      "推荐",
-                      style: TextStyle(
-                        fontSize: 36.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      semanticsLabel: S.of(context).tab_anime_calendar,
-                    )
-                  ]),
+              child:
+                  Wrap(alignment: WrapAlignment.spaceBetween, crossAxisAlignment: WrapCrossAlignment.center, children: [
+                Text(
+                  "推荐",
+                  style: TextStyle(
+                    fontSize: 36.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  semanticsLabel: S.of(context).tab_anime_calendar,
+                )
+              ]),
             ),
           ]),
     );
@@ -133,8 +128,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
         mainAxisSpacing: 6,
         crossAxisSpacing: 6,
         crossAxisCount: 3,
-        mainAxisExtent:
-            Get.size.width / 2 + MediaQuery.textScalerOf(context).scale(16),
+        mainAxisExtent: Get.size.width / 2 + MediaQuery.textScalerOf(context).scale(16),
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
@@ -157,22 +151,18 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
       children: {
         1: Text(
           _animeController.yesterday.value,
-          style: TextStyle(
-              fontSize: Theme.of(context).textTheme.labelMedium!.fontSize),
+          style: TextStyle(fontSize: Theme.of(context).textTheme.labelMedium!.fontSize),
         ),
         2: Text(_animeController.today.value,
-            style: TextStyle(
-                fontSize: Theme.of(context).textTheme.labelMedium!.fontSize)),
+            style: TextStyle(fontSize: Theme.of(context).textTheme.labelMedium!.fontSize)),
         3: Text(_animeController.tomorrow.value,
-            style: TextStyle(
-                fontSize: Theme.of(context).textTheme.labelMedium!.fontSize))
+            style: TextStyle(fontSize: Theme.of(context).textTheme.labelMedium!.fontSize))
       },
       // innerPadding: EdgeInsets.zero,
       height: 50.h,
       padding: 12.0,
       decoration: BoxDecoration(
-        color:
-            Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.1),
+        color: Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),
       ),
       thumbDecoration: BoxDecoration(

@@ -7,9 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/network_img.dart';
+import 'package:hele_app/model/character_list/character_list.dart';
+import 'package:hele_app/model/derivation/related_works_query.dart';
+import 'package:hele_app/model/person_career/person_career.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
+import 'package:hele_app/pages/wiki/widget/info_subitem.dart';
 import 'package:hele_app/pages/wiki/widget/introduction.dart';
 import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
@@ -24,12 +28,18 @@ class Wiki extends StatefulWidget {
 
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   final WikiController _wikiController = Get.put(WikiController());
-  late Future? _futureBuilder;
+  late Future _futureBuilder; // 条目基础信息
+  late Future _characters; // 角色列表
+  late Future _person; // 演职信息
+  late Future _derivation; // 衍生条目
 
   @override
   void initState() {
     super.initState();
     _futureBuilder = _wikiController.querySubjectDetails(_wikiController.legacySubjectSmall.id!);
+    _characters = _wikiController.querySubjectCharacterList(_wikiController.legacySubjectSmall.id!);
+    _person = _wikiController.querySubjectPersons(_wikiController.legacySubjectSmall.id!);
+    _derivation = _wikiController.querySubjectDerivation(_wikiController.legacySubjectSmall.id!);
   }
 
   @override
@@ -38,6 +48,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  // todo 评论吐槽 HTML解析转实体
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -64,7 +75,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         // 封面介绍
                         SliverToBoxAdapter(child: Introduction(data: s)),
                         SliverGap(16.h),
-
                         // 可展开的文本框
                         if (s.summary != "")
                           SliverToBoxAdapter(
@@ -76,91 +86,140 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
                         // 剧集展示  0 < x < 60
                         // todo 点击跳转到剧集详情
+                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
+                          SliverToBoxAdapter(
+                            child: Wrap(
+                                alignment: WrapAlignment.spaceBetween,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  Text("剧集",
+                                      style: TextStyle(
+                                          fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary))
+                                ]),
+                          ),
+                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
+                          SliverGap(16.h),
+                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
+                          contentGrid(s.totalEpisodes != 0 ? s.totalEpisodes : s.eps),
+                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
+                          SliverGap(24.h),
+
+                        // 评分信息
+                        if (s.rating.total >= 10)
+                          SliverToBoxAdapter(
+                            child: Wrap(
+                                alignment: WrapAlignment.spaceBetween,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                        text: '评分',
+                                        style: TextStyle(
+                                            fontSize: 42.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: colorScheme.secondary)),
+                                    if (s.rating.score != 0)
+                                      TextSpan(
+                                          text: " ${s.rating.score}",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: AppThemeColorScheme.top,
+                                              fontSize: 40.sp)),
+                                  ])),
+                                  if (s.rating.rank != 0)
+                                    Container(
+                                      padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8.r),
+                                        gradient: const LinearGradient(
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight,
+                                          colors: [
+                                            AppThemeColorScheme.top3,
+                                            AppThemeColorScheme.top,
+                                            AppThemeColorScheme.top2,
+                                          ],
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "${s.rating.rank} 名",
+                                        style: TextStyle(
+                                            color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                ]),
+                          ),
+                        if (s.rating.total >= 10) SliverGap(16.h),
+                        if (s.rating.total >= 10)
+                          SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
+                        if (s.rating.total >= 10) SliverGap(8.h),
+                        if (s.rating.total >= 10)
+                          SliverToBoxAdapter(
+                              child: Wrap(
+                                  alignment: WrapAlignment.spaceBetween,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                AutoSizeText(
+                                  "共计 ${s.rating.total} 条评分",
+                                  style: TextStyle(
+                                    fontSize: 27.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme.secondaryContainer.withOpacity(0.85),
+                                  ),
+                                ),
+                                AutoSizeText("当前评价：${_wikiController.dispute}",
+                                    style: TextStyle(
+                                      fontSize: 26.5.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme.secondaryContainer.withOpacity(0.85),
+                                    ))
+                              ])),
+
+                        SliverGap(24.h),
+                        // 角色信息
                         SliverToBoxAdapter(
                           child: Wrap(
                               alignment: WrapAlignment.spaceBetween,
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                                Text("剧集",
+                                Text("角色",
+                                    style: TextStyle(
+                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                              ]),
+                        ),
+                        SliverGap(16.h),
+                        futureCharactersBuilder(colorScheme),
+                        SliverGap(24.h),
+
+                        // 制作人员
+                        SliverToBoxAdapter(
+                          child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Text("制作人员",
                                     style: TextStyle(
                                         fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary))
                               ]),
                         ),
                         SliverGap(16.h),
-                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
-                          contentGrid(s.totalEpisodes != 0 ? s.totalEpisodes : s.eps),
+                        futurePersonBuilder(colorScheme),
                         SliverGap(24.h),
 
-                        // 评分信息
-                        if(s.rating.total >= 10)
+                        // 关联作品
                         SliverToBoxAdapter(
                           child: Wrap(
                               alignment: WrapAlignment.spaceBetween,
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                                RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text: '评分',
-                                      style: TextStyle(
-                                          fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
-                                  if (s.rating.score != 0)
-                                    TextSpan(
-                                        text: " ${s.rating.score}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: AppThemeColorScheme.top,
-                                            fontSize: 40.sp)),
-                                ])),
-                                if (s.rating.rank != 0)
-                                  Container(
-                                    padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      gradient: const LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        colors: [
-                                          AppThemeColorScheme.top3,
-                                          AppThemeColorScheme.top,
-                                          AppThemeColorScheme.top2,
-                                        ],
-                                      ),
-                                    ),
-                                    child: Text(
-                                      "${s.rating.rank} 名",
-                                      style: TextStyle(
-                                          color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
-                                    ),
-                                  )
+                                Text("相关作品",
+                                    style: TextStyle(
+                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary))
                               ]),
                         ),
                         SliverGap(16.h),
-                        if(s.rating.total >= 10)
-                        SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
-                        if(s.rating.total >= 10)
-                        SliverGap(8.h),
-                        if(s.rating.total >= 10)
-                        SliverToBoxAdapter(
-                            child: Wrap(
-                                alignment: WrapAlignment.spaceBetween,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                              AutoSizeText(
-                                "共计 ${s.rating.total} 条评分",
-                                style: TextStyle(
-                                  fontSize: 27.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.secondaryContainer.withOpacity(0.85),
-                                ),
-                              ),
-                              AutoSizeText("当前评价：${_wikiController.dispute}",
-                                  style: TextStyle(
-                                    fontSize: 26.5.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: colorScheme.secondaryContainer.withOpacity(0.85),
-                                  ))
-                            ])),
+                        futureRelatedWorksBuilder(colorScheme),
                       ]);
                 } else {
                   return nil;
@@ -169,28 +228,129 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
     ]));
   }
 
+  // 关联作品
+  // todo 点击事件
+  FutureBuilder futureRelatedWorksBuilder(ColorScheme colorScheme) {
+    return FutureBuilder(
+        future: _derivation,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            List<RelatedWorksQuery> derivation = snapshot.data;
+            return SliverToBoxAdapter(
+                child: SizedBox(
+                    height: 330.h,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
+                            ? derivation[index].nameCn
+                            : derivation[index].name;
+                        return InfoSubitem(
+                          containerWidth: 200.w,
+                          src: derivation[index].images?.medium,
+                          width: 200.w,
+                          height: 230.h,
+                          fit: BoxFit.cover,
+                          title: title,
+                          subtitle: derivation[index].relation,
+                          onTap: () {},
+                        );
+                      },
+                      itemCount: derivation.length,
+                      scrollDirection: Axis.horizontal,
+                    )));
+          } else {
+            return const SliverToBoxAdapter(child: nil);
+          }
+        });
+  }
+
+  // 制作人员
+  // todo 点击事件
+  FutureBuilder futurePersonBuilder(ColorScheme colorScheme) {
+    return FutureBuilder(
+        future: _person,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            List<PersonCareer> persons = snapshot.data;
+            return SliverToBoxAdapter(
+                child: SizedBox(
+                    height: 200.h,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return InfoSubitem(
+                          src: persons[index].images?.medium,
+                          title: persons[index].name,
+                          subtitle: persons[index].relation,
+                          onTap: () {},
+                        );
+                      },
+                      itemCount: persons.length,
+                      scrollDirection: Axis.horizontal,
+                    )));
+          } else {
+            return const SliverToBoxAdapter(child: nil);
+          }
+        });
+  }
+
+  // 角色信息
+  // todo 点击事件
+  FutureBuilder futureCharactersBuilder(ColorScheme colorScheme) {
+    return FutureBuilder(
+        future: _characters,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            List<CharacterList> characters = snapshot.data;
+            return SliverToBoxAdapter(
+                child: SizedBox(
+                    height: 200.h,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        String? subtitle = characters[index].relation != "" &&
+                                characters[index].relation != null &&
+                                characters[index].actors?[0].name != null &&
+                                characters[index].actors?[0].name != ""
+                            ? characters[index].relation
+                            : characters[index].actors?[0].name;
+                        return InfoSubitem(
+                          src: characters[index].images?.medium,
+                          radius: 5,
+                          fit: BoxFit.fitHeight,
+                          title: characters[index].name,
+                          subtitle: subtitle,
+                          onTap: () {},
+                        );
+                      },
+                      itemCount: characters.length,
+                      scrollDirection: Axis.horizontal,
+                    )));
+          } else {
+            return const SliverToBoxAdapter(child: nil);
+          }
+        });
+  }
+
   // 剧集列表
   Widget contentGrid(int eps) {
     return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: 20.h,
-        crossAxisSpacing: 5.w,
-        crossAxisCount: 6,
-        mainAxisExtent: 52.h,
-      ),
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return CustomChip(
-            onTap: () {},
-            label: (index + 1).toString(),
-            selected: false,
-            isPadding: false,
-            isTranslucent: true,
-          );
-        },
-        childCount: eps,
-      ),
-    );
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisSpacing: 20.h,
+          crossAxisSpacing: 5.w,
+          crossAxisCount: 6,
+          mainAxisExtent: 52.h,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return CustomChip(
+              onTap: () {},
+              label: (index + 1).toString(),
+              selected: false,
+              isPadding: false,
+              isTranslucent: true,
+            );
+          },
+          childCount: eps,
+        ));
   }
 
   // AppBar
@@ -237,46 +397,34 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   // 背景图
   Widget _buildBackgroundImage() {
     return Opacity(
-      opacity: 0.2,
-      child: ClipRect(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            // 图片组件
-            AspectRatio(
-              aspectRatio: 1.5,
-              child: NetworkImg(
-                src: _wikiController.imgUrl,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-              ),
+        opacity: 0.2,
+        child: ClipRect(
+            child: Stack(alignment: Alignment.bottomCenter, children: [
+          // 图片组件
+          AspectRatio(
+            aspectRatio: 1.5,
+            child: NetworkImg(
+              src: _wikiController.imgUrl,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
             ),
+          ),
 
-            // 模糊滤镜
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-              child: const SizedBox(),
-            ),
+          // 模糊滤镜
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+            child: const SizedBox(),
+          ),
 
-            // 渐变遮罩
-            Positioned.fill(
+          // 渐变遮罩
+          Positioned.fill(
               child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                      Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                      Theme.of(context).colorScheme.surface,
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+            Theme.of(context).colorScheme.primary.withOpacity(0.7),
+            Theme.of(context).colorScheme.primary.withOpacity(0.5),
+            Theme.of(context).colorScheme.surface,
+          ]))))
+        ])));
   }
 }

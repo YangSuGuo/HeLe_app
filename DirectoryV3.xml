@@ -67,4 +67,9 @@
     <tree path="/lib/pages/wiki/widget/ratingGraph.dart" title="评分图表"/>
     <tree path="/lib/common/utils/math_utils.dart" title="数学计算"/>
     <tree path="/lib/common/utils/date_utils.dart" title="时间计算"/>
+    <tree path="/lib/model/person_career" title="演员列表"/>
+    <tree path="/lib/model/character_list" title="角色列表"/>
+    <tree path="/lib/model/derivation" title="衍生"/>
+    <tree path="/lib/model/derivation/related_works_query.dart" title="相关作品"/>
+    <tree path="/lib/pages/wiki/widget/info_subitem.dart" title="横向小卡片"/>
 </trees>

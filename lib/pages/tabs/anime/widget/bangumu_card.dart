@@ -33,17 +33,15 @@ class BangumiCard extends StatelessWidget {
                   final double maxHeight = boxConstraints.maxHeight;
                   return Stack(
                     children: [
-                      if (bangumiItem.images != null)
                         Hero(
                           tag: bangumiItem.id.toString(),
                           child: NetworkImg(
-                            src: bangumiItem.images?.common ??
-                                'https://img.picui.cn/free/2024/07/01/66824a43e0e23.png',
+                            src: bangumiItem.images?.common,
                             width: maxWidth,
                             height: maxHeight,
                           ),
                         ),
-                      if (bangumiItem.images == null)
+                      /*if (bangumiItem.images == null)
                         Container(
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
@@ -59,7 +57,7 @@ class BangumiCard extends StatelessWidget {
                               "assets/images/svg/defaultPageNoImage.svg",
                             ),
                           ),
-                        ),
+                        ),*/
                       // 评分
                       if (bangumiItem.rating?.score != null)
                         PBadge(

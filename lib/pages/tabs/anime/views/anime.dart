@@ -1,17 +1,23 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/utils/network_img.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/model/pagination.dart';
+import 'package:hele_app/model/search/search.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
 import 'package:hele_app/pages/tabs/anime/controllers/anime_controller.dart';
 import 'package:hele_app/pages/tabs/anime/widget/bangumu_card.dart';
-import 'package:nil/nil.dart';
+import 'package:hele_app/pages/tabs/anime/widget/recommendations_card.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Anime extends StatefulWidget {
   const Anime({super.key});
@@ -24,6 +30,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   final AnimeController _animeController = Get.put(AnimeController());
   StreamController<bool> searchBarStream = Get.find<HomeController>().searchBarStream;
   late Future? _futureBuilderFuture;
+  late Future? _getRecommendations;
 
   @override
   // 页面保活
@@ -33,8 +40,8 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     _futureBuilderFuture = _animeController.queryBangumiCalendarFeed();
+    _getRecommendations = _animeController.getRecommendations();
     ScrollController scrollController = _animeController.scrollController;
-
     scrollController.addListener(
       () async {
         final ScrollDirection direction = scrollController.position.userScrollDirection;
@@ -49,6 +56,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.symmetric(horizontal: 40.w),
@@ -62,6 +70,52 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
           primary: false,
           shrinkWrap: false,
           slivers: [
+            SliverGap(12.h),
+
+            /// 推荐
+            /// todo 根据当前时间所处季度，按收藏人数进行排序，取前5个为推荐
+            SliverToBoxAdapter(
+              child:
+                  Wrap(alignment: WrapAlignment.spaceBetween, crossAxisAlignment: WrapCrossAlignment.center, children: [
+                Text(
+                  "为你推荐",
+                  style: TextStyle(
+                    fontSize: 44.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  semanticsLabel: S.of(context).tab_anime_calendar,
+                )
+              ]),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              sliver: FutureBuilder(
+                  future: _getRecommendations,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      Pagination s = snapshot.data;
+                      // todo 显示推荐
+                      return recommendations(s);
+                    } else if (snapshot.hasError) {
+                      return SliverToBoxAdapter(
+                          child: Center(
+                        child: LoadingAnimationWidget.stretchedDots(
+                          color: colorScheme.primary,
+                          size: 140.sp,
+                        ),
+                      ));
+                    } else {
+                      return SliverToBoxAdapter(
+                          child: Center(
+                        child: LoadingAnimationWidget.stretchedDots(
+                          color: colorScheme.primary,
+                          size: 140.sp,
+                        ),
+                      ));
+                    }
+                  }),
+            ),
+
             SliverGap(12.h),
             // 追番表
             SliverToBoxAdapter(
@@ -96,14 +150,41 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                       return Obx(
                           () => contentGrid(_animeController, data[_animeController.dayOfWeekIndex.value].items!));
                     } else if (snapshot.hasError) {
-                      return const SliverToBoxAdapter(child: Text("5409"));
+                      return SliverToBoxAdapter(
+                          child: Center(
+                        child: LoadingAnimationWidget.stretchedDots(
+                          color: colorScheme.primary,
+                          size: 140.sp,
+                        ),
+                      ));
                     } else {
-                      return nil;
+                      return SliverToBoxAdapter(
+                          child: Center(
+                        child: LoadingAnimationWidget.stretchedDots(
+                          color: colorScheme.primary,
+                          size: 140.sp,
+                        ),
+                      ));
                     }
                   }),
             )
           ]),
     );
+  }
+
+  // 水平滚动的推荐
+  SliverToBoxAdapter recommendations(Pagination pagination) {
+    return SliverToBoxAdapter(
+        child: SizedBox(
+      height: 200.h,
+      child: ListView.builder(
+          itemCount: pagination.limit,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) {
+            List<Datum>? data = pagination.data;
+            return RecommendationsCard(data: data?[index]);
+          }),
+    ));
   }
 
   // 追番剧列表

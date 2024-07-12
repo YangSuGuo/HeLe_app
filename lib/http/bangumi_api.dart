@@ -14,6 +14,9 @@ class BangumiApi {
   // /v0/subjects/{subject_id}/subjects
   static const String subject = '/v0/subjects/';
 
+  // 搜索
+  static const String searchSubject = '/v0/search/subjects';
+
   // 相关地点
   // https://api.anitabi.cn/bangumi/${subjectID}/lite
   static const String search = 'https://api.anitabi.cn/bangumi/';

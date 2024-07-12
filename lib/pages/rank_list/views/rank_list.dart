@@ -13,8 +13,6 @@ class _RankListState extends State<RankList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: Text(S.of(context).navigationBar_title_rank_list,
-                style: TextStyle(fontSize: 50.sp))));
+        body: Center(child: Text(S.of(context).navigationBar_title_rank_list, style: TextStyle(fontSize: 50.sp))));
   }
 }

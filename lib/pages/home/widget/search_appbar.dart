@@ -56,8 +56,7 @@ class SearchAppBar extends StatelessWidget {
         height: 80.sp,
         child: IconButton(
           style: ButtonStyle(
-            backgroundColor: ButtonStyleButton.allOrNull(
-                Theme.of(context).colorScheme.onInverseSurface),
+            backgroundColor: ButtonStyleButton.allOrNull(Theme.of(context).colorScheme.onInverseSurface),
           ),
           onPressed: () => {},
           icon: Icon(

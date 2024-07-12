@@ -12,9 +12,6 @@ class My extends StatefulWidget {
 class _MyState extends State<My> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-            child: Text(S.of(context).navigationBar_title_my,
-                style: TextStyle(fontSize: 50.sp))));
+    return Scaffold(body: Center(child: Text(S.of(context).navigationBar_title_my, style: TextStyle(fontSize: 50.sp))));
   }
 }

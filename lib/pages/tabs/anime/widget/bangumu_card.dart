@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/badge.dart';
 import 'package:hele_app/common/utils/network_img.dart';
@@ -34,18 +33,13 @@ class BangumiCard extends StatelessWidget {
                   return Stack(
                     children: [
                       NetworkImg(
-                            src: bangumiItem.images?.common,
-                            width: maxWidth,
-                            height: maxHeight,
-                          ),
+                        src: bangumiItem.images?.common,
+                        width: maxWidth,
+                        height: maxHeight,
+                      ),
                       // 评分
                       if (bangumiItem.rating?.score != null)
-                        PBadge(
-                            text: bangumiItem.rating!.score.toString(),
-                            top: 6,
-                            right: 6,
-                            bottom: null,
-                            left: null),
+                        PBadge(text: bangumiItem.rating!.score.toString(), top: 6, right: 6, bottom: null, left: null),
                       /* if (bangumiItem.order != null)
                         PBadge(
                           text: bangumiItem.order,
@@ -86,9 +80,7 @@ class BangumiContent extends StatelessWidget {
               children: [
                 Expanded(
                     child: Text(
-                  bangumiItem.nameCn!.isEmpty
-                      ? bangumiItem.name.toString()
-                      : bangumiItem.nameCn.toString(),
+                  bangumiItem.nameCn!.isEmpty ? bangumiItem.name.toString() : bangumiItem.nameCn.toString(),
                   textAlign: TextAlign.start,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,

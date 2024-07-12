@@ -82,8 +82,9 @@ class CustomChip extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
             selectedColor: colorScheme.primary.withAlpha(120),
             backgroundColor: colorScheme.primary.withAlpha(40),
-            padding:
-                isPadding ?? true ? EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.h) : EdgeInsets.fromLTRB(20.w, 0.h, 20.w, 0.h),
+            padding: isPadding ?? true
+                ? EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.h)
+                : EdgeInsets.fromLTRB(20.w, 0.h, 20.w, 0.h),
             label: Text(label),
             labelStyle: isPadding ?? true
                 ? TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp)

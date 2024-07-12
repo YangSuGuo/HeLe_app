@@ -38,10 +38,10 @@ class _IntroductionState extends State<Introduction> {
         // 封面图片
         Stack(children: [
           NetworkImg(
-                src: _wikiController.imgUrl,
-                width: 210.w,
-                height: 240.h,
-              ),
+            src: _wikiController.imgUrl,
+            width: 210.w,
+            height: 240.h,
+          ),
           if (s.rating.score != 0.0 && s.rating.score != null)
             PBadge(text: s.rating.score.toString(), top: 6, right: 6, bottom: null, left: null),
         ]),

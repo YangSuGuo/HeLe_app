@@ -7,10 +7,12 @@ import 'package:hele_app/common/utils/date_utils.dart';
 import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/model/pagination.dart';
 
 class AnimeController extends GetxController {
   final ScrollController scrollController = ScrollController();
   DateTime dateTime = DateTime.now();
+  Rxn<Pagination> bangumiPagination = Rxn<Pagination>(); // 番剧推荐
   RxList<Calendar> bangumiCalendar = <Calendar>[].obs; // 追番表
   RxInt bangumiItemsLength = 0.obs; // 追番表长度
 
@@ -63,6 +65,16 @@ class AnimeController extends GetxController {
         }
         break;
     }
+  }
+
+  // 获取动漫推荐
+  Future getRecommendations() async {
+    var result = await BangumiNet.bangumiRecommendation(2);
+    bangumiPagination.value = result;
+
+    log(result.total.toString());
+
+    return result;
   }
 
   // 请求追番表

@@ -12,8 +12,6 @@ class Movie extends StatefulWidget {
 class _MovieState extends State<Movie> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child:
-            Text(S.of(context).tabs_movie, style: TextStyle(fontSize: 25.sp)));
+    return Center(child: Text(S.of(context).tabs_movie, style: TextStyle(fontSize: 25.sp)));
   }
 }

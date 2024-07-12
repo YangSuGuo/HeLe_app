@@ -12,8 +12,6 @@ class Series extends StatefulWidget {
 class _SeriesState extends State<Series> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child:
-            Text(S.of(context).tabs_series, style: TextStyle(fontSize: 25.sp)));
+    return Center(child: Text(S.of(context).tabs_series, style: TextStyle(fontSize: 25.sp)));
   }
 }

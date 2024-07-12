@@ -12,8 +12,6 @@ class LightNovel extends StatefulWidget {
 class _LightNovelState extends State<LightNovel> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Text(S.of(context).tabs_light_novel,
-            style: TextStyle(fontSize: 25.sp)));
+    return Center(child: Text(S.of(context).tabs_light_novel, style: TextStyle(fontSize: 25.sp)));
   }
 }

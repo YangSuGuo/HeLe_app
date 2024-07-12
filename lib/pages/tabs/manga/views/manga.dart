@@ -12,8 +12,6 @@ class Manga extends StatefulWidget {
 class _MangaState extends State<Manga> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child:
-            Text(S.of(context).tabs_manga, style: TextStyle(fontSize: 25.sp)));
+    return Center(child: Text(S.of(context).tabs_manga, style: TextStyle(fontSize: 25.sp)));
   }
 }

@@ -30,6 +30,7 @@ class Wiki extends StatefulWidget {
 
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   final WikiController _wikiController = Get.put(WikiController());
+  int subjectId = 0; // 条目id
   late Future _futureBuilder; // 条目基础信息
   late Future _characters; // 角色列表
   late Future _person; // 演职信息
@@ -38,10 +39,11 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _futureBuilder = _wikiController.querySubjectDetails(_wikiController.legacySubjectSmall.id!);
-    _characters = _wikiController.querySubjectCharacterList(_wikiController.legacySubjectSmall.id!);
-    _person = _wikiController.querySubjectPersons(_wikiController.legacySubjectSmall.id!);
-    _derivation = _wikiController.querySubjectDerivation(_wikiController.legacySubjectSmall.id!);
+    subjectId = _wikiController.subjectId;
+    _futureBuilder = _wikiController.querySubjectDetails(subjectId);
+    _characters = _wikiController.querySubjectCharacterList(subjectId);
+    _person = _wikiController.querySubjectPersons(subjectId);
+    _derivation = _wikiController.querySubjectDerivation(subjectId);
   }
 
   @override

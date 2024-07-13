@@ -20,4 +20,31 @@ class DateUtils {
     int dayOfWeekIndex = now.weekday;
     return dayOfWeekIndex;
   }
+
+  /// 获取当前季度的起始日期
+  /// 如果当前正好是季度开始时间，则返回上一季度时间
+  static String getAdjustedQuarterStartDate() {
+    DateTime now = DateTime.now();
+    int currentMonth = now.month;
+
+    // 特殊处理1月份的情况
+    if (currentMonth == 1) {
+      DateTime previousYearQ4Start = DateTime(now.year - 1, 10, 1);
+      return DateFormat('yyyy-MM-dd').format(previousYearQ4Start);
+    } else {
+      // 计算当前季度的起始月份
+      int quarterStartMonth = (currentMonth - 1) ~/ 3 * 3 + 1;
+
+      // 判断是否为当前季度的第一天
+      if (quarterStartMonth == currentMonth && now.day == 1) {
+        // 减去3个月获取上一季度
+        DateTime previousQuarterStart = DateTime(now.year, quarterStartMonth - 3, 1);
+        return DateFormat('yyyy-MM-dd').format(previousQuarterStart);
+      } else {
+        // 不是则直接返回当前季度的开始日期
+        DateTime thisQuarterStart = DateTime(now.year, quarterStartMonth, 1);
+        return DateFormat('yyyy-MM-dd').format(thisQuarterStart);
+      }
+    }
+  }
 }

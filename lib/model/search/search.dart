@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/model/images.dart';
+import 'package:hele_app/model/rating.dart';
 import 'package:hele_app/model/tag.dart';
 
 class Datum {
@@ -71,4 +74,25 @@ class Datum {
         "tags": List<dynamic>.from(tags.map((x) => x.toJson())),
         "type": type,
       };
+  // 新增转换方法
+  LegacySubjectSmall toLegacySubjectSmall() {
+    return LegacySubjectSmall(
+      airDate: date.isNotEmpty ? date : null,
+      id: id,
+      images: Images.allSame(image),
+      name: name,
+      nameCn: nameCn,
+      rank: rank,
+      summary: summary,
+
+      // 缺少字段
+      rating: null,
+      type: null,
+      eps: null,
+      epsCount: null,
+      collection: null,
+      url: null,
+
+    );
+  }
 }

@@ -75,5 +75,6 @@
     <tree path="/lib/pages/wiki/widget/more_information.dart" title="更多"/>
     <tree path="/lib/pages/search" title="搜索"/>
     <tree path="/lib/model/pagination.dart" title="分页"/>
-    <tree path="/lib/model/search" title="搜索结果"/>
+    <tree path="/lib/model/search" title="搜索" extension="" presentableText="" tooltipTitle="" icon="" textColor="" backgroundColor=""/>
+    <tree path="/lib/model/search/request_body.dart" title="搜索Body"/>
 </trees>

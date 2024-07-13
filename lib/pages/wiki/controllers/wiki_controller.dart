@@ -16,6 +16,7 @@ class WikiController extends GetxController {
   // RxList<RelatedWorksQuery> derivation = <RelatedWorksQuery>[].obs; // 衍生相关作品
   RxList tags = [].obs; // 标签列表
 
+  int subjectId = 0;
   String title = '';
   String imgUrl = '';
   RxString production = ''.obs;
@@ -28,7 +29,8 @@ class WikiController extends GetxController {
   void onInit() {
     super.onInit();
     legacySubjectSmall = Get.arguments['bangumiItem'];
-    querySubjectDetails(legacySubjectSmall.id!);
+    subjectId = legacySubjectSmall.id!;
+    querySubjectDetails(subjectId);
 
     title = legacySubjectSmall.nameCn != "" || legacySubjectSmall.name != ""
         ? legacySubjectSmall.nameCn != ""

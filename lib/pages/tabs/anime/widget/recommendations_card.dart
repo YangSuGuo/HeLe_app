@@ -1,8 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hele_app/common/utils/network_img.dart';
+import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/search/search.dart';
+import 'package:hele_app/routes/app_pages.dart';
 
 class RecommendationsCard extends StatelessWidget {
   const RecommendationsCard({
@@ -20,8 +23,8 @@ class RecommendationsCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
         child: InkWell(onTap: () {
-          // todo 特殊处理跳转 实体类转换 toBangumiItem
-          // Get.toNamed(Routes.WIKI, arguments: {"bangumiItem": data});
+          LegacySubjectSmall toLegacySubjectSmall = data!.toLegacySubjectSmall();
+          Get.toNamed(Routes.WIKI, arguments: {"bangumiItem": toLegacySubjectSmall});
         }, child: LayoutBuilder(builder: (context, constraints) {
           final double maxWidth = MediaQuery.of(context).size.width * 0.65;
           final double maxHeight = constraints.maxHeight;

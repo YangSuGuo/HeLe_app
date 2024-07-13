@@ -15,6 +15,13 @@ class Images {
     this.small,
   });
 
+  Images.allSame(String imageUrl)
+      : common = imageUrl,
+        grid = imageUrl,
+        large = imageUrl,
+        medium = imageUrl,
+        small = imageUrl;
+
   factory Images.fromRawJson(String str) => Images.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());

@@ -77,4 +77,7 @@
     <tree path="/lib/model/pagination.dart" title="分页"/>
     <tree path="/lib/model/search" title="搜索" extension="" presentableText="" tooltipTitle="" icon="" textColor="" backgroundColor=""/>
     <tree path="/lib/model/search/request_body.dart" title="搜索Body"/>
+    <tree path="/lib/pages/tabs/manga" title="漫画"/>
+    <tree path="/lib/common/Widget/entry_title.dart" title="条目标题"/>
+    <tree path="/lib/model/search/query_parameters.dart" title="搜索Query" extension="" presentableText="" tooltipTitle="" icon="" textColor="" backgroundColor=""/>
 </trees>

@@ -49,7 +49,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // _wikiController.dispose();
+    _wikiController.removeListener((){});
     super.dispose();
   }
 

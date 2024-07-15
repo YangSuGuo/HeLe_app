@@ -31,6 +31,7 @@ dependencies:
 
   # 网络请求
   dio: ^5.4.3+1 # 网络请求
+
   cookie_jar: ^4.0.8
   dio_cookie_manager: ^3.1.1
   connectivity_plus: ^6.0.1
@@ -40,7 +41,6 @@ dependencies:
   cached_network_image: ^3.3.1 # 图片缓存
   flutter_screenutil: ^5.9.0 # 屏幕适配
   flutter_svg: ^2.0.10+1 # svg显示
-  easy_refresh: ^3.4.0 # 下拉刷新
   url_launcher: ^6.2.6 # url跳转
   easy_debounce: ^2.0.3 # 防抖
   share_plus: ^9.0.0 # 分享

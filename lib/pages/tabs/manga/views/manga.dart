@@ -90,8 +90,8 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
         ]));
   }
 
-  // 追番剧列表
-  Widget contentGrid(List<LegacySubjectSmall> bangumiList) {
+  // 推荐
+  SliverGrid contentGrid(List<LegacySubjectSmall> bangumiList) {
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: 6,

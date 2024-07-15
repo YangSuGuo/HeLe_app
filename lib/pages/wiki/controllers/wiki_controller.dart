@@ -67,6 +67,17 @@ class WikiController extends GetxController {
     return '厨黑大战';
   }
 
+  String? getSubTitle(String? subtitle, List<PersonCareer>? personCareerList) {
+    if (subtitle != null && subtitle != "") {
+      return subtitle;
+    } else if (personCareerList != null && !personCareerList.isNotEmpty) {
+      if(personCareerList.first != "" && personCareerList.first.name != ""){
+        return personCareerList.first.name;
+      }
+    }
+    return "暂无";
+  }
+
   // 请求条目详情
   Future<Subjects> querySubjectDetails(int subjectId) async {
     Subjects result = await BangumiNet.bangumiSubject(subjectId);

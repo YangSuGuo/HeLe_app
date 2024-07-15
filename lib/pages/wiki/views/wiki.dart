@@ -301,23 +301,18 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             List<CharacterList> characters = snapshot.data;
+            print(characters);
             return SliverToBoxAdapter(
                 child: SizedBox(
                     height: 200.h,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        String? subtitle = characters[index].relation != "" &&
-                                characters[index].relation != null &&
-                                characters[index].actors?[0].name != null &&
-                                characters[index].actors?[0].name != ""
-                            ? characters[index].relation
-                            : characters[index].actors?[0].name;
                         return InfoSubitem(
                           src: characters[index].images?.medium,
                           radius: 5,
                           fit: BoxFit.fitHeight,
                           title: characters[index].name,
-                          subtitle: subtitle,
+                          subtitle: _wikiController.getSubTitle(characters[index].relation, characters[index].actors),
                           onTap: () {},
                         );
                       },

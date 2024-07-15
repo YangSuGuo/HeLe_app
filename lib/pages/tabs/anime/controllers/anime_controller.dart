@@ -41,10 +41,12 @@ class AnimeController extends GetxController {
     switch (v) {
       case 1: // -
         if (TODAY_ID.value == 1) {
+          // 周一
           dayOfWeekIndex.value = 6;
           log("当前索引：${dayOfWeekIndex.value}");
         } else if (TODAY_ID.value == 7) {
-          dayOfWeekIndex.value = 0;
+          // 周日
+          dayOfWeekIndex.value = 5;
           log("当前索引：${dayOfWeekIndex.value}");
         } else {
           dayOfWeekIndex.value = TODAY_ID.value - 2;
@@ -57,6 +59,7 @@ class AnimeController extends GetxController {
         break;
       case 3: // +
         if (TODAY_ID.value == 7) {
+          // 周日
           dayOfWeekIndex.value = 0;
           log("当前索引：${dayOfWeekIndex.value}");
         } else {

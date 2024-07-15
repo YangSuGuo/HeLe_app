@@ -80,4 +80,5 @@
     <tree path="/lib/pages/tabs/manga" title="漫画"/>
     <tree path="/lib/common/Widget/entry_title.dart" title="条目标题"/>
     <tree path="/lib/model/search/query_parameters.dart" title="搜索Query" extension="" presentableText="" tooltipTitle="" icon="" textColor="" backgroundColor=""/>
+    <tree path="/lib/pages/tabs/anime/widget/recommendations_card.dart" title="推荐卡片"/>
 </trees>

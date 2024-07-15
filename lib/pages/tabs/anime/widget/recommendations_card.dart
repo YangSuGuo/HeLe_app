@@ -20,7 +20,7 @@ class RecommendationsCard extends StatelessWidget {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Card(
         clipBehavior: Clip.antiAlias,
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
+        margin: EdgeInsets.only(right: 20.w),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
         child: InkWell(onTap: () {
           LegacySubjectSmall toLegacySubjectSmall = data!.toLegacySubjectSmall();

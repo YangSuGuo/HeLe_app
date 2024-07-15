@@ -84,6 +84,7 @@ class Datum {
       nameCn: nameCn,
       rank: rank,
       summary: summary,
+      score: score,
 
       // 缺少字段
       rating: null,

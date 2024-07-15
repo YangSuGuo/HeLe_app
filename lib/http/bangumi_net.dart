@@ -112,10 +112,8 @@ class BangumiNet {
 
   // 获取热门推荐
   static Future<Pagination> getHotRecommendedComics(QueryParameters queryParameters, RequestBody requestBody) async {
-    var res = await Request().post(
-        BangumiApi.searchSubject,
-        queryParameters: queryParameters.toJson(),
-        data: requestBody.toJson());
+    var res = await Request()
+        .post(BangumiApi.searchSubject, queryParameters: queryParameters.toJson(), data: requestBody.toJson());
 
     if (res.statusCode == 200) {
       Pagination pagination = Pagination.fromJson(res.data);

@@ -87,6 +87,9 @@ class LegacySubjectSmall {
   ///条目地址
   String? url;
 
+  /// 兼容搜索实体 评分 【不参与 toJson 与 fromJson】
+  double? score;
+
   LegacySubjectSmall({
     this.airDate,
     this.airWeekday,
@@ -102,6 +105,7 @@ class LegacySubjectSmall {
     this.summary,
     this.type,
     this.url,
+    this.score,
   });
 
   factory LegacySubjectSmall.fromRawJson(String str) =>

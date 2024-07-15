@@ -79,7 +79,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
           shrinkWrap: false,
           slivers: [
             /// 推荐
-            /// todo 根据当前时间所处季度，按收藏人数进行排序，取前5个为推荐
+            /// 根据当前时间所处季度，按收藏人数进行排序，取前5个为推荐
             EntryTitle(
               title: "为你推荐",
               size: 44.sp,
@@ -115,7 +115,6 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
             ),
             SliverGap(12.h),
             // 追番表
-
             EntryTitle(
               title: S.of(context).tab_anime_calendar,
               size: 48.sp,

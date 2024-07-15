@@ -1,7 +1,13 @@
 class BangumiApi {
+  ///SubjectType，条目类型
+  ///- `1` 为 书籍
+  ///- `2` 为 动画
+  ///- `3` 为 音乐
+  ///- `4` 为 游戏
+  ///- `6` 为 三次元
   static const String baseUrl = 'https://api.bgm.tv';
 
-// 追番表
+  /// 追番表
   static const String calendar = '/calendar';
 
   /// 条目信息

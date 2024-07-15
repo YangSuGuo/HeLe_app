@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/Widget/entry_title.dart';
 import 'package:hele_app/common/utils/network_img.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
@@ -55,37 +56,34 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   }
 
   @override
+  void dispose() {
+    _animeController.removeListener(() {});
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       clipBehavior: Clip.hardEdge,
-      margin: EdgeInsets.symmetric(horizontal: 40.w),
+      margin: EdgeInsets.symmetric(horizontal: 40.w, vertical: 12.h),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: CustomScrollView(
+        controller: _animeController.scrollController,
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
           ),
           primary: false,
           shrinkWrap: false,
           slivers: [
-            SliverGap(12.h),
-
             /// 推荐
             /// todo 根据当前时间所处季度，按收藏人数进行排序，取前5个为推荐
-            SliverToBoxAdapter(
-              child:
-                  Wrap(alignment: WrapAlignment.spaceBetween, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                Text(
-                  "为你推荐",
-                  style: TextStyle(
-                    fontSize: 44.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  semanticsLabel: S.of(context).tab_anime_calendar,
-                )
-              ]),
+            EntryTitle(
+              title: "为你推荐",
+              size: 44.sp,
+              fontWeight: FontWeight.bold,
             ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -115,30 +113,20 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                     }
                   }),
             ),
-
             SliverGap(12.h),
             // 追番表
-            SliverToBoxAdapter(
-              child:
-                  Wrap(alignment: WrapAlignment.spaceBetween, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                Text(
-                  S.of(context).tab_anime_calendar,
-                  style: TextStyle(
-                    fontSize: 48.sp,
-                    fontWeight: FontWeight.bold,
+
+            EntryTitle(
+              title: S.of(context).tab_anime_calendar,
+              size: 48.sp,
+              fontWeight: FontWeight.bold,
+              semanticsLabel: S.of(context).tab_anime_calendar,
+              child: Theme(
+                  data: ThemeData(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                   ),
-                  semanticsLabel: S.of(context).tab_anime_calendar,
-                ),
-                SizedBox(
-                  height: 50.h,
-                  child: Theme(
-                      data: ThemeData(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                      ),
-                      child: segmentControl(_animeController)),
-                ),
-              ]),
+                  child: segmentControl(_animeController)),
             ),
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),

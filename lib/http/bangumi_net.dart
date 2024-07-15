@@ -6,6 +6,7 @@ import 'package:hele_app/model/character_list/character_list.dart';
 import 'package:hele_app/model/derivation/related_works_query.dart';
 import 'package:hele_app/model/pagination.dart';
 import 'package:hele_app/model/person_career/person_career.dart';
+import 'package:hele_app/model/search/query_parameters.dart';
 import 'package:hele_app/model/search/request_body.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 
@@ -92,12 +93,13 @@ class BangumiNet {
       sort: Sort.HEAT,
     );
 
-    final queryParameters = {
-      'offset': '0',
-      'limit': '5',
-    };
+    final queryParameters = QueryParameters(
+      limit: 5,
+      offset: 0,
+    );
 
-    var res = await Request().post(BangumiApi.searchSubject, queryParameters: queryParameters, data: requestBody.toJson());
+    var res = await Request()
+        .post(BangumiApi.searchSubject, queryParameters: queryParameters.toJson(), data: requestBody.toJson());
 
     if (res.statusCode == 200) {
       Pagination pagination = Pagination.fromJson(res.data);
@@ -105,6 +107,31 @@ class BangumiNet {
     } else {
       log("报错：$res");
       throw Exception('获取推荐信息数据失败');
+    }
+  }
+
+  // 获取热门推荐漫画
+  static Future<Pagination> getHotRecommendedComics(QueryParameters queryParameters) async {
+    final requestBody = RequestBody(
+      filter: Filter(
+        tag: ["漫画"],
+        type: [1],
+      ),
+      keyword: "",
+      sort: Sort.HEAT,
+    );
+
+    var res = await Request().post(
+        BangumiApi.searchSubject,
+        queryParameters: queryParameters.toJson(),
+        data: requestBody.toJson());
+
+    if (res.statusCode == 200) {
+      Pagination pagination = Pagination.fromJson(res.data);
+      return pagination;
+    } else {
+      log("报错：$res");
+      throw Exception('获取热门漫画推荐数据失败');
     }
   }
 }

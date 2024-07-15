@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/Widget/entry_title.dart';
 import 'package:hele_app/common/utils/network_img.dart';
 import 'package:hele_app/model/character_list/character_list.dart';
 import 'package:hele_app/model/derivation/related_works_query.dart';
@@ -92,15 +93,10 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         // 剧集展示  0 < x < 60
                         // todo 点击跳转到剧集详情
                         if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
-                          SliverToBoxAdapter(
-                            child: Wrap(
-                                alignment: WrapAlignment.spaceBetween,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  Text("剧集",
-                                      style: TextStyle(
-                                          fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary))
-                                ]),
+                          EntryTitle(
+                            title: "剧集",
+                            size: 42.sp,
+                            fontWeight: FontWeight.bold,
                           ),
                         if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
                           SliverGap(16.h),
@@ -183,49 +179,22 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
                         SliverGap(24.h),
                         // 角色信息
-                        SliverToBoxAdapter(
-                          child: Wrap(
-                              alignment: WrapAlignment.spaceBetween,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Text("角色",
-                                    style: TextStyle(
-                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
-                                const MoreInformation()
-                              ]),
-                        ),
+                        EntryTitle(
+                            title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
                         SliverGap(16.h),
                         futureCharactersBuilder(colorScheme),
                         SliverGap(24.h),
 
                         // 制作人员
-                        SliverToBoxAdapter(
-                          child: Wrap(
-                              alignment: WrapAlignment.spaceBetween,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Text("制作人员",
-                                    style: TextStyle(
-                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
-                                const MoreInformation()
-                              ]),
-                        ),
+                        EntryTitle(
+                            title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
                         SliverGap(16.h),
                         futurePersonBuilder(colorScheme),
                         SliverGap(24.h),
 
                         // 关联作品
-                        SliverToBoxAdapter(
-                          child: Wrap(
-                              alignment: WrapAlignment.spaceBetween,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                Text("相关作品",
-                                    style: TextStyle(
-                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
-                                const MoreInformation()
-                              ]),
-                        ),
+                        EntryTitle(
+                            title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
                         SliverGap(16.h),
                         futureRelatedWorksBuilder(colorScheme),
 

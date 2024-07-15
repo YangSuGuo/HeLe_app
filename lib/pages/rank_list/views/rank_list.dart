@@ -16,7 +16,10 @@ class _RankListState extends State<RankList> {
       children: [
         // 渐变背景
         GradientBackground(),
+
       ],
     ));
   }
+
+
 }

@@ -110,17 +110,8 @@ class BangumiNet {
     }
   }
 
-  // 获取热门推荐漫画
-  static Future<Pagination> getHotRecommendedComics(QueryParameters queryParameters) async {
-    final requestBody = RequestBody(
-      filter: Filter(
-        tag: ["漫画"],
-        type: [1],
-      ),
-      keyword: "",
-      sort: Sort.HEAT,
-    );
-
+  // 获取热门推荐
+  static Future<Pagination> getHotRecommendedComics(QueryParameters queryParameters, RequestBody requestBody) async {
     var res = await Request().post(
         BangumiApi.searchSubject,
         queryParameters: queryParameters.toJson(),

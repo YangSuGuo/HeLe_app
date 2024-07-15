@@ -301,7 +301,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             List<CharacterList> characters = snapshot.data;
-            print(characters);
             return SliverToBoxAdapter(
                 child: SizedBox(
                     height: 200.h,

@@ -57,7 +57,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
-    _animeController.removeListener(() {});
+    _animeController.scrollController.removeListener(() {});
     super.dispose();
   }
 

@@ -55,7 +55,7 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
-    _mangaController.removeListener(() {});
+    _mangaController.scrollController.removeListener(() {});
     super.dispose();
   }
 

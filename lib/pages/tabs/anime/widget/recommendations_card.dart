@@ -22,9 +22,9 @@ class RecommendationsCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.only(right: 20.w),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: InkWell(onTap: () {
+        child: InkWell(onTap: () async {
           LegacySubjectSmall toLegacySubjectSmall = data!.toLegacySubjectSmall();
-          Get.toNamed(Routes.WIKI, arguments: {"bangumiItem": toLegacySubjectSmall});
+          await Get.toNamed(Routes.WIKI, arguments: {"bangumiItem": toLegacySubjectSmall});
         }, child: LayoutBuilder(builder: (context, constraints) {
           final double maxWidth = MediaQuery.of(context).size.width * 0.65;
           final double maxHeight = constraints.maxHeight;

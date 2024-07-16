@@ -79,11 +79,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       initialData: true,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         final double top = MediaQuery.of(context).padding.top;
-
-        /*Timer.periodic(const Duration(seconds: 5), (timer) {
-          print(snapshot.data);
-        });*/
-
         return AnimatedOpacity(
           opacity: snapshot.data ? 1 : 0,
           duration: const Duration(milliseconds: 300),

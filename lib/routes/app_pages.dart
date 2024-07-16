@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:hele_app/pages/home/bindings/home_binding.dart';
 import 'package:hele_app/pages/home/views/home.dart';
 import 'package:hele_app/pages/main/bindings/main_binding.dart';
 import 'package:hele_app/pages/main/views/main.dart';
@@ -26,7 +25,7 @@ class AppPages {
     GetPage(
         name: Routes.HOME,
         page: () => const Home(),
-        binding: HomeBinding(),
+        // binding: HomeBinding(),
         children: [
           // tab页面
           GetPage(

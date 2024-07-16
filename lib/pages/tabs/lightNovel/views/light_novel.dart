@@ -55,7 +55,7 @@ class _LightNovelState extends State<LightNovel> with AutomaticKeepAliveClientMi
 
   @override
   void dispose() {
-    _lightNovelController.removeListener(() {});
+    _lightNovelController.scrollController.removeListener(() {});
     super.dispose();
   }
 

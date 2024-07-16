@@ -33,7 +33,7 @@ class BangumiCard extends StatelessWidget {
                   return Stack(
                     children: [
                       NetworkImg(
-                        src: bangumiItem.images?.common,
+                        src: bangumiItem.images?.large,
                         width: maxWidth,
                         height: maxHeight,
                       ),

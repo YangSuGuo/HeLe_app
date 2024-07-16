@@ -58,11 +58,10 @@ android {
 
     buildTypes {
         release {
-            // signingConfig = signingConfigs.debug
             signingConfig signingConfigs.debug
             //启用缩减、混淆处理和优化功能
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             // proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

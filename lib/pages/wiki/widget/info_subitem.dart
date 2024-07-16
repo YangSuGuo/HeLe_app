@@ -66,7 +66,7 @@ class InfoSubitem extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     color: colorScheme.secondary.withOpacity(0.9),
                   ),
-                )
+                ),
               ],
             )));
   }

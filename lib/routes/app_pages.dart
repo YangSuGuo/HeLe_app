@@ -7,6 +7,7 @@ import 'package:hele_app/pages/tabs/lightNovel/views/light_novel.dart';
 import 'package:hele_app/pages/tabs/manga/views/manga.dart';
 import 'package:hele_app/pages/tabs/movie/views/movie.dart';
 import 'package:hele_app/pages/tabs/series/views/series.dart';
+import 'package:hele_app/pages/wiki/bindings/wiki_bindings.dart';
 import 'package:hele_app/pages/wiki/views/wiki.dart';
 
 part 'app_routes.dart';
@@ -59,7 +60,7 @@ class AppPages {
     GetPage(
       name: Routes.WIKI,
       page: () => const Wiki(),
-      // binding: WikiBindings(),
+      binding: WikiBindings(),
     )
   ];
 }

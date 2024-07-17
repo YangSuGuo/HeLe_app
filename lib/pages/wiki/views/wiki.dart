@@ -20,7 +20,6 @@ import 'package:hele_app/pages/wiki/widget/more_information.dart';
 import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:nil/nil.dart';
 
 class Wiki extends StatefulWidget {
   const Wiki({super.key});
@@ -30,26 +29,44 @@ class Wiki extends StatefulWidget {
 }
 
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
-  final WikiController _wikiController = Get.put(WikiController());
+  // final WikiController _wikiController = Get.put(WikiController());
+  final WikiController _wikiController = Get.find<WikiController>();
   int subjectId = 0; // 条目id
-  late Future _futureBuilder; // 条目基础信息
-  late Future _characters; // 角色列表
-  late Future _person; // 演职信息
-  late Future _derivation; // 衍生条目
+  late Future _future;
+
+  // late Future _futureBuilder; // 条目基础信息
+  // late Future _characters; // 角色列表
+  // late Future _person; // 演职信息
+  // late Future _derivation; // 衍生条目
 
   @override
   void initState() {
     super.initState();
+
     subjectId = _wikiController.subjectId;
-    _futureBuilder = _wikiController.querySubjectDetails(subjectId);
-    _characters = _wikiController.querySubjectCharacterList(subjectId);
-    _person = _wikiController.querySubjectPersons(subjectId);
-    _derivation = _wikiController.querySubjectDerivation(subjectId);
+
+    List<Future<dynamic>> futureList = [
+      _wikiController.querySubjectDetails(subjectId),
+      _wikiController.querySubjectCharacterList(subjectId),
+      _wikiController.querySubjectPersons(subjectId),
+      _wikiController.querySubjectDerivation(subjectId)
+    ];
+
+    try {
+      _future = Future.wait(futureList);
+    } catch (error) {
+      print('Error: $error');
+    }
+
+    // _futureBuilder = _wikiController.querySubjectDetails(subjectId);
+    // _characters = _wikiController.querySubjectCharacterList(subjectId);
+    // _person = _wikiController.querySubjectPersons(subjectId);
+    // _derivation = _wikiController.querySubjectDerivation(subjectId);
   }
 
   @override
   void dispose() {
-    _wikiController.removeListener((){});
+    _wikiController.dispose();
     super.dispose();
   }
 
@@ -66,10 +83,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
       Padding(
           padding: EdgeInsets.fromLTRB(40.w, 162.h, 40.w, 0.h),
           child: FutureBuilder(
-              future: _futureBuilder,
+              future: _future,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  Subjects s = snapshot.data;
+                  Subjects s = snapshot.data[0]; // 条目信息
+                  List<CharacterList> characters = snapshot.data[1]; // 角色列表
+                  List<PersonCareer> persons = snapshot.data[2]; // 演员信息
+                  List<RelatedWorksQuery> derivation = snapshot.data[3]; // 衍生条目
+
                   return CustomScrollView(
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics(),
@@ -182,21 +203,73 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         EntryTitle(
                             title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
                         SliverGap(16.h),
-                        futureCharactersBuilder(colorScheme),
+                        SliverToBoxAdapter(
+                            child: SizedBox(
+                                height: 200.h,
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return InfoSubitem(
+                                      src: characters[index].images?.medium,
+                                      radius: 5,
+                                      fit: BoxFit.fitHeight,
+                                      title: characters[index].name,
+                                      subtitle: _wikiController.getSubTitle(
+                                          characters[index].relation, characters[index].actors),
+                                      onTap: () {},
+                                    );
+                                  },
+                                  itemCount: characters.length,
+                                  scrollDirection: Axis.horizontal,
+                                ))),
                         SliverGap(24.h),
 
                         // 制作人员
                         EntryTitle(
                             title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
                         SliverGap(16.h),
-                        futurePersonBuilder(colorScheme),
+                        SliverToBoxAdapter(
+                            child: SizedBox(
+                                height: 200.h,
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return InfoSubitem(
+                                      src: persons[index].images?.medium,
+                                      title: persons[index].name,
+                                      subtitle: persons[index].relation,
+                                      onTap: () {},
+                                    );
+                                  },
+                                  itemCount: persons.length,
+                                  scrollDirection: Axis.horizontal,
+                                ))),
                         SliverGap(24.h),
 
                         // 关联作品
                         EntryTitle(
                             title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
                         SliverGap(16.h),
-                        futureRelatedWorksBuilder(colorScheme),
+                        SliverToBoxAdapter(
+                            child: SizedBox(
+                                height: 330.h,
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
+                                        ? derivation[index].nameCn
+                                        : derivation[index].name;
+                                    return InfoSubitem(
+                                      containerWidth: 200.w,
+                                      src: derivation[index].images?.medium,
+                                      width: 200.w,
+                                      height: 230.h,
+                                      fit: BoxFit.cover,
+                                      title: title,
+                                      subtitle: derivation[index].relation,
+                                      onTap: () {},
+                                    );
+                                  },
+                                  itemCount: derivation.length,
+                                  scrollDirection: Axis.horizontal,
+                                )))
 
                         // 相关景点，地点
                       ]);
@@ -228,9 +301,9 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
     ]));
   }
 
-  // 关联作品
+/*  // 关联作品
   // todo 点击事件
-  FutureBuilder futureRelatedWorksBuilder(ColorScheme colorScheme) {
+  FutureBuilder futureRelatedWorksBuilder() {
     return FutureBuilder(
         future: _derivation,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -266,7 +339,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
   // 制作人员
   // todo 点击事件
-  FutureBuilder futurePersonBuilder(ColorScheme colorScheme) {
+  FutureBuilder futurePersonBuilder() {
     return FutureBuilder(
         future: _person,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -295,7 +368,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
   // 角色信息
   // todo 点击事件
-  FutureBuilder futureCharactersBuilder(ColorScheme colorScheme) {
+  FutureBuilder futureCharactersBuilder() {
     return FutureBuilder(
         future: _characters,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -322,7 +395,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
             return const SliverToBoxAdapter(child: nil);
           }
         });
-  }
+  }*/
 
   // 剧集列表
   Widget contentGrid(int eps) {

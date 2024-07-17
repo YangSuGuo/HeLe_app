@@ -1,15 +1,12 @@
 import 'dart:async';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/entry_title.dart';
-import 'package:hele_app/common/utils/network_img.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/pagination.dart';
@@ -58,6 +55,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   @override
   void dispose() {
     _animeController.scrollController.removeListener(() {});
+    _animeController.scrollController.dispose();
     super.dispose();
   }
 
@@ -71,7 +69,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: CustomScrollView(
-        controller: _animeController.scrollController,
+          controller: _animeController.scrollController,
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
           ),
@@ -212,7 +210,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
             style: TextStyle(fontSize: Theme.of(context).textTheme.labelMedium!.fontSize))
       },
       // innerPadding: EdgeInsets.zero,
-      height: 50.h,
+      // height: 50,
       padding: 12.0,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.1),

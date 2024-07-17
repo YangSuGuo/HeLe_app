@@ -23,18 +23,12 @@ class _InitState extends State<Init> {
 
     /// App 生命周期
     _appLifecycleListener = AppLifecycleListener(
-      onResume: () => print('App Resume'),
-      // 从后台回到前台时调用
-      onInactive: () => print('App Inactive'),
-      // 进入后台但仍在活动状态时调用
-      onHide: () => print('App Hide'),
-      // 被隐藏时调用
-      onShow: () => print('App Show'),
-      // 从隐藏状态重新显示时调用
-      onPause: () => print('App Pause'),
-      // 即将进入后台时调用
-      onRestart: () => print('App Restart'),
-      // 重新启动时调用
+      onResume: () => print('App Resume'), // 从后台回到前台时调用
+      onInactive: () => print('App Inactive'), // 进入后台但仍在活动状态时调用
+      onHide: () => print('App Hide'), // 被隐藏时调用
+      onShow: () => print('App Show'), // 从隐藏状态重新显示时调用
+      onPause: () => print('App Pause'), // 即将进入后台时调用
+      onRestart: () => print('App Restart'), // 重新启动时调用
       onDetach: () => print('App Detach'), // 完全退出时调用
     );
 

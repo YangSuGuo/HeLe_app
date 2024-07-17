@@ -30,7 +30,11 @@ class WikiController extends GetxController {
     super.onInit();
     legacySubjectSmall = Get.arguments['bangumiItem'];
     subjectId = legacySubjectSmall.id!;
-    querySubjectDetails(subjectId);
+
+    querySubjectDetails(subjectId); // 获取条目详情
+    querySubjectCharacterList(subjectId); // 获取角色列表
+    querySubjectPersons(subjectId); // 获取演员信息
+    querySubjectDerivation(subjectId); // 获取衍生相关作品
 
     title = legacySubjectSmall.nameCn != "" || legacySubjectSmall.name != ""
         ? legacySubjectSmall.nameCn != ""
@@ -79,7 +83,7 @@ class WikiController extends GetxController {
   }
 
   // 请求条目详情
-  Future<Subjects> querySubjectDetails(int subjectId) async {
+  Future<Subjects>  querySubjectDetails(int subjectId) async {
     Subjects result = await BangumiNet.bangumiSubject(subjectId);
     // subjects.value = result;
     production.value = getInfobox(result.infobox!, '製作');
@@ -108,7 +112,7 @@ class WikiController extends GetxController {
     return resultPersons;
   }
 
-  // 请求条目演员信息列表
+  // 请求条目衍生相关作品
   Future<List<RelatedWorksQuery>> querySubjectDerivation(int subjectId) async {
     List<RelatedWorksQuery> resultDerivation = await BangumiNet.bangumiSubjectDerivation(subjectId);
 

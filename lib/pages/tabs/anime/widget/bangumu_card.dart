@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/badge.dart';
-import 'package:hele_app/common/utils/network_img.dart';
+import 'package:hele_app/common/Widget/network_img.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/routes/app_pages.dart';
 

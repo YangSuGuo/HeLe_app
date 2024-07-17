@@ -14,7 +14,7 @@ class WikiController extends GetxController {
   // RxList<CharacterList> characterList = <CharacterList>[].obs; // 角色列表
   // RxList<PersonCareer> person = <PersonCareer>[].obs; // 演员信息
   // RxList<RelatedWorksQuery> derivation = <RelatedWorksQuery>[].obs; // 衍生相关作品
-  RxList tags = [].obs; // 标签列表
+  List<String> tags = []; // 标签列表
 
   int subjectId = 0;
   String title = '';
@@ -31,10 +31,10 @@ class WikiController extends GetxController {
     legacySubjectSmall = Get.arguments['bangumiItem'];
     subjectId = legacySubjectSmall.id!;
 
-    querySubjectDetails(subjectId); // 获取条目详情
-    querySubjectCharacterList(subjectId); // 获取角色列表
-    querySubjectPersons(subjectId); // 获取演员信息
-    querySubjectDerivation(subjectId); // 获取衍生相关作品
+    // querySubjectDetails(subjectId); // 获取条目详情
+    // querySubjectCharacterList(subjectId); // 获取角色列表
+    // querySubjectPersons(subjectId); // 获取演员信息
+    // querySubjectDerivation(subjectId); // 获取衍生相关作品
 
     title = legacySubjectSmall.nameCn != "" || legacySubjectSmall.name != ""
         ? legacySubjectSmall.nameCn != ""
@@ -88,7 +88,7 @@ class WikiController extends GetxController {
     // subjects.value = result;
     production.value = getInfobox(result.infobox!, '製作');
     // 标签列表
-    tags.value = result.tags.map((tag) => tag.name).toList();
+    tags = result.tags.map((tag) => tag.name).toList();
     // 标准差
     deviation.value =
         MathUtils.calculateStandardDeviation(result.rating.total, result.rating.count, result.rating.score);

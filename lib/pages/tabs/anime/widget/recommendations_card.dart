@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/common/utils/network_img.dart';
+import 'package:hele_app/common/Widget/network_img.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/search/search.dart';
 import 'package:hele_app/routes/app_pages.dart';

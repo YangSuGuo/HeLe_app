@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/entry_title.dart';
-import 'package:hele_app/common/utils/network_img.dart';
+import 'package:hele_app/common/Widget/network_img.dart';
 import 'package:hele_app/model/character_list/character_list.dart';
 import 'package:hele_app/model/derivation/related_works_query.dart';
 import 'package:hele_app/model/person_career/person_career.dart';
@@ -28,6 +28,7 @@ class Wiki extends StatefulWidget {
   State<Wiki> createState() => _WikiState();
 }
 
+// BUG 该页面在生产模式下会出现空指针解引用（null pointer dereference）
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   // final WikiController _wikiController = Get.put(WikiController());
   final WikiController _wikiController = Get.find<WikiController>();
@@ -66,7 +67,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _wikiController.dispose();
+    // _wikiController.dispose();
     super.dispose();
   }
 
@@ -100,7 +101,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                       slivers: [
                         /* _buildAppBar(),*/
                         // 封面介绍
-                        SliverToBoxAdapter(child: Introduction(data: s)),
+                        SliverToBoxAdapter(
+                            child: Introduction(
+                          s: s,
+                          imgUrl: _wikiController.imgUrl,
+                          title: _wikiController.title,
+                          production: _wikiController.production.value,
+                          tags: _wikiController.tags,
+                        )),
                         SliverGap(16.h),
                         // 可展开的文本框
                         if (s.summary != "")
@@ -200,76 +208,82 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
                         SliverGap(24.h),
                         // 角色信息
-                        EntryTitle(
-                            title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        SliverGap(16.h),
-                        SliverToBoxAdapter(
-                            child: SizedBox(
-                                height: 200.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    return InfoSubitem(
-                                      src: characters[index].images?.medium,
-                                      radius: 5,
-                                      fit: BoxFit.fitHeight,
-                                      title: characters[index].name,
-                                      subtitle: _wikiController.getSubTitle(
-                                          characters[index].relation, characters[index].actors),
-                                      onTap: () {},
-                                    );
-                                  },
-                                  itemCount: characters.length,
-                                  scrollDirection: Axis.horizontal,
-                                ))),
+                        if (characters.isNotEmpty)
+                          EntryTitle(
+                              title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                        if (characters.isNotEmpty) SliverGap(16.h),
+                        if (characters.isNotEmpty)
+                          SliverToBoxAdapter(
+                              child: SizedBox(
+                                  height: 200.h,
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return InfoSubitem(
+                                        src: characters[index].images?.medium,
+                                        radius: 5,
+                                        fit: BoxFit.fitHeight,
+                                        title: characters[index].name,
+                                        subtitle: _wikiController.getSubTitle(
+                                            characters[index].relation, characters[index].actors ?? []),
+                                        onTap: () {},
+                                      );
+                                    },
+                                    itemCount: characters.length,
+                                    scrollDirection: Axis.horizontal,
+                                  ))),
                         SliverGap(24.h),
 
                         // 制作人员
-                        EntryTitle(
-                            title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        SliverGap(16.h),
-                        SliverToBoxAdapter(
-                            child: SizedBox(
-                                height: 200.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    return InfoSubitem(
-                                      src: persons[index].images?.medium,
-                                      title: persons[index].name,
-                                      subtitle: persons[index].relation,
-                                      onTap: () {},
-                                    );
-                                  },
-                                  itemCount: persons.length,
-                                  scrollDirection: Axis.horizontal,
-                                ))),
+                        if (persons.isNotEmpty)
+                          EntryTitle(
+                              title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                        if (persons.isNotEmpty) SliverGap(16.h),
+                        if (persons.isNotEmpty)
+                          SliverToBoxAdapter(
+                              child: SizedBox(
+                                  height: 200.h,
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return InfoSubitem(
+                                        src: persons[index].images?.medium,
+                                        title: persons[index].name,
+                                        subtitle: persons[index].relation,
+                                        onTap: () {},
+                                      );
+                                    },
+                                    itemCount: persons.length,
+                                    scrollDirection: Axis.horizontal,
+                                  ))),
                         SliverGap(24.h),
 
                         // 关联作品
-                        EntryTitle(
-                            title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        SliverGap(16.h),
-                        SliverToBoxAdapter(
-                            child: SizedBox(
-                                height: 330.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
-                                        ? derivation[index].nameCn
-                                        : derivation[index].name;
-                                    return InfoSubitem(
-                                      containerWidth: 200.w,
-                                      src: derivation[index].images?.medium,
-                                      width: 200.w,
-                                      height: 230.h,
-                                      fit: BoxFit.cover,
-                                      title: title,
-                                      subtitle: derivation[index].relation,
-                                      onTap: () {},
-                                    );
-                                  },
-                                  itemCount: derivation.length,
-                                  scrollDirection: Axis.horizontal,
-                                )))
+                        if (derivation.isNotEmpty)
+                          EntryTitle(
+                              title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                        if (derivation.isNotEmpty) SliverGap(16.h),
+                        if (derivation.isNotEmpty)
+                          SliverToBoxAdapter(
+                              child: SizedBox(
+                                  height: 330.h,
+                                  child: ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
+                                          ? derivation[index].nameCn
+                                          : derivation[index].name;
+                                      return InfoSubitem(
+                                        containerWidth: 200.w,
+                                        src: derivation[index].images?.medium,
+                                        width: 200.w,
+                                        height: 230.h,
+                                        fit: BoxFit.cover,
+                                        title: title,
+                                        subtitle: derivation[index].relation,
+                                        onTap: () {},
+                                      );
+                                    },
+                                    itemCount: derivation.length,
+                                    scrollDirection: Axis.horizontal,
+                                  )))
 
                         // 相关景点，地点
                       ]);
@@ -300,102 +314,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
               }))
     ]));
   }
-
-/*  // 关联作品
-  // todo 点击事件
-  FutureBuilder futureRelatedWorksBuilder() {
-    return FutureBuilder(
-        future: _derivation,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            List<RelatedWorksQuery> derivation = snapshot.data;
-            return SliverToBoxAdapter(
-                child: SizedBox(
-                    height: 330.h,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
-                            ? derivation[index].nameCn
-                            : derivation[index].name;
-                        return InfoSubitem(
-                          containerWidth: 200.w,
-                          src: derivation[index].images?.medium,
-                          width: 200.w,
-                          height: 230.h,
-                          fit: BoxFit.cover,
-                          title: title,
-                          subtitle: derivation[index].relation,
-                          onTap: () {},
-                        );
-                      },
-                      itemCount: derivation.length,
-                      scrollDirection: Axis.horizontal,
-                    )));
-          } else {
-            return const SliverToBoxAdapter(child: nil);
-          }
-        });
-  }
-
-  // 制作人员
-  // todo 点击事件
-  FutureBuilder futurePersonBuilder() {
-    return FutureBuilder(
-        future: _person,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            List<PersonCareer> persons = snapshot.data;
-            return SliverToBoxAdapter(
-                child: SizedBox(
-                    height: 200.h,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return InfoSubitem(
-                          src: persons[index].images?.medium,
-                          title: persons[index].name,
-                          subtitle: persons[index].relation,
-                          onTap: () {},
-                        );
-                      },
-                      itemCount: persons.length,
-                      scrollDirection: Axis.horizontal,
-                    )));
-          } else {
-            return const SliverToBoxAdapter(child: nil);
-          }
-        });
-  }
-
-  // 角色信息
-  // todo 点击事件
-  FutureBuilder futureCharactersBuilder() {
-    return FutureBuilder(
-        future: _characters,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            List<CharacterList> characters = snapshot.data;
-            return SliverToBoxAdapter(
-                child: SizedBox(
-                    height: 200.h,
-                    child: ListView.builder(
-                      itemBuilder: (context, index) {
-                        return InfoSubitem(
-                          src: characters[index].images?.medium,
-                          radius: 5,
-                          fit: BoxFit.fitHeight,
-                          title: characters[index].name,
-                          subtitle: _wikiController.getSubTitle(characters[index].relation, characters[index].actors),
-                          onTap: () {},
-                        );
-                      },
-                      itemCount: characters.length,
-                      scrollDirection: Axis.horizontal,
-                    )));
-          } else {
-            return const SliverToBoxAdapter(child: nil);
-          }
-        });
-  }*/
 
   // 剧集列表
   Widget contentGrid(int eps) {

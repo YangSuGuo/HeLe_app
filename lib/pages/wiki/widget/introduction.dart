@@ -2,33 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/badge.dart';
-import 'package:hele_app/common/utils/network_img.dart';
+import 'package:hele_app/common/Widget/network_img.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
-import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
 import 'package:hele_app/pages/wiki/widget/subheading.dart';
 
-class Introduction extends StatefulWidget {
-  const Introduction({super.key, required this.data});
+class Introduction extends StatelessWidget {
+  const Introduction(
+      {super.key,
+      required this.s,
+      required this.imgUrl,
+      required this.title,
+      required this.production,
+      required this.tags});
 
-  final Subjects data;
-
-  @override
-  State<Introduction> createState() => _IntroductionState();
-}
-
-class _IntroductionState extends State<Introduction> {
-  final WikiController _wikiController = Get.find<WikiController>();
-  late final Subjects s;
-
-  @override
-  void initState() {
-    super.initState();
-    s = widget.data;
-  }
+  final Subjects s;
+  final String imgUrl;
+  final String title;
+  final String production;
+  final List<String> tags;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +32,7 @@ class _IntroductionState extends State<Introduction> {
         // 封面图片
         Stack(children: [
           NetworkImg(
-            src: _wikiController.imgUrl,
+            src: imgUrl,
             width: 210.w,
             height: 240.h,
           ),
@@ -50,7 +44,7 @@ class _IntroductionState extends State<Introduction> {
           // 标题
           SizedBox(
               width: constraints.maxWidth - 235.w,
-              child: Text(_wikiController.title,
+              child: Text(title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -85,9 +79,9 @@ class _IntroductionState extends State<Introduction> {
           ),
 
           // 制作
-          if (_wikiController.production != "")
+          if (production != "")
             Subheading(
-              title: _wikiController.production.value,
+              title: production,
               icon: FontAwesomeIcons.user,
               isOverflow: true,
               width: constraints.maxWidth - 267.5.w,
@@ -100,14 +94,14 @@ class _IntroductionState extends State<Introduction> {
               child: ListView.separated(
                   padding: EdgeInsets.zero,
                   scrollDirection: Axis.horizontal,
-                  itemCount: _wikiController.tags.length,
+                  itemCount: tags.length,
                   separatorBuilder: (BuildContext context, int index) {
                     return Gap(12.w);
                   },
                   itemBuilder: (BuildContext context, int index) {
                     return CustomChip(
                       onTap: () {},
-                      label: _wikiController.tags[index],
+                      label: tags[index],
                       selected: false,
                       isTranslucent: true,
                     );

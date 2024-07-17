@@ -68,7 +68,9 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        child: CustomScrollView(controller: _mangaController.scrollController, slivers: [
+        child: CustomScrollView(
+            controller: _mangaController.scrollController,
+            slivers: [
           EntryTitle(title: "热门推荐", fontWeight: FontWeight.bold, size: 44.sp),
           SliverGap(16.h),
           FutureBuilder(

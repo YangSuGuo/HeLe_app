@@ -73,8 +73,6 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
           ),
-          primary: false,
-          shrinkWrap: false,
           slivers: [
             /// 推荐
             /// 根据当前时间所处季度，按收藏人数进行排序，取前5个为推荐

@@ -96,8 +96,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics(),
                       ),
-                      primary: false,
-                      shrinkWrap: false,
                       slivers: [
                         /* _buildAppBar(),*/
                         // 封面介绍

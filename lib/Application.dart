@@ -1,9 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/common/flavors/build_config.dart';
-import 'package:hele_app/common/flavors/env_config.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/routes/app_pages.dart';
@@ -18,8 +18,6 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  final EnvConfig _envConfig = BuildConfig.instance.config;
-
   @override
   Widget build(BuildContext context) {
     // 状态管理
@@ -38,13 +36,11 @@ class _ApplicationState extends State<Application> {
               builder: (context, child) {
                 return GetMaterialApp(
                     // APP 配置
-                    title: _envConfig.appName,
+                    title: "HeLe",
                     // 主题
                     themeMode: watchApplicationProvider.themeMode,
-                    theme: AppTheme(getMultipleThemesMode(context))
-                        .multipleThemesLightMode(),
-                    darkTheme: AppTheme(getMultipleThemesMode(context))
-                        .multipleThemesDarkMode(),
+                    theme: AppTheme(getMultipleThemesMode(context)).multipleThemesLightMode(),
+                    darkTheme: AppTheme(getMultipleThemesMode(context)).multipleThemesDarkMode(),
                     // 路由
                     initialRoute: AppPages.INITIAL,
                     getPages: AppPages.routes,
@@ -53,12 +49,10 @@ class _ApplicationState extends State<Application> {
                     // 国际化
                     supportedLocales: S.supportedLocales,
                     localizationsDelegates: S.localizationsDelegates,
-                    locale: watchApplicationProvider.localeSystem
-                        ? null
-                        : watchApplicationProvider.locale,
+                    locale: watchApplicationProvider.localeSystem ? null : watchApplicationProvider.locale,
                     localeListResolutionCallback: (locales, supportedLocales) {
-                      print('当前地区语言$locales');
-                      print('设备支持的地区语言$supportedLocales');
+                      log('当前地区语言$locales');
+                      log('设备支持的地区语言$supportedLocales');
                       return null;
                     },
                     // 弹框提示

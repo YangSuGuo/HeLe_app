@@ -14,7 +14,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   late RxList tabs = [].obs; // Tab列表
   late List defaultTabs; // 默认Tab列表
   late List<String> tabbarSort; // Tab排序
-  late List tabsCtrList; // TabController列表
+  // late List tabsCtrList; // TabController列表
   RxInt initialIndex = 1.obs; // 初始Tab索引
   late List<Widget> tabsPageList; // Tab页面列表
 
@@ -33,7 +33,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
         tabbarSort.indexOf((a['type'] as TabType).id).compareTo(tabbarSort.indexOf((b['type'] as TabType).id)));
 
     tabs.value = defaultTabs;
-    tabsCtrList = tabs.map((e) => e['controller']).toList();
+    // tabsCtrList = tabs.map((e) => e['controller']).toList();
     tabsPageList = tabs.map<Widget>((e) => e['page']).toList();
 
     if (kDebugMode) {

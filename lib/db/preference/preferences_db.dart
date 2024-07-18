@@ -3,7 +3,6 @@ import 'package:hele_app/themes/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesDB {
-  // todo 抽象化
   PreferencesDB._();
 
   static final PreferencesDB db = PreferencesDB._();
@@ -13,24 +12,10 @@ class PreferencesDB {
       _db ??= await SharedPreferences.getInstance();
 
   /// ** APP相关 **
-
-  static const keyToken = "token"; // token
   static const appThemeDarkMode = "themes"; // app主题
   static const appMultipleThemesMode = 'appMultipleThemesMode'; // 多主题
   static const appLocale = 'appLocale'; // 语言
   static const appIsLocaleSystem = 'appIsLocaleSystem'; // 语言是否跟随系统
-
-  /// 设置-token
-  Future<bool> setToken(String token) async {
-    final SharedPreferences prefs = await database;
-    return prefs.setString(keyToken, token);
-  }
-
-  /// 获取-token
-  Future<String> getToken() async {
-    final SharedPreferences prefs = await database;
-    return prefs.getString(keyToken) ?? '';
-  }
 
   /// 设置-主题外观模式
   Future<bool> setAppThemeDarkMode(ThemeMode themeMode) async {

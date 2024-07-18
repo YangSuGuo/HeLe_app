@@ -111,11 +111,16 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         // 可展开的文本框
                         if (s.summary != "")
                           SliverToBoxAdapter(
-                              child: ExpandText(
-                            s.summary,
-                            maxLines: 4,
-                            style: TextStyle(color: colorScheme.secondary.withOpacity(0.85)),
-                          )),
+                              child: Theme(
+                                  data: ThemeData(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                  ),
+                                  child: ExpandText(
+                                    s.summary,
+                                    maxLines: 4,
+                                    style: TextStyle(color: colorScheme.secondary.withOpacity(0.85)),
+                                  ))),
 
                         // 剧集展示  0 < x < 60
                         // todo 点击跳转到剧集详情

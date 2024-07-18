@@ -16,7 +16,7 @@ class AnimeController extends GetxController {
   RxList<Calendar> bangumiCalendar = <Calendar>[].obs; // 追番表
   RxInt bangumiItemsLength = 0.obs; // 追番表长度
 
-  final RxInt TODAY_ID = 0.obs;
+  late final int TODAY_ID;
   RxInt dayOfWeekIndex = 0.obs;
   RxInt initialValue = 2.obs;
 
@@ -27,9 +27,9 @@ class AnimeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    queryBangumiCalendarFeed();
+    // queryBangumiCalendarFeed();
 
-    TODAY_ID.value = DateUtils.getDayOfWeekIndex();
+    TODAY_ID = DateUtils.getDayOfWeekIndex();
     dayOfWeekIndex.value = DateUtils.getDayOfWeekIndex() - 1; // 星期几 id
 
     log(TODAY_ID.toString());
@@ -40,30 +40,30 @@ class AnimeController extends GetxController {
   tapSegmentChanger(v) async {
     switch (v) {
       case 1: // -
-        if (TODAY_ID.value == 1) {
+        if (TODAY_ID == 1) {
           // 周一
           dayOfWeekIndex.value = 6;
           log("当前索引：${dayOfWeekIndex.value}");
-        } else if (TODAY_ID.value == 7) {
+        } else if (TODAY_ID == 7) {
           // 周日
           dayOfWeekIndex.value = 5;
           log("当前索引：${dayOfWeekIndex.value}");
         } else {
-          dayOfWeekIndex.value = TODAY_ID.value - 2;
+          dayOfWeekIndex.value = TODAY_ID - 2;
           log("当前索引：${dayOfWeekIndex.value}");
         }
         break;
       case 2:
-        dayOfWeekIndex.value = TODAY_ID.value - 1;
+        dayOfWeekIndex.value = TODAY_ID - 1;
         log("当前索引：${dayOfWeekIndex.value}");
         break;
       case 3: // +
-        if (TODAY_ID.value == 7) {
+        if (TODAY_ID == 7) {
           // 周日
           dayOfWeekIndex.value = 0;
           log("当前索引：${dayOfWeekIndex.value}");
         } else {
-          dayOfWeekIndex.value = TODAY_ID.value;
+          dayOfWeekIndex.value = TODAY_ID;
           log("当前索引：${dayOfWeekIndex.value}");
         }
         break;

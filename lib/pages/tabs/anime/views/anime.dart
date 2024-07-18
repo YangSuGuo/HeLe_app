@@ -55,12 +55,13 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   @override
   void dispose() {
     _animeController.scrollController.removeListener(() {});
-    _animeController.scrollController.dispose();
+    // _animeController.scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       clipBehavior: Clip.hardEdge,
@@ -131,7 +132,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                     if (snapshot.connectionState == ConnectionState.done) {
                       List<Calendar> data = snapshot.data;
                       return Obx(
-                          () => contentGrid(_animeController, data[_animeController.dayOfWeekIndex.value].items!));
+                          () => contentGrid(data[_animeController.dayOfWeekIndex.value].items!));
                     } else if (snapshot.hasError) {
                       return SliverToBoxAdapter(
                           child: Center(
@@ -160,9 +161,12 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
     return SliverToBoxAdapter(
         child: SizedBox(
       height: 200.h,
-      child: ListView.builder(
-          itemCount: pagination.limit,
+      child: ListView.separated(
+          itemCount: pagination.limit ?? 5,
           scrollDirection: Axis.horizontal,
+          separatorBuilder: (BuildContext context, int index) {
+            return Gap(20.w);
+          },
           itemBuilder: (BuildContext context, int index) {
             List<Datum>? data = pagination.data;
             return RecommendationsCard(data: data?[index]);
@@ -171,7 +175,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   }
 
   // 追番剧列表
-  Widget contentGrid(ctr, List<LegacySubjectSmall> bangumiList) {
+  Widget contentGrid(List<LegacySubjectSmall> bangumiList) {
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: 6,
@@ -182,11 +186,6 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return BangumiCard(bangumiItem: bangumiList[index]);
-
-          // 过滤 无图片 子项
-          /* bangumiList[index].images != null
-              ? BangumiCard(bangumiItem: bangumiList[index])
-              : nil;*/
         },
         childCount: bangumiList.length,
       ),

@@ -14,9 +14,9 @@ class _CustomTabsState extends State<CustomTabs> {
   final HomeController _homeController = Get.find<HomeController>();
 
   void onTap(int index) {
-    if (_homeController.initialIndex.value == index) {
-      _homeController.tabsCtrList[index]().animateToTop();
-    }
+    // if (_homeController.initialIndex.value == index) {
+      // _homeController.tabsCtrList[index]().animateToTop();
+    // }
     _homeController.initialIndex.value = index;
     _homeController.tabController.index = index;
   }

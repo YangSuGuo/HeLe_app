@@ -82,4 +82,6 @@
     <tree path="/lib/model/search/query_parameters.dart" title="搜索Query" extension="" presentableText="" tooltipTitle="" icon="" textColor="" backgroundColor=""/>
     <tree path="/lib/pages/tabs/anime/widget/recommendations_card.dart" title="推荐卡片"/>
     <tree path="/lib/common/Widget/network_img.dart" title="图片封装"/>
+    <tree path="/lib/common/Widget/show_modal_bottom_detail.dart" title="底部弹出层"/>
+    <tree path="/lib/pages/home/widget/theme_card.dart" title="主题卡片"/>
 </trees>

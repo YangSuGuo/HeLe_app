@@ -18,7 +18,7 @@ class Datum {
   String name;
 
   ///条目中文名
-  String nameCn;
+  String? nameCn;
 
   ///排名
   int rank;
@@ -36,7 +36,7 @@ class Datum {
     required this.id,
     required this.image,
     required this.name,
-    required this.nameCn,
+    this.nameCn,
     required this.rank,
     required this.score,
     required this.summary,

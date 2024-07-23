@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/themes/app_theme.dart';
+import 'package:provider/provider.dart';
 
 class Init extends StatefulWidget {
   const Init({super.key, required this.child});
@@ -73,7 +75,7 @@ class _InitState extends State<Init> {
 
   /// 应用初始化
   void init() async {
-/*    final ApplicationProvider applicationProvider =
+    final ApplicationProvider applicationProvider =
         context.read<ApplicationProvider>();
 
     // 获取APP主题深色模式
@@ -83,6 +85,6 @@ class _InitState extends State<Init> {
     // 获取APP地区语言
     applicationProvider.loadLocale();
     // 获取APP地区语言是否跟随系统
-    applicationProvider.loadLocaleSystem();*/
+    applicationProvider.loadLocaleSystem();
   }
 }

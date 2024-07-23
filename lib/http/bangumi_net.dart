@@ -120,7 +120,7 @@ class BangumiNet {
       return pagination;
     } else {
       log("报错：$res");
-      throw Exception('获取热门漫画推荐数据失败');
+      throw Exception('获取搜索数据失败');
     }
   }
 }

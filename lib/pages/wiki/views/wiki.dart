@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/entry_title.dart';
@@ -14,6 +15,7 @@ import 'package:hele_app/model/person_career/person_career.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
+import 'package:hele_app/pages/wiki/widget/action_item.dart';
 import 'package:hele_app/pages/wiki/widget/info_subitem.dart';
 import 'package:hele_app/pages/wiki/widget/introduction.dart';
 import 'package:hele_app/pages/wiki/widget/more_information.dart';
@@ -107,6 +109,10 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                           production: _wikiController.production.value,
                           tags: _wikiController.tags,
                         )),
+                       // 功能列表
+                        SliverToBoxAdapter(
+                          child: actionGrid(context),
+                        ),
                         SliverGap(16.h),
                         // 可展开的文本框
                         if (s.summary != "")
@@ -316,6 +322,51 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 }
               }))
     ]));
+  }
+
+  // 功能模块
+  Widget actionGrid(BuildContext context) {
+    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      return Container(
+        margin: const EdgeInsets.only(top: 6, bottom: 4),
+        height: constraints.maxWidth * 0.17,
+        child: GridView.count(
+          physics: const NeverScrollableScrollPhysics(),
+          primary: false,
+          padding: EdgeInsets.zero,
+          crossAxisCount: 4,
+          childAspectRatio: 1.5,
+          children: [
+            ActionItem(
+                icon: const Icon(FontAwesomeIcons.thumbsUp),
+                selectIcon: const Icon(FontAwesomeIcons.solidThumbsUp),
+                onTap: () {},
+                selectStatus: false,
+                text: "推荐"),
+            ActionItem(
+              icon: const Icon(FontAwesomeIcons.b),
+              selectIcon: const Icon(FontAwesomeIcons.b),
+              onTap: () {},
+              selectStatus: false,
+              text: "标记",
+            ),
+            ActionItem(
+              icon: const Icon(FontAwesomeIcons.star),
+              selectIcon: const Icon(FontAwesomeIcons.solidStar),
+              onTap: () {},
+              selectStatus: false,
+              text: "收藏",
+            ),
+            ActionItem(
+              icon: const Icon(FontAwesomeIcons.shareFromSquare),
+              onTap: () {},
+              selectStatus: false,
+              text: '分享',
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   // 剧集列表

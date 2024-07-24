@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 Future<T?> showModalBottomDetail<T>({
   required BuildContext context,
   required Widget child,
+  required double height,
 }) {
   ColorScheme colorScheme = Theme.of(context).colorScheme;
   return showModalBottomSheet<T>(
@@ -21,7 +22,7 @@ Future<T?> showModalBottomDetail<T>({
     ),
     builder: (BuildContext context) {
       return Container(
-          height: Get.height * 0.4,
+          height: height,
           child: Column(
             children: [
               // 顶部拖拽小横条

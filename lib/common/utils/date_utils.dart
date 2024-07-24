@@ -47,4 +47,9 @@ class DateUtils {
       }
     }
   }
+
+  /// 格式化时间 2023-01-01
+  static String formatDate(DateTime date) {
+    return DateFormat('yyyy-MM-dd').format(date);
+  }
 }

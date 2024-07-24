@@ -84,4 +84,5 @@
     <tree path="/lib/common/Widget/network_img.dart" title="图片封装"/>
     <tree path="/lib/common/Widget/show_modal_bottom_detail.dart" title="底部弹出层"/>
     <tree path="/lib/pages/home/widget/theme_card.dart" title="主题卡片"/>
+    <tree path="/lib/pages/wiki/widget/action_item.dart" title="图标按钮"/>
 </trees>

@@ -9,6 +9,7 @@ class PBadge extends StatelessWidget {
   final double? left;
   final String? stack;
   final double? fs;
+  final Color? bgColor;
 
   const PBadge({
     super.key,
@@ -17,6 +18,7 @@ class PBadge extends StatelessWidget {
     this.right,
     this.bottom,
     this.left,
+    this.bgColor,
     this.stack = 'position',
     this.fs = 11,
   });
@@ -24,11 +26,8 @@ class PBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorScheme t = Theme.of(context).colorScheme;
-    // 背景色
-    Color bgColor = t.primary;
-    // 前景色
+    Color bg = t.primary.withOpacity(0.85);
     Color color = t.onPrimary;
-    // 边框色
     Color borderColor = Colors.transparent;
 
     EdgeInsets paddingStyle =
@@ -39,7 +38,7 @@ class PBadge extends StatelessWidget {
       padding: paddingStyle,
       decoration: BoxDecoration(
         borderRadius: br,
-        color: bgColor,
+        color: bgColor ?? bg,
         border: Border.all(color: borderColor),
       ),
       child: Text(

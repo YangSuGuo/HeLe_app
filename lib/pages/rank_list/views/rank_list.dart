@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
@@ -90,6 +91,7 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                             padding: EdgeInsets.only(top: 8.h, right: 36.w),
                             child: IconButton(
                               onPressed: () {
+                                HapticFeedback.lightImpact();
                                 showModalBottomDetail(
                                     height: Get.height * 0.41, context: context, child: bottomSheet(context));
                               },
@@ -191,6 +193,7 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
                     textTheme: ButtonTextTheme.primary,
                     onPressed: () {
+                      HapticFeedback.lightImpact();
                       _rankController.applySearchFilters();
                       Get.back();
                     },

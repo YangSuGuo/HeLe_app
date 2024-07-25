@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:hele_app/common/Widget/show_modal_bottom_detail.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
 import 'package:hele_app/pages/home/widget/theme_card.dart';
 import 'package:hele_app/providers/application/application.dart';
+import 'package:hele_app/routes/app_pages.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 import 'package:hele_app/themes/multiple_themes_mode/multiple_themes.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +37,7 @@ class SearchAppBar extends StatelessWidget {
             color: colorScheme.primary.withOpacity(0.1),
             child: InkWell(
               splashColor: colorScheme.primary.withOpacity(0.05),
-              onTap: () => {},
+              onTap: () => {Get.toNamed(Routes.SEARCH)},
               child: Row(
                 children: [
                   const SizedBox(width: 14),
@@ -69,6 +71,7 @@ class SearchAppBar extends StatelessWidget {
             backgroundColor: ButtonStyleButton.allOrNull(Theme.of(context).colorScheme.onInverseSurface),
           ),
           onPressed: () => {
+            HapticFeedback.lightImpact(),
             showModalBottomDetail(
               height: Get.height * 0.4,
               context: context,
@@ -212,97 +215,103 @@ class SearchAppBar extends StatelessWidget {
                         // spacing: 50.w,
                         children: [
                           ThemeCard(
-                            title: "跟随系统",
-                            selected: themeMode == ThemeMode.system,
-                            width: 210.w,
-                            height: 110.h,
-                            borderCurvature: 24.5.r,
-                            containerCurvature: 20.r,
-                            showBorder: true,
-                            iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
-                            isExplanationText: true,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    color: colorScheme.scrim,
-                                    child: Text(
-                                      'Aa',
-                                      style: TextStyle(
-                                        color: AppThemeColorScheme.lightDefaultScheme().onSecondary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 32.sp,
+                              title: "跟随系统",
+                              selected: themeMode == ThemeMode.system,
+                              width: 210.w,
+                              height: 110.h,
+                              borderCurvature: 24.5.r,
+                              containerCurvature: 20.r,
+                              showBorder: true,
+                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              isExplanationText: true,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      color: colorScheme.scrim,
+                                      child: Text(
+                                        'Aa',
+                                        style: TextStyle(
+                                          color: AppThemeColorScheme.lightDefaultScheme().onSecondary,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 32.sp,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    color: AppThemeColorScheme.lightDefaultScheme().onPrimary,
-                                    child: Text(
-                                      'Aa',
-                                      style: TextStyle(
-                                        color: AppThemeColorScheme.lightDefaultScheme().secondary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 32.sp,
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      color: AppThemeColorScheme.lightDefaultScheme().onPrimary,
+                                      child: Text(
+                                        'Aa',
+                                        style: TextStyle(
+                                          color: AppThemeColorScheme.lightDefaultScheme().secondary,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 32.sp,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            onTap: () => applicationProvider.themeMode = ThemeMode.system,
-                          ),
+                                ],
+                              ),
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                applicationProvider.themeMode = ThemeMode.system;
+                              }),
                           ThemeCard(
-                            title: "日间模式",
-                            selected: themeMode == ThemeMode.light,
-                            width: 210.w,
-                            height: 110.h,
-                            borderCurvature: 24.5.r,
-                            containerCurvature: 20.r,
-                            showBorder: true,
-                            iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
-                            isExplanationText: true,
-                            child: Container(
-                              alignment: Alignment.center,
-                              color: AppThemeColorScheme.lightDefaultScheme().onPrimary,
-                              child: Text(
-                                'Aa',
-                                style: TextStyle(
-                                  color: AppThemeColorScheme.lightDefaultScheme().secondary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 36.sp,
+                              title: "日间模式",
+                              selected: themeMode == ThemeMode.light,
+                              width: 210.w,
+                              height: 110.h,
+                              borderCurvature: 24.5.r,
+                              containerCurvature: 20.r,
+                              showBorder: true,
+                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              isExplanationText: true,
+                              child: Container(
+                                alignment: Alignment.center,
+                                color: AppThemeColorScheme.lightDefaultScheme().onPrimary,
+                                child: Text(
+                                  'Aa',
+                                  style: TextStyle(
+                                    color: AppThemeColorScheme.lightDefaultScheme().secondary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 36.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                            onTap: () => applicationProvider.themeMode = ThemeMode.light,
-                          ),
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                applicationProvider.themeMode = ThemeMode.light;
+                              }),
                           ThemeCard(
-                            title: "夜间模式",
-                            selected: themeMode == ThemeMode.dark,
-                            width: 210.w,
-                            height: 110.h,
-                            borderCurvature: 24.5.r,
-                            containerCurvature: 20.r,
-                            showBorder: true,
-                            iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
-                            isExplanationText: true,
-                            child: Container(
-                              alignment: Alignment.center,
-                              color: colorScheme.scrim,
-                              child: Text(
-                                'Aa',
-                                style: TextStyle(
-                                  color: AppThemeColorScheme.lightDefaultScheme().onSecondary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 36.sp,
+                              title: "夜间模式",
+                              selected: themeMode == ThemeMode.dark,
+                              width: 210.w,
+                              height: 110.h,
+                              borderCurvature: 24.5.r,
+                              containerCurvature: 20.r,
+                              showBorder: true,
+                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              isExplanationText: true,
+                              child: Container(
+                                alignment: Alignment.center,
+                                color: colorScheme.scrim,
+                                child: Text(
+                                  'Aa',
+                                  style: TextStyle(
+                                    color: AppThemeColorScheme.lightDefaultScheme().onSecondary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 36.sp,
+                                  ),
                                 ),
                               ),
-                            ),
-                            onTap: () => applicationProvider.themeMode = ThemeMode.dark,
-                          ),
+                              onTap: () {
+                                HapticFeedback.lightImpact();
+                                applicationProvider.themeMode = ThemeMode.dark;
+                              }),
                         ],
                       );
                     },
@@ -373,6 +382,7 @@ class _MultipleThemesBodyState extends State<MultipleThemesBody> {
                     color: primaryColor,
                   ),
                   onTap: () {
+                    HapticFeedback.lightImpact();
                     applicationProvider.multipleThemesMode = key;
                   },
                 );

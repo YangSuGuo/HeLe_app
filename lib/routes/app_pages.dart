@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:hele_app/pages/home/views/home.dart';
 import 'package:hele_app/pages/main/bindings/main_binding.dart';
 import 'package:hele_app/pages/main/views/main.dart';
+import 'package:hele_app/pages/search/bindings/search_binding.dart';
+import 'package:hele_app/pages/search/views/search.dart';
 import 'package:hele_app/pages/tabs/anime/views/anime.dart';
 import 'package:hele_app/pages/tabs/lightNovel/views/light_novel.dart';
 import 'package:hele_app/pages/tabs/manga/views/manga.dart';
@@ -61,6 +63,13 @@ class AppPages {
       name: Routes.WIKI,
       page: () => const Wiki(),
       binding: WikiBindings(),
-    )
+    ),
+
+    // 搜索页
+    GetPage(
+      name: Routes.SEARCH,
+      page: () => const Search(),
+      binding: SearchBinding(),
+    ),
   ];
 }

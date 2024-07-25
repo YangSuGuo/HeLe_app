@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/pages/home/controllers/home_controller.dart';
@@ -17,6 +18,7 @@ class _CustomTabsState extends State<CustomTabs> {
     // if (_homeController.initialIndex.value == index) {
       // _homeController.tabsCtrList[index]().animateToTop();
     // }
+    HapticFeedback.lightImpact();
     _homeController.initialIndex.value = index;
     _homeController.tabController.index = index;
   }

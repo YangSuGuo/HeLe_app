@@ -12,6 +12,7 @@ import 'package:hele_app/model/search/search.dart';
 class RankController extends GetxController with GetSingleTickerProviderStateMixin {
   final ScrollController scrollController = ScrollController();
   late RxList<Datum> rankList = <Datum>[].obs;
+  List<String> tags = ["书籍", "动漫", "电影", "电视剧"];
   late RxInt type = 2.obs;
   late int limit = 50;
   late int offset = 0;
@@ -20,19 +21,19 @@ class RankController extends GetxController with GetSingleTickerProviderStateMix
   late DateTime startTime = DateTime.now();
   late DateTime endTime = DateTime.now();
 
-  late RxDouble expansionState = 0.0.obs;
-
   @override
   void onInit() {
     super.onInit();
     date = DateTime.now();
   }
 
+  // 重置时间
   void restoreDefaultFilters() {
     offset = 0;
     getRankingList([]);
   }
 
+  // 筛选
   void applySearchFilters() {
     if (!startTime.isAfter(date) && endTime.isAfter(startTime)) {
       String start = DateUtils.formatDate(startTime);
@@ -45,6 +46,7 @@ class RankController extends GetxController with GetSingleTickerProviderStateMix
     }
   }
 
+  // 选择类型
   void onSelected(bool value, int index) {
     switch (index) {
       case 0: // 书籍
@@ -66,6 +68,7 @@ class RankController extends GetxController with GetSingleTickerProviderStateMix
     }
   }
 
+  // 下一页
   Future next() async {
     offset += 50;
     await getRankingList([]);

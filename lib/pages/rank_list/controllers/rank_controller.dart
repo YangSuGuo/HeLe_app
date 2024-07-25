@@ -24,18 +24,23 @@ class RankController extends GetxController with GetSingleTickerProviderStateMix
 
   @override
   void onInit() {
-    date = DateTime.now();
     super.onInit();
+    date = DateTime.now();
   }
 
-  void applySearchFilters(){
-    if(startTime.isBefore(DateTime.now()) && startTime != null && endTime != null){
+  void restoreDefaultFilters() {
+    offset = 0;
+    getRankingList([]);
+  }
+
+  void applySearchFilters() {
+    if (!startTime.isAfter(date) && endTime.isAfter(startTime)) {
       String start = DateUtils.formatDate(startTime);
       String end = DateUtils.formatDate(endTime);
       List<String> airDate = [">$start", "<$end"];
-      print(airDate.toString());
       getRankingList(airDate);
-    }else{
+    } else {
+      offset = 0;
       getRankingList([]);
     }
   }

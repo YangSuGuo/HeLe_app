@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_debounce/easy_throttle.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,6 +16,7 @@ import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/search/search.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/rank_list/controllers/rank_controller.dart';
+import 'package:hele_app/pages/rank_list/widget/scroll_year_picker.dart';
 import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/routes/app_pages.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -101,142 +99,98 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                               child: IconButton(
                                 onPressed: () {
                                   showModalBottomDetail(
-                                      height: Get.height * 0.45,
+                                      height: Get.height * 0.41,
                                       context: context,
                                       child: ListView(
-                                        physics: const NeverScrollableScrollPhysics(),
-                                        padding: EdgeInsets.only(bottom: 28.h, left: 24.w, right: 24.w),
-                                        children: [
-                                          Row(
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          padding: EdgeInsets.only(bottom: 28.h, left: 24.w, right: 24.w),
+                                          children: [
+                                            Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  AutoSizeText(
+                                                    "分类排行",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 42.sp,
+                                                        color: colorScheme.secondary),
+                                                  ),
+                                                  MaterialButton(
+                                                      minWidth: 10.w,
+                                                      height: 45.h,
+                                                      color: colorScheme.primary.withOpacity(0.8),
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(50.r)),
+                                                      textTheme: ButtonTextTheme.primary,
+                                                      onPressed: () {
+                                                        _rankController.applySearchFilters();
+                                                        Get.back();
+                                                      },
+                                                      onLongPress: () {
+                                                        _rankController.restoreDefaultFilters();
+                                                        Get.back();
+                                                      },
+                                                      child: const AutoSizeText("筛选"))
+                                                ]),
+                                            Gap(16.h),
+                                            SizedBox(
+                                                height: 80.h,
+                                                child: ListView.separated(
+                                                  padding: EdgeInsets.symmetric(horizontal: 30.w),
+                                                  scrollDirection: Axis.horizontal,
+                                                  itemCount: 4,
+                                                  separatorBuilder: (BuildContext context, int index) {
+                                                    return SizedBox(width: 20.w);
+                                                  },
+                                                  itemBuilder: (BuildContext context, int index) {
+                                                    List<String> tags = ["书籍", "动漫", "电影", "电视剧"];
+                                                    return Obx(() => FilterChip(
+                                                        selected: index == _rankController.type.value - 1,
+                                                        // avatar: const CircleAvatar(),
+                                                        label: Text(tags[index]),
+                                                        backgroundColor: colorScheme.primary.withAlpha(40),
+                                                        side: const BorderSide(color: Colors.transparent),
+                                                        showCheckmark: true,
+                                                        visualDensity:
+                                                            const VisualDensity(horizontal: 0.0, vertical: -2.0),
+                                                        onSelected: (bool value) {
+                                                          _rankController.onSelected(value, index);
+                                                        }));
+                                                  },
+                                                )),
+                                            Gap(16.h),
+                                            Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 AutoSizeText(
-                                                  "分类排行",
+                                                  "年份筛选",
                                                   style: TextStyle(
                                                       fontWeight: FontWeight.bold,
                                                       fontSize: 42.sp,
                                                       color: colorScheme.secondary),
                                                 ),
-                                                MaterialButton(
-                                                    minWidth: 10.w,
-                                                    height: 45.h,
-                                                    color: colorScheme.primary.withOpacity(0.8),
-                                                    shape:
-                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
-                                                    textTheme: ButtonTextTheme.primary,
-                                                    onPressed: () {
-                                                      _rankController.applySearchFilters();
-                                                      Get.back();
-                                                    },
-                                                    child: const AutoSizeText("筛选"))
-                                              ]),
-
-                                          Gap(16.h),
-                                          SizedBox(
-                                              height: 80.h,
-                                              child: ListView.separated(
-                                                padding: EdgeInsets.symmetric(horizontal: 30.w),
-                                                scrollDirection: Axis.horizontal,
-                                                itemCount: 4,
-                                                separatorBuilder: (BuildContext context, int index) {
-                                                  return SizedBox(width: 20.w);
-                                                },
-                                                itemBuilder: (BuildContext context, int index) {
-                                                  List<String> tags = ["书籍", "动漫", "电影", "电视剧"];
-                                                  return Obx(() => FilterChip(
-                                                      selected: index == _rankController.type.value - 1,
-                                                      // avatar: const CircleAvatar(),
-                                                      label: Text(tags[index]),
-                                                      backgroundColor: colorScheme.primary.withAlpha(40),
-                                                      side: const BorderSide(color: Colors.transparent),
-                                                      showCheckmark: true,
-                                                      visualDensity:
-                                                          const VisualDensity(horizontal: 0.0, vertical: -2.0),
-                                                      onSelected: (bool value) {
-                                                        _rankController.onSelected(value, index);
-                                                      }));
-                                                },
-                                              )),
-                                          Gap(16.h),
-                                          AutoSizeText(
-                                            "年份筛选",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 42.sp,
-                                                color: colorScheme.secondary),
-                                          ),
-                                          Gap(16.h),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              AutoSizeText("开始时间",
+                                                AutoSizeText(
+                                                  "（长按筛选重置）",
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 30.sp,
-                                                      color: colorScheme.secondary)),
-                                              SizedBox(
-                                                  width: 550.w,
-                                                  height: 100.h,
-                                                  child: CupertinoDatePicker(
-                                                      mode: CupertinoDatePickerMode.monthYear,
-                                                      minimumYear: DateTime(1980).year,
-                                                      maximumYear: DateTime.now().year,
-                                                      onDateTimeChanged: (date) {
-                                                        log("开始时间：$date");
-                                                        _rankController.startTime = date;
-                                                      })),
-                                            ],
-                                          ),
-                                          Gap(32.h),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              AutoSizeText("结束时间",
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 30.sp,
-                                                      color: colorScheme.secondary)),
-                                              SizedBox(
-                                                  width: 550.w,
-                                                  height: 100.h,
-                                                  child: CupertinoDatePicker(
-                                                      mode: CupertinoDatePickerMode.monthYear,
-                                                      minimumYear: DateTime(1980).year,
-                                                      maximumYear: DateTime.now().year,
-                                                      onDateTimeChanged: (date) {
-                                                        log("结束时间：$date");
-                                                        _rankController.endTime = date;
-                                                      })),
-                                            ],
-                                          ),
-                                          if (false)
-                                            SizedBox(
-                                                height: 405.h,
-                                                child: YearPicker(
-                                                  firstDate: DateTime(1980),
-                                                  lastDate: DateTime(_rankController.date.year),
-                                                  selectedDate: _rankController.date,
-                                                  onChanged: (date) {},
-                                                )),
-                                          Gap(16.h),
-                                         /* Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                              children: [
-                                            MaterialButton(
-                                                minWidth: 100.w,
-                                                color: colorScheme.primary.withOpacity(0.8),
-                                                shape:
-                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
-                                                textTheme: ButtonTextTheme.primary,
-                                                onPressed: () {},
-                                                child: const AutoSizeText("筛选"))
-                                          ])*/
-                                        ],
-                                      ));
+                                                    fontSize: 21.sp,
+                                                    color: colorScheme.secondary.withOpacity(0.5),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Gap(24.h),
+                                            ScrollYearPicker(
+                                                startTime: _rankController.startTime,
+                                                endTime: _rankController.endTime,
+                                                startOnChange: (DateTime startTime) {
+                                                  _rankController.startTime = startTime;
+                                                },
+                                                endOnChange: (DateTime endTime) {
+                                                  _rankController.endTime = endTime;
+                                                })
+                                          ]));
                                 },
                                 iconSize: 35.sp,
                                 color: colorScheme.secondary,

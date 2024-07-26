@@ -4,8 +4,8 @@ import 'package:hele_app/pages/search/controllers/search_controller.dart';
 class SearchBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SearchController>(
-      () => SearchController(),
+    Get.lazyPut<SearchPageController>(
+      () => SearchPageController(),
     );
   }
 }

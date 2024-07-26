@@ -7,6 +7,7 @@ class ApplicationProvider extends ChangeNotifier {
   String _multipleThemesMode = 'default'; // 多主题模式
   bool _localeSystem = true; // 语言是否跟随系统
   Locale _locale = const Locale('zh_CH'); // 语言
+  // List<String> _historyList = []; // 历史记录
 
   ThemeMode get themeMode => _themeMode;
 
@@ -15,6 +16,8 @@ class ApplicationProvider extends ChangeNotifier {
   Locale get locale => _locale;
 
   bool get localeSystem => _localeSystem;
+
+  // List<String> get historyList => _historyList;
 
   /// 获取-主题模式
   void loadThemeMode() async {
@@ -68,4 +71,16 @@ class ApplicationProvider extends ChangeNotifier {
     _locale = locale;
     notifyListeners();
   }
+
+/*  /// 添加-历史记录
+  set addHistoryList(List<String> historyList) {
+    PreferencesDB.db.setAppHistoryList(historyList);
+    notifyListeners();
+  }
+
+  /// 获取-历史记录
+  history(String history) async {
+    _historyList = await PreferencesDB.db.getAppHistoryList();
+    notifyListeners();
+  }*/
 }

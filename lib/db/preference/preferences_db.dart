@@ -8,14 +8,15 @@ class PreferencesDB {
   static final PreferencesDB db = PreferencesDB._();
   SharedPreferences? _db;
 
-  Future<SharedPreferences> get database async =>
-      _db ??= await SharedPreferences.getInstance();
+  Future<SharedPreferences> get database async => _db ??= await SharedPreferences.getInstance();
 
   /// ** APP相关 **
   static const appThemeDarkMode = "themes"; // app主题
   static const appMultipleThemesMode = 'appMultipleThemesMode'; // 多主题
   static const appLocale = 'appLocale'; // 语言
   static const appIsLocaleSystem = 'appIsLocaleSystem'; // 语言是否跟随系统
+  /// ** 搜索相关 **
+  static const appHistoryList = "historyList"; // 搜索历史
 
   /// 设置-主题外观模式
   Future<bool> setAppThemeDarkMode(ThemeMode themeMode) async {
@@ -70,5 +71,17 @@ class PreferencesDB {
   Future<bool> getAppIsLocaleSystem() async {
     final SharedPreferences prefs = await database;
     return prefs.getBool(appIsLocaleSystem) ?? true;
+  }
+
+  // 设置-APP搜索历史
+  Future<bool> setAppHistoryList(List<String> value) async {
+    final SharedPreferences prefs = await database;
+    return prefs.setStringList(appHistoryList, value);
+  }
+
+  // 获取-APP搜索历史
+  Future<List<String>> getAppHistoryList() async {
+    final SharedPreferences prefs = await database;
+    return prefs.getStringList(appHistoryList) ?? [];
   }
 }

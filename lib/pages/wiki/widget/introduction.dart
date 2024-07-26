@@ -8,6 +8,8 @@ import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/wiki/widget/subheading.dart';
+import 'package:hele_app/providers/application/application.dart';
+import 'package:provider/provider.dart';
 
 class Introduction extends StatelessWidget {
   const Introduction(

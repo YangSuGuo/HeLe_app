@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SearchText extends StatelessWidget {
-  final String? searchText;
+  final String searchText;
   final Function? onSelect;
-  final int? searchTextIdx;
   final Function? onLongSelect;
 
   const SearchText({
     super.key,
-    this.searchText,
+    required this.searchText,
     this.onSelect,
-    this.searchTextIdx,
     this.onLongSelect,
   });
 
@@ -32,7 +30,7 @@ class SearchText extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 5, left: 11, right: 11),
             child: Text(
-              searchText!,
+              searchText,
               style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ),

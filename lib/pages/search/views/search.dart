@@ -30,6 +30,8 @@ class _SearchState extends State<Search> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // 筛选
+            categoryFilter(colorScheme),
             // 搜索历史
             _history()
           ],
@@ -80,11 +82,38 @@ class _SearchState extends State<Search> {
     );
   }
 
+  // 分类筛选
+  Widget categoryFilter(ColorScheme colorScheme) {
+    return Container(
+        height: 80.h,
+        padding: EdgeInsets.fromLTRB(36.w, 12.h, 20.w, 0),
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemCount: 5,
+          separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(width: 20.w);
+          },
+          itemBuilder: (BuildContext context, int index) {
+            return Obx(() => FilterChip(
+                selected: index == _searchController.type.value,
+                // avatar: const CircleAvatar(),
+                label: Text(_searchController.tags[index]),
+                backgroundColor: colorScheme.primary.withAlpha(40),
+                side: const BorderSide(color: Colors.transparent),
+                showCheckmark: true,
+                visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
+                onSelected: (bool value) {
+                  _searchController.type.value = index;
+                }));
+          },
+        ));
+  }
+
   // 搜索历史
   Widget _history() {
     return Obx(() => Container(
         width: double.infinity,
-        padding: EdgeInsets.fromLTRB(36.w, 6.h, 36.w, 0),
+        padding: EdgeInsets.fromLTRB(36.w, 0.h, 36.w, 0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           if (_searchController.historyList.isNotEmpty)
             Row(
@@ -105,7 +134,6 @@ class _SearchState extends State<Search> {
                 for (int i = 0; i < _searchController.historyList.length; i++)
                   SearchText(
                     searchText: _searchController.historyList[i],
-                    searchTextIdx: i,
                     onSelect: (value) => _searchController.onTagClick(value),
                   )
               ]))

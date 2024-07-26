@@ -14,6 +14,7 @@ class SearchPageController extends GetxController with GetTickerProviderStateMix
   // 筛选条件
   RxString keyword = ''.obs;
   late RxInt type = 2.obs;
+  List<String> tags = ["ALL", "书籍", "动漫", "电影", "电视剧"];
   late DateTime startTime = DateTime.now();
   late DateTime endTime = DateTime.now();
 

@@ -165,8 +165,9 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                 showCheckmark: true,
                 visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
                 onSelected: (bool value) {
-                  _rankController.onSelected(value, index);
-                }));
+                  _rankController.onSelected(value,index);
+                }
+                ));
           },
         ));
   }

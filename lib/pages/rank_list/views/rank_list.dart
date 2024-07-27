@@ -26,6 +26,7 @@ class RankList extends StatefulWidget {
 class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin {
   final RankController _rankController = Get.put(RankController());
   Future? _rankList;
+  late ScrollController scrollController;
 
   @override
   // 页面保活
@@ -35,7 +36,7 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
   void initState() {
     super.initState();
     _rankList = _rankController.getRankingList([]);
-    ScrollController scrollController = _rankController.scrollController;
+    scrollController = _rankController.scrollController;
     scrollController.addListener(() async {
       // 触底加载
       if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
@@ -46,6 +47,12 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(() {});
+    super.dispose();
   }
 
   @override
@@ -165,9 +172,8 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                 showCheckmark: true,
                 visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
                 onSelected: (bool value) {
-                  _rankController.onSelected(value,index);
-                }
-                ));
+                  _rankController.onSelected(value, index);
+                }));
           },
         ));
   }

@@ -4,6 +4,8 @@ import 'package:hele_app/pages/main/bindings/main_binding.dart';
 import 'package:hele_app/pages/main/views/main.dart';
 import 'package:hele_app/pages/search/bindings/search_binding.dart';
 import 'package:hele_app/pages/search/views/search.dart';
+import 'package:hele_app/pages/search_result/bindings/search_result_bindings.dart';
+import 'package:hele_app/pages/search_result/views/search_result.dart';
 import 'package:hele_app/pages/tabs/anime/views/anime.dart';
 import 'package:hele_app/pages/tabs/lightNovel/views/light_novel.dart';
 import 'package:hele_app/pages/tabs/manga/views/manga.dart';
@@ -70,6 +72,12 @@ class AppPages {
       name: Routes.SEARCH,
       page: () => const Search(),
       binding: SearchBinding(),
+    ),
+    // 搜索结果页
+    GetPage(
+      name: Routes.SEARCH_RESULT,
+      page: () => const SearchResult(),
+      binding: SearchResultBindings(),
     ),
   ];
 }

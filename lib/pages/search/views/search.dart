@@ -14,7 +14,7 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  final SearchPageController _searchController = Get.put(SearchPageController());
+  final SearchPageController _searchController = Get.find<SearchPageController>();
 
   @override
   void initState() {

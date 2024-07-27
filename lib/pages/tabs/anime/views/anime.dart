@@ -29,6 +29,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   StreamController<bool> searchBarStream = Get.find<HomeController>().searchBarStream;
   late Future? _futureBuilderFuture;
   late Future? _getRecommendations;
+  late ScrollController scrollController;
 
   @override
   // 页面保活
@@ -39,7 +40,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
     super.initState();
     _futureBuilderFuture = _animeController.queryBangumiCalendarFeed();
     _getRecommendations = _animeController.getRecommendations();
-    ScrollController scrollController = _animeController.scrollController;
+    scrollController = _animeController.scrollController;
     scrollController.addListener(
       () async {
         final ScrollDirection direction = scrollController.position.userScrollDirection;
@@ -54,8 +55,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
-    _animeController.scrollController.removeListener(() {});
-    // _animeController.scrollController.dispose();
+    scrollController.removeListener(() {});
     super.dispose();
   }
 

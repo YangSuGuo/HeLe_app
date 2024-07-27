@@ -11,10 +11,16 @@ import 'package:hele_app/model/search/search.dart';
 import 'package:hele_app/routes/app_pages.dart';
 
 class RankedCardsList extends StatelessWidget {
-  const RankedCardsList({super.key, required this.datum, required this.index});
+  const RankedCardsList({
+    super.key,
+    required this.datum,
+    required this.index,
+    this.isRank = true,
+  });
 
   final Datum datum;
   final int index;
+  final bool? isRank;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +42,7 @@ class RankedCardsList extends StatelessWidget {
                     width: 210.w,
                     height: 240.h,
                   ),
+                  if(isRank ?? true)
                   PBadge(text: "TOP ${(index + 1).toString()}", top: 6, left: 6),
                   if (datum.date != "")
                     PBadge(

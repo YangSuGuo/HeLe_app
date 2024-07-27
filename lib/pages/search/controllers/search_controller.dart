@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/db/preference/preferences_db.dart';
+import 'package:hele_app/routes/app_pages.dart';
 
 class SearchPageController extends GetxController with GetTickerProviderStateMixin {
   final FocusNode searchFocusNode = FocusNode();
@@ -56,8 +57,20 @@ class SearchPageController extends GetxController with GetTickerProviderStateMix
       if (historyList.value.length > 20) {
         historyList.removeLast();
         await PreferencesDB.db.setAppHistoryList(history);
+        Get.toNamed(Routes.SEARCH_RESULT, arguments: {
+          'keyword': keyword.value,
+          'type': type.value,
+          'startTime': startTime,
+          'endTime': endTime,
+        });
       } else {
         await PreferencesDB.db.setAppHistoryList(history);
+        Get.toNamed(Routes.SEARCH_RESULT, arguments: {
+          'keyword': keyword.value,
+          'type': type.value,
+          'startTime': startTime,
+          'endTime': endTime,
+        });
       }
     } else {
       SmartDialog.showToast('你是不是忘了什么？');

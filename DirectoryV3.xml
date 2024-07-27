@@ -88,4 +88,5 @@
     <tree path="/lib/pages/rank_list/widget/ranked_cards_list.dart" title="排行榜卡片"/>
     <tree path="/lib/pages/rank_list/widget/scroll_year_picker.dart" title="滚动年份选择器"/>
     <tree path="/lib/pages/search/widget/search_text.dart" title="搜索历史标签"/>
+    <tree path="/lib/pages/search_result" title="搜索结果"/>
 </trees>

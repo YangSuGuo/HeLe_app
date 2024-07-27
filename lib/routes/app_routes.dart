@@ -20,4 +20,5 @@ abstract class Routes {
 
   // 搜索页
   static const SEARCH = '/search';
+  static const SEARCH_RESULT = '/searchResult';
 }

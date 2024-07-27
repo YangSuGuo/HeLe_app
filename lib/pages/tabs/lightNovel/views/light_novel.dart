@@ -24,6 +24,7 @@ class _LightNovelState extends State<LightNovel> with AutomaticKeepAliveClientMi
   final LightNovelController _lightNovelController = Get.put(LightNovelController());
   StreamController<bool> searchBarStream = Get.find<HomeController>().searchBarStream;
   Future? _hotRecommendations;
+  late ScrollController scrollController;
 
   // 页面保活
   @override
@@ -33,7 +34,7 @@ class _LightNovelState extends State<LightNovel> with AutomaticKeepAliveClientMi
   void initState() {
     super.initState();
     _hotRecommendations = _lightNovelController.getHotRecommendations();
-    ScrollController scrollController = _lightNovelController.scrollController;
+    scrollController = _lightNovelController.scrollController;
     scrollController.addListener(
       () async {
         // 触底加载
@@ -55,7 +56,7 @@ class _LightNovelState extends State<LightNovel> with AutomaticKeepAliveClientMi
 
   @override
   void dispose() {
-    _lightNovelController.scrollController.removeListener(() {});
+    scrollController.removeListener(() {});
     super.dispose();
   }
 

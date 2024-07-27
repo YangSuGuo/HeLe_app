@@ -24,6 +24,7 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
   final MangaController _mangaController = Get.put(MangaController());
   StreamController<bool> searchBarStream = Get.find<HomeController>().searchBarStream;
   late Future? _hotRecommendations;
+  late ScrollController scrollController;
 
   @override
   // 页面保活
@@ -33,7 +34,7 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     _hotRecommendations = _mangaController.getHotRecommendations();
-    ScrollController scrollController = _mangaController.scrollController;
+    scrollController = _mangaController.scrollController;
     scrollController.addListener(
       () async {
         // 触底加载
@@ -55,7 +56,7 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
 
   @override
   void dispose() {
-    _mangaController.scrollController.removeListener(() {});
+    scrollController.removeListener(() {});
     super.dispose();
   }
 
@@ -68,9 +69,7 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        child: CustomScrollView(
-            controller: _mangaController.scrollController,
-            slivers: [
+        child: CustomScrollView(controller: _mangaController.scrollController, slivers: [
           EntryTitle(title: "热门推荐", fontWeight: FontWeight.bold, size: 44.sp),
           SliverGap(16.h),
           FutureBuilder(

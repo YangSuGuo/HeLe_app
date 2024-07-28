@@ -43,18 +43,20 @@ class ThemeCard extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                decoration: showBorder ? BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderCurvature),
-                  border: isSelected
-                      ? Border.all(
-                          width: 5.w,
-                          color: colorScheme.shadow,
-                        )
-                      : Border.all(
-                          width: 5.w,
-                          color: colorScheme.outlineVariant,
-                        ),
-                ) : const BoxDecoration(),
+                decoration: showBorder
+                    ? BoxDecoration(
+                        borderRadius: BorderRadius.circular(borderCurvature),
+                        border: isSelected
+                            ? Border.all(
+                                width: 5.w,
+                                color: colorScheme.shadow,
+                              )
+                            : Border.all(
+                                width: 5.w,
+                                color: colorScheme.outlineVariant,
+                              ),
+                      )
+                    : const BoxDecoration(),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(containerCurvature),
                   child: ExcludeSemantics(child: child),

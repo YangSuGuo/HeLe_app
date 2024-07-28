@@ -16,7 +16,7 @@ class _CustomTabsState extends State<CustomTabs> {
 
   void onTap(int index) {
     // if (_homeController.initialIndex.value == index) {
-      // _homeController.tabsCtrList[index]().animateToTop();
+    // _homeController.tabsCtrList[index]().animateToTop();
     // }
     HapticFeedback.lightImpact();
     _homeController.initialIndex.value = index;

@@ -39,22 +39,10 @@ class BangumiCard extends StatelessWidget {
                       ),
                       // 评分
                       if (bangumiItem.rating?.score != null)
-                        PBadge(
-                            text: bangumiItem.rating!.score.toString(),
-                            top: 6,
-                            right: 6,
-                            bottom: null,
-                            left: null
-                        ),
-                       // 兼容 搜索API 评分
-                       if (bangumiItem.score != null)
-                        PBadge(
-                          text: bangumiItem.score.toString(),
-                          top: 6,
-                          right: 6,
-                          bottom: null,
-                          left: null
-                        ),
+                        PBadge(text: bangumiItem.rating!.score.toString(), top: 6, right: 6, bottom: null, left: null),
+                      // 兼容 搜索API 评分
+                      if (bangumiItem.score != null)
+                        PBadge(text: bangumiItem.score.toString(), top: 6, right: 6, bottom: null, left: null),
                     ],
                   );
                 }),

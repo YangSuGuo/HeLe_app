@@ -14,24 +14,19 @@ class Calendar {
     this.weekday,
   });
 
-  factory Calendar.fromRawJson(String str) =>
-      Calendar.fromJson(json.decode(str));
+  factory Calendar.fromRawJson(String str) => Calendar.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Calendar.fromJson(Map<String, dynamic> json) => Calendar(
         items: json["items"] == null
             ? []
-            : List<LegacySubjectSmall>.from(
-                json["items"]!.map((x) => LegacySubjectSmall.fromJson(x))),
-        weekday:
-            json["weekday"] == null ? null : Weekday.fromJson(json["weekday"]),
+            : List<LegacySubjectSmall>.from(json["items"]!.map((x) => LegacySubjectSmall.fromJson(x))),
+        weekday: json["weekday"] == null ? null : Weekday.fromJson(json["weekday"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "items": items == null
-            ? []
-            : List<dynamic>.from(items!.map((x) => x.toJson())),
+        "items": items == null ? [] : List<dynamic>.from(items!.map((x) => x.toJson())),
         "weekday": weekday?.toJson(),
       };
 }
@@ -108,18 +103,14 @@ class LegacySubjectSmall {
     this.score,
   });
 
-  factory LegacySubjectSmall.fromRawJson(String str) =>
-      LegacySubjectSmall.fromJson(json.decode(str));
+  factory LegacySubjectSmall.fromRawJson(String str) => LegacySubjectSmall.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory LegacySubjectSmall.fromJson(Map<String, dynamic> json) =>
-      LegacySubjectSmall(
+  factory LegacySubjectSmall.fromJson(Map<String, dynamic> json) => LegacySubjectSmall(
         airDate: json["air_date"],
         airWeekday: json["air_weekday"],
-        collection: json["collection"] == null
-            ? null
-            : Collection.fromJson(json["collection"]),
+        collection: json["collection"] == null ? null : Collection.fromJson(json["collection"]),
         eps: json["eps"],
         epsCount: json["eps_count"],
         id: json["id"],

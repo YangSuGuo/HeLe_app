@@ -40,7 +40,7 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
     scrollController.addListener(() async {
       // 触底加载
       if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
-        EasyThrottle.throttle('my-throttler', const Duration(seconds: 1), () {
+        EasyThrottle.throttle('Rank', const Duration(seconds: 1), () {
           if (_rankController.offset < 50) {
             _rankController.next();
           }

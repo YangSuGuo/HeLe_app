@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hele_app/db/database/database.dart';
+import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/themes/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -75,8 +79,7 @@ class _InitState extends State<Init> {
 
   /// 应用初始化
   void init() async {
-    final ApplicationProvider applicationProvider =
-        context.read<ApplicationProvider>();
+    final ApplicationProvider applicationProvider = context.read<ApplicationProvider>();
 
     // 获取APP主题深色模式
     applicationProvider.loadThemeMode();
@@ -86,5 +89,8 @@ class _InitState extends State<Init> {
     applicationProvider.loadLocale();
     // 获取APP地区语言是否跟随系统
     applicationProvider.loadLocaleSystem();
+
+    // 数据库初始化
+    await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }
 }

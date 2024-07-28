@@ -42,8 +42,7 @@ class RankedCardsList extends StatelessWidget {
                     width: 210.w,
                     height: 240.h,
                   ),
-                  if(isRank ?? true)
-                  PBadge(text: "TOP ${(index + 1).toString()}", top: 6, left: 6),
+                  if (isRank ?? true) PBadge(text: "TOP ${(index + 1).toString()}", top: 6, left: 6),
                   if (datum.date != "")
                     PBadge(
                       text: DateTime.parse(datum.date).year.toString(),

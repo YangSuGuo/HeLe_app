@@ -28,25 +28,25 @@ dependencies:
   gap: ^3.0.1 # 间隔
   scroll_datetime_picker: ^0.1.2 # 滑动时间选择
 
-#  flutter_tilt: ^3.0.0 # 倾斜视差
-#  skeletonizer: ^1.2.0 # 骨架屏
+  #  flutter_tilt: ^3.0.0 # 倾斜视差
+  #  skeletonizer: ^1.2.0 # 骨架屏
 
   # 网络请求
   dio: ^5.4.3+1 # 网络请求
 
-#  cookie_jar: ^4.0.8
+  #  cookie_jar: ^4.0.8
   dio_cookie_manager: ^3.1.1
   connectivity_plus: ^6.0.1
-#  dio_http2_adapter: ^2.3.1+1
+  #  dio_http2_adapter: ^2.3.1+1
 
   # 开发工具
   cached_network_image: ^3.3.1 # 图片缓存
   flutter_screenutil: ^5.9.0 # 屏幕适配
-#  flutter_svg: ^2.0.10+1 # svg显示
+  #  flutter_svg: ^2.0.10+1 # svg显示
   url_launcher: ^6.2.6 # url跳转
   easy_debounce: ^2.0.3 # 防抖
-#  share_plus: ^9.0.0 # 分享
-#  logger: ^2.3.0 # log
+  #  share_plus: ^9.0.0 # 分享
+  #  logger: ^2.3.0 # log
   nil: ^1.1.1 # 占位符
 
   # 状态管理
@@ -55,6 +55,7 @@ dependencies:
 
   # 本地存储
   shared_preferences: ^2.2.3 # 本地状态存储
+  floor: ^1.5.0 # 本地数据库
 
 # 开发环境依赖
 dev_dependencies:
@@ -63,6 +64,9 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
   flutter_launcher_icons: ^0.13.1 # 应用图标生成
+  # 本地数据库
+  floor_generator: ^1.5.0
+  build_runner: ^2.4.11
 
 flutter:
   uses-material-design: true
@@ -80,7 +84,7 @@ flutter_launcher_icons:
 # 国际化配置
 flutter_intl:
   generate: true
-#  enabled: true
+  #  enabled: true
   # 自定义生成配置
   arb-dir: lib/l10n
   format: true

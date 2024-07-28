@@ -75,7 +75,7 @@ class WikiController extends GetxController {
     if (subtitle != null && subtitle != "") {
       return subtitle;
     } else if (personCareerList != null && !personCareerList.isNotEmpty) {
-      if(personCareerList.first != "" && personCareerList.first.name != ""){
+      if (personCareerList.first != "" && personCareerList.first.name != "") {
         return personCareerList.first.name;
       }
     }
@@ -83,7 +83,7 @@ class WikiController extends GetxController {
   }
 
   // 请求条目详情
-  Future<Subjects>  querySubjectDetails(int subjectId) async {
+  Future<Subjects> querySubjectDetails(int subjectId) async {
     Subjects result = await BangumiNet.bangumiSubject(subjectId);
     // subjects.value = result;
     production.value = getInfobox(result.infobox!, '製作');

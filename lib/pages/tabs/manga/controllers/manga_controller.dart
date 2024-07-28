@@ -39,7 +39,7 @@ class MangaController extends GetxController {
       sort: Sort.HEAT,
     );
 
-    var result = await BangumiNet.getHotRecommendedComics(queryParameters,requestBody);
+    var result = await BangumiNet.getHotRecommendedComics(queryParameters, requestBody);
     List<Datum>? data = result.data;
     List<LegacySubjectSmall>? res = data?.map((e) => e.toLegacySubjectSmall()).toList();
 

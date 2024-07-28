@@ -131,8 +131,7 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       List<Calendar> data = snapshot.data;
-                      return Obx(
-                          () => contentGrid(data[_animeController.dayOfWeekIndex.value].items!));
+                      return Obx(() => contentGrid(data[_animeController.dayOfWeekIndex.value].items!));
                     } else if (snapshot.hasError) {
                       return SliverToBoxAdapter(
                           child: Center(

@@ -39,7 +39,7 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
       () async {
         // 触底加载
         if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
-          EasyThrottle.throttle('my-throttler', const Duration(seconds: 1), () {
+          EasyThrottle.throttle('Manga', const Duration(seconds: 1), () {
             _mangaController.next();
           });
         }

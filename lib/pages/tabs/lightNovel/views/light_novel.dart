@@ -39,7 +39,7 @@ class _LightNovelState extends State<LightNovel> with AutomaticKeepAliveClientMi
       () async {
         // 触底加载
         if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
-          EasyThrottle.throttle('my-throttler', const Duration(seconds: 1), () {
+          EasyThrottle.throttle('LightNovel', const Duration(seconds: 1), () {
             _lightNovelController.next();
           });
         }

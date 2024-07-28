@@ -8,8 +8,6 @@ import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
 import 'package:hele_app/pages/wiki/widget/subheading.dart';
-import 'package:hele_app/providers/application/application.dart';
-import 'package:provider/provider.dart';
 
 class Introduction extends StatelessWidget {
   const Introduction(
@@ -102,7 +100,9 @@ class Introduction extends StatelessWidget {
                   },
                   itemBuilder: (BuildContext context, int index) {
                     return CustomChip(
-                      onTap: () {},
+                      onTap: () {
+                        // todo 跳转搜索页面，搜索条件设置标签，标题需要展示【特殊处理】
+                      },
                       label: tags[index],
                       selected: false,
                       isTranslucent: true,

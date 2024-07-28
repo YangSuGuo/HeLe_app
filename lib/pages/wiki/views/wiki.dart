@@ -37,11 +37,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   int subjectId = 0; // 条目id
   late Future _future;
 
-  // late Future _futureBuilder; // 条目基础信息
-  // late Future _characters; // 角色列表
-  // late Future _person; // 演职信息
-  // late Future _derivation; // 衍生条目
-
   @override
   void initState() {
     super.initState();
@@ -60,16 +55,11 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
     } catch (error) {
       print('Error: $error');
     }
-
-    // _futureBuilder = _wikiController.querySubjectDetails(subjectId);
-    // _characters = _wikiController.querySubjectCharacterList(subjectId);
-    // _person = _wikiController.querySubjectPersons(subjectId);
-    // _derivation = _wikiController.querySubjectDerivation(subjectId);
   }
 
   @override
   void dispose() {
-    // _wikiController.dispose();
+    _wikiController.dispose();
     super.dispose();
   }
 
@@ -78,6 +68,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    // List slivers = [];
     return Scaffold(
         body: Stack(children: [
       // 背景图片
@@ -93,209 +84,215 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                   List<CharacterList> characters = snapshot.data[1]; // 角色列表
                   List<PersonCareer> persons = snapshot.data[2]; // 演员信息
                   List<RelatedWorksQuery> derivation = snapshot.data[3]; // 衍生条目
+                  List<Widget> slivers = [];
+                  // 封面介绍
+                  slivers.addAll([
+                    SliverGap(16.h),
+                    SliverToBoxAdapter(
+                        child: Introduction(
+                      s: s,
+                      imgUrl: _wikiController.imgUrl,
+                      title: _wikiController.title,
+                      production: _wikiController.production.value,
+                      tags: _wikiController.tags,
+                    )),
+                    // 功能列表
+                    SliverToBoxAdapter(
+                      child: actionGrid(context),
+                    ),
+                    SliverGap(16.h),
+                  ]);
+
+                  // 简介
+                  if (s.summary != "") {
+                    slivers.add(SliverToBoxAdapter(
+                        child: Theme(
+                            data: ThemeData(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                            ),
+                            child: ExpandText(
+                              s.summary,
+                              maxLines: 4,
+                              style: TextStyle(color: colorScheme.secondary.withOpacity(0.85)),
+                            ))));
+                  }
+
+                  // 剧集
+                  if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60)) {
+                    slivers.addAll([
+                      EntryTitle(
+                        title: "剧集",
+                        size: 42.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      SliverGap(16.h),
+                      contentGrid(s.totalEpisodes != 0 ? s.totalEpisodes : s.eps),
+                      SliverGap(24.h),
+                    ]);
+
+                    // 评分信息
+                    if (s.rating.total >= 10) {
+                      slivers.addAll([
+                        SliverToBoxAdapter(
+                          child: Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                RichText(
+                                    text: TextSpan(children: [
+                                  TextSpan(
+                                      text: '评分',
+                                      style: TextStyle(
+                                          fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                  if (s.rating.score != 0)
+                                    TextSpan(
+                                        text: " ${s.rating.score}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: AppThemeColorScheme.top,
+                                            fontSize: 40.sp)),
+                                ])),
+                                if (s.rating.rank != 0)
+                                  Container(
+                                    padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      gradient: const LinearGradient(
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
+                                        colors: [
+                                          AppThemeColorScheme.top3,
+                                          AppThemeColorScheme.top,
+                                          AppThemeColorScheme.top2,
+                                        ],
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "${s.rating.rank} 名",
+                                      style: TextStyle(
+                                          color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                              ]),
+                        ),
+                        SliverGap(16.h),
+                        SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
+                        SliverGap(8.h),
+                        SliverToBoxAdapter(
+                            child: Wrap(
+                                alignment: WrapAlignment.spaceBetween,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                              AutoSizeText(
+                                "共计 ${s.rating.total} 条评分",
+                                style: TextStyle(
+                                  fontSize: 27.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: colorScheme.secondaryContainer.withOpacity(0.85),
+                                ),
+                              ),
+                              AutoSizeText("当前评价：${_wikiController.dispute}",
+                                  style: TextStyle(
+                                    fontSize: 26.5.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme.secondaryContainer.withOpacity(0.85),
+                                  ))
+                            ])),
+                        SliverGap(24.h),
+                      ]);
+                    }
+
+                    // 角色信息
+                    if (characters.isNotEmpty) {
+                      slivers.addAll([
+                        EntryTitle(
+                            title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                        SliverGap(16.h),
+                        SliverToBoxAdapter(
+                            child: SizedBox(
+                                height: 200.h,
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return InfoSubitem(
+                                      src: characters[index].images?.medium,
+                                      radius: 5,
+                                      fit: BoxFit.fitHeight,
+                                      title: characters[index].name,
+                                      subtitle: _wikiController.getSubTitle(
+                                          characters[index].relation, characters[index].actors ?? []),
+                                      onTap: () {},
+                                    );
+                                  },
+                                  itemCount: characters.length,
+                                  scrollDirection: Axis.horizontal,
+                                ))),
+                        SliverGap(24.h),
+                      ]);
+                    }
+
+                    // 制作人员
+                    if (persons.isNotEmpty) {
+                      slivers.addAll([
+                        EntryTitle(
+                            title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                        SliverGap(16.h),
+                        SliverToBoxAdapter(
+                            child: SizedBox(
+                                height: 200.h,
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    return InfoSubitem(
+                                      src: persons[index].images?.medium,
+                                      title: persons[index].name,
+                                      subtitle: persons[index].relation,
+                                      onTap: () {},
+                                    );
+                                  },
+                                  itemCount: persons.length,
+                                  scrollDirection: Axis.horizontal,
+                                ))),
+                        SliverGap(24.h),
+                      ]);
+                    }
+
+                    // 关联作品
+                    if (derivation.isNotEmpty) {
+                      slivers.addAll([
+                        EntryTitle(
+                            title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                        SliverGap(16.h),
+                        SliverToBoxAdapter(
+                            child: SizedBox(
+                                height: 330.h,
+                                child: ListView.builder(
+                                  itemBuilder: (context, index) {
+                                    String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
+                                        ? derivation[index].nameCn
+                                        : derivation[index].name;
+                                    return InfoSubitem(
+                                      containerWidth: 200.w,
+                                      src: derivation[index].images?.medium,
+                                      width: 200.w,
+                                      height: 230.h,
+                                      fit: BoxFit.cover,
+                                      title: title,
+                                      subtitle: derivation[index].relation,
+                                      onTap: () {},
+                                    );
+                                  },
+                                  itemCount: derivation.length,
+                                  scrollDirection: Axis.horizontal,
+                                )))
+                      ]);
+                    }
+                  }
 
                   return CustomScrollView(
                       physics: const AlwaysScrollableScrollPhysics(
                         parent: BouncingScrollPhysics(),
                       ),
-                      slivers: [
-                        /* _buildAppBar(),*/
-                        // 封面介绍
-                        SliverToBoxAdapter(
-                            child: Introduction(
-                          s: s,
-                          imgUrl: _wikiController.imgUrl,
-                          title: _wikiController.title,
-                          production: _wikiController.production.value,
-                          tags: _wikiController.tags,
-                        )),
-                        // 功能列表
-                        SliverToBoxAdapter(
-                          child: actionGrid(context),
-                        ),
-                        SliverGap(16.h),
-                        // 可展开的文本框
-                        if (s.summary != "")
-                          SliverToBoxAdapter(
-                              child: Theme(
-                                  data: ThemeData(
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                  ),
-                                  child: ExpandText(
-                                    s.summary,
-                                    maxLines: 4,
-                                    style: TextStyle(color: colorScheme.secondary.withOpacity(0.85)),
-                                  ))),
-
-                        // 剧集展示  0 < x < 60
-                        // todo 点击跳转到剧集详情
-                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
-                          EntryTitle(
-                            title: "剧集",
-                            size: 42.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
-                          SliverGap(16.h),
-                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
-                          contentGrid(s.totalEpisodes != 0 ? s.totalEpisodes : s.eps),
-                        if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60))
-                          SliverGap(24.h),
-
-                        // 评分信息
-                        if (s.rating.total >= 10)
-                          SliverToBoxAdapter(
-                            child: Wrap(
-                                alignment: WrapAlignment.spaceBetween,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  RichText(
-                                      text: TextSpan(children: [
-                                    TextSpan(
-                                        text: '评分',
-                                        style: TextStyle(
-                                            fontSize: 42.sp,
-                                            fontWeight: FontWeight.bold,
-                                            color: colorScheme.secondary)),
-                                    if (s.rating.score != 0)
-                                      TextSpan(
-                                          text: " ${s.rating.score}",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: AppThemeColorScheme.top,
-                                              fontSize: 40.sp)),
-                                  ])),
-                                  if (s.rating.rank != 0)
-                                    Container(
-                                      padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8.r),
-                                        gradient: const LinearGradient(
-                                          begin: Alignment.bottomLeft,
-                                          end: Alignment.topRight,
-                                          colors: [
-                                            AppThemeColorScheme.top3,
-                                            AppThemeColorScheme.top,
-                                            AppThemeColorScheme.top2,
-                                          ],
-                                        ),
-                                      ),
-                                      child: Text(
-                                        "${s.rating.rank} 名",
-                                        style: TextStyle(
-                                            color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
-                                      ),
-                                    )
-                                ]),
-                          ),
-                        if (s.rating.total >= 10) SliverGap(16.h),
-                        if (s.rating.total >= 10)
-                          SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
-                        if (s.rating.total >= 10) SliverGap(8.h),
-                        if (s.rating.total >= 10)
-                          SliverToBoxAdapter(
-                              child: Wrap(
-                                  alignment: WrapAlignment.spaceBetween,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                AutoSizeText(
-                                  "共计 ${s.rating.total} 条评分",
-                                  style: TextStyle(
-                                    fontSize: 27.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: colorScheme.secondaryContainer.withOpacity(0.85),
-                                  ),
-                                ),
-                                AutoSizeText("当前评价：${_wikiController.dispute}",
-                                    style: TextStyle(
-                                      fontSize: 26.5.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: colorScheme.secondaryContainer.withOpacity(0.85),
-                                    ))
-                              ])),
-
-                        SliverGap(24.h),
-                        // 角色信息
-                        if (characters.isNotEmpty)
-                          EntryTitle(
-                              title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        if (characters.isNotEmpty) SliverGap(16.h),
-                        if (characters.isNotEmpty)
-                          SliverToBoxAdapter(
-                              child: SizedBox(
-                                  height: 200.h,
-                                  child: ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return InfoSubitem(
-                                        src: characters[index].images?.medium,
-                                        radius: 5,
-                                        fit: BoxFit.fitHeight,
-                                        title: characters[index].name,
-                                        subtitle: _wikiController.getSubTitle(
-                                            characters[index].relation, characters[index].actors ?? []),
-                                        onTap: () {},
-                                      );
-                                    },
-                                    itemCount: characters.length,
-                                    scrollDirection: Axis.horizontal,
-                                  ))),
-                        SliverGap(24.h),
-
-                        // 制作人员
-                        if (persons.isNotEmpty)
-                          EntryTitle(
-                              title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        if (persons.isNotEmpty) SliverGap(16.h),
-                        if (persons.isNotEmpty)
-                          SliverToBoxAdapter(
-                              child: SizedBox(
-                                  height: 200.h,
-                                  child: ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return InfoSubitem(
-                                        src: persons[index].images?.medium,
-                                        title: persons[index].name,
-                                        subtitle: persons[index].relation,
-                                        onTap: () {},
-                                      );
-                                    },
-                                    itemCount: persons.length,
-                                    scrollDirection: Axis.horizontal,
-                                  ))),
-                        SliverGap(24.h),
-
-                        // 关联作品
-                        if (derivation.isNotEmpty)
-                          EntryTitle(
-                              title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        if (derivation.isNotEmpty) SliverGap(16.h),
-                        if (derivation.isNotEmpty)
-                          SliverToBoxAdapter(
-                              child: SizedBox(
-                                  height: 330.h,
-                                  child: ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
-                                          ? derivation[index].nameCn
-                                          : derivation[index].name;
-                                      return InfoSubitem(
-                                        containerWidth: 200.w,
-                                        src: derivation[index].images?.medium,
-                                        width: 200.w,
-                                        height: 230.h,
-                                        fit: BoxFit.cover,
-                                        title: title,
-                                        subtitle: derivation[index].relation,
-                                        onTap: () {},
-                                      );
-                                    },
-                                    itemCount: derivation.length,
-                                    scrollDirection: Axis.horizontal,
-                                  )))
-
-                        // 相关景点，地点
-                      ]);
+                      slivers: slivers);
                 } else if (snapshot.hasError) {
                   // todo 网络重试点击事件
                   return Center(

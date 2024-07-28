@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'database.dart';
+part of 'app_database.dart';
 
 // **************************************************************************
 // FloorGenerator
@@ -125,13 +125,102 @@ class _$SubjectsStarDao extends SubjectsStarDao {
   _$SubjectsStarDao(
     this.database,
     this.changeListener,
-  ) : _queryAdapter = QueryAdapter(database);
+  )   : _queryAdapter = QueryAdapter(database),
+        _subjectsStarInsertionAdapter = InsertionAdapter(
+            database,
+            'subjects_star',
+            (SubjectsStar item) => <String, Object?>{
+                  'id': item.id,
+                  'subjectId': item.subjectId,
+                  'name': item.name,
+                  'nameCn': item.nameCn,
+                  'type': item.type,
+                  'url': item.url,
+                  'platform': item.platform,
+                  'summary': item.summary,
+                  'totalEpisodes': item.totalEpisodes,
+                  'volumes': item.volumes,
+                  'eps': item.eps,
+                  'airDate': item.airDate,
+                  'airWeekday': item.airWeekday,
+                  'images': item.images,
+                  'score': item.score,
+                  'rank': item.rank,
+                  'isHidden':
+                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
+                  'status': item.status,
+                  'rating': item.rating,
+                  'tags': item.tags,
+                  'creationTime': item.creationTime
+                }),
+        _subjectsStarUpdateAdapter = UpdateAdapter(
+            database,
+            'subjects_star',
+            ['id'],
+            (SubjectsStar item) => <String, Object?>{
+                  'id': item.id,
+                  'subjectId': item.subjectId,
+                  'name': item.name,
+                  'nameCn': item.nameCn,
+                  'type': item.type,
+                  'url': item.url,
+                  'platform': item.platform,
+                  'summary': item.summary,
+                  'totalEpisodes': item.totalEpisodes,
+                  'volumes': item.volumes,
+                  'eps': item.eps,
+                  'airDate': item.airDate,
+                  'airWeekday': item.airWeekday,
+                  'images': item.images,
+                  'score': item.score,
+                  'rank': item.rank,
+                  'isHidden':
+                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
+                  'status': item.status,
+                  'rating': item.rating,
+                  'tags': item.tags,
+                  'creationTime': item.creationTime
+                }),
+        _subjectsStarDeletionAdapter = DeletionAdapter(
+            database,
+            'subjects_star',
+            ['id'],
+            (SubjectsStar item) => <String, Object?>{
+                  'id': item.id,
+                  'subjectId': item.subjectId,
+                  'name': item.name,
+                  'nameCn': item.nameCn,
+                  'type': item.type,
+                  'url': item.url,
+                  'platform': item.platform,
+                  'summary': item.summary,
+                  'totalEpisodes': item.totalEpisodes,
+                  'volumes': item.volumes,
+                  'eps': item.eps,
+                  'airDate': item.airDate,
+                  'airWeekday': item.airWeekday,
+                  'images': item.images,
+                  'score': item.score,
+                  'rank': item.rank,
+                  'isHidden':
+                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
+                  'status': item.status,
+                  'rating': item.rating,
+                  'tags': item.tags,
+                  'creationTime': item.creationTime
+                });
 
   final sqflite.DatabaseExecutor database;
 
   final StreamController<String> changeListener;
 
   final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<SubjectsStar> _subjectsStarInsertionAdapter;
+
+  final UpdateAdapter<SubjectsStar> _subjectsStarUpdateAdapter;
+
+  final DeletionAdapter<SubjectsStar> _subjectsStarDeletionAdapter;
 
   @override
   Future<List<SubjectsStar>> findAllSubjectsStar() async {
@@ -159,6 +248,38 @@ class _$SubjectsStarDao extends SubjectsStarDao {
             tags: row['tags'] as String,
             creationTime: row['creationTime'] as int));
   }
+
+  @override
+  Future<List<SubjectsStar>> findSubjectsStarByTypeStatusTagsHidden(
+    String type,
+    String status,
+    String tags,
+    bool isHidden,
+    String sortBy,
+    int offset,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM subjects_star         WHERE type = ?1          AND status = ?2          AND (tags LIKE ?3 OR ?3 IS NULL)          AND isHidden = ?4       ORDER BY ?5 DESC       LIMIT 20 OFFSET ?6;',
+        mapper: (Map<String, Object?> row) => SubjectsStar(id: row['id'] as int?, subjectId: row['subjectId'] as int, name: row['name'] as String, nameCn: row['nameCn'] as String, type: row['type'] as int, url: row['url'] as String?, platform: row['platform'] as String, summary: row['summary'] as String?, volumes: row['volumes'] as int?, eps: row['eps'] as int?, airDate: row['airDate'] as String?, airWeekday: row['airWeekday'] as int?, images: row['images'] as String?, score: row['score'] as double?, rank: row['rank'] as int?, isHidden: row['isHidden'] == null ? null : (row['isHidden'] as int) != 0, status: row['status'] as int, rating: row['rating'] as double, tags: row['tags'] as String, creationTime: row['creationTime'] as int),
+        arguments: [type, status, tags, isHidden ? 1 : 0, sortBy, offset]);
+  }
+
+  @override
+  Future<void> addSubject(SubjectsStar subject) async {
+    await _subjectsStarInsertionAdapter.insert(
+        subject, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<int> updateSubject(SubjectsStar subject) {
+    return _subjectsStarUpdateAdapter.updateAndReturnChangedRows(
+        subject, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> removeSubject(SubjectsStar subject) async {
+    await _subjectsStarDeletionAdapter.delete(subject);
+  }
 }
 
 class _$SubjectsUserTagsDao extends SubjectsUserTagsDao {
@@ -169,6 +290,19 @@ class _$SubjectsUserTagsDao extends SubjectsUserTagsDao {
         _subjectsUserTagsInsertionAdapter = InsertionAdapter(
             database,
             'subjects_user_tags',
+            (SubjectsUserTags item) => <String, Object?>{
+                  'tagId': item.tagId,
+                  'tag': item.tag,
+                  'creationTime': item.creationTime,
+                  'isHidden':
+                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
+                  'isPinned':
+                      item.isPinned == null ? null : (item.isPinned! ? 1 : 0)
+                }),
+        _subjectsUserTagsUpdateAdapter = UpdateAdapter(
+            database,
+            'subjects_user_tags',
+            ['tagId'],
             (SubjectsUserTags item) => <String, Object?>{
                   'tagId': item.tagId,
                   'tag': item.tag,
@@ -200,6 +334,8 @@ class _$SubjectsUserTagsDao extends SubjectsUserTagsDao {
 
   final InsertionAdapter<SubjectsUserTags> _subjectsUserTagsInsertionAdapter;
 
+  final UpdateAdapter<SubjectsUserTags> _subjectsUserTagsUpdateAdapter;
+
   final DeletionAdapter<SubjectsUserTags> _subjectsUserTagsDeletionAdapter;
 
   @override
@@ -219,6 +355,12 @@ class _$SubjectsUserTagsDao extends SubjectsUserTagsDao {
   @override
   Future<void> insertTag(SubjectsUserTags tag) async {
     await _subjectsUserTagsInsertionAdapter.insert(
+        tag, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> updateTag(SubjectsUserTags tag) async {
+    await _subjectsUserTagsUpdateAdapter.update(
         tag, OnConflictStrategy.replace);
   }
 

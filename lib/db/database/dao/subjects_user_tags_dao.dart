@@ -11,6 +11,10 @@ abstract class SubjectsUserTagsDao {
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertTag(SubjectsUserTags tag);
 
+  // 更新 Tag
+  @Update(onConflict: OnConflictStrategy.replace)
+  Future<void> updateTag(SubjectsUserTags tag);
+
   // 删除 Tag
   @delete
   Future<void> deleteTag(SubjectsUserTags tag);

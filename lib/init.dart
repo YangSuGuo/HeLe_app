@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hele_app/db/database/database.dart';
-import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
+import 'package:get/get.dart';
+import 'package:hele_app/db/database/app_database.dart';
 import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/themes/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +17,8 @@ class Init extends StatefulWidget {
 
 class _InitState extends State<Init> {
   late final AppLifecycleListener _appLifecycleListener;
+  // 数据库名称
+  static const String databaseName = 'app_database.db';
 
   @override
   void initState() {
@@ -90,7 +90,19 @@ class _InitState extends State<Init> {
     // 获取APP地区语言是否跟随系统
     applicationProvider.loadLocaleSystem();
 
-    // 数据库初始化
-    await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    // 数据库初始化【单例模式】
+    // final $FloorAppDatabase database = await Database.instance.database;
+
+    // 初始化测试数据
+    // final SubjectsUserTags tag = SubjectsUserTags(
+    //   tag:"测试",
+    //   creationTime: DateTime.now().millisecondsSinceEpoch,
+    // );
+
+    await Get.putAsync<AppDatabase>(permanent: true, () async {
+      final db = await $FloorAppDatabase.databaseBuilder(databaseName).build();
+      return db;
+    });
+    // await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }
 }

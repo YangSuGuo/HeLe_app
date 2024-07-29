@@ -1,11 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:hele_app/db/database/app_database.dart';
-import 'package:hele_app/db/database/dao/subjects_user_tags_dao.dart';
-import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 
 class My extends StatefulWidget {
@@ -16,18 +10,18 @@ class My extends StatefulWidget {
 }
 
 class _MyState extends State<My> {
-  final AppDatabase db = Get.find<AppDatabase>();
-  final SubjectsUserTags tag = SubjectsUserTags(
-    tag: "测试",
-    creationTime: DateTime.now().millisecondsSinceEpoch,
-  );
+  // final AppDatabase db = Get.find<AppDatabase>();
+  // final SubjectsUserTags tag = SubjectsUserTags(
+  //   tag: "测试",
+  //   creationTime: DateTime.now().millisecondsSinceEpoch,
+  // );
 
   @override
   void initState() {
     super.initState();
-    db.subjectsUserTagsDao.insertTag(tag);
-    Future<List<SubjectsUserTags>> tags = db.subjectsUserTagsDao.findAllTags();
-    print(tags.toString());
+    // db.subjectsUserTagsDao.insertTag(tag);
+    // Future<List<SubjectsUserTags>> tags = db.subjectsUserTagsDao.findAllTags();
+    // print(tags.toString());
   }
 
   @override

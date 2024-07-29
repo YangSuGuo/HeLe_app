@@ -17,6 +17,7 @@ class Init extends StatefulWidget {
 
 class _InitState extends State<Init> {
   late final AppLifecycleListener _appLifecycleListener;
+
   // 数据库名称
   static const String databaseName = 'app_database.db';
 
@@ -91,18 +92,11 @@ class _InitState extends State<Init> {
     applicationProvider.loadLocaleSystem();
 
     // 数据库初始化【单例模式】
-    // final $FloorAppDatabase database = await Database.instance.database;
-
-    // 初始化测试数据
-    // final SubjectsUserTags tag = SubjectsUserTags(
-    //   tag:"测试",
-    //   creationTime: DateTime.now().millisecondsSinceEpoch,
-    // );
-
-    await Get.putAsync<AppDatabase>(permanent: true, () async {
+    // putAsync 异步获取
+    await Get.putAsync<AppDatabase>(permanent: true, // 持久化
+        () async {
       final db = await $FloorAppDatabase.databaseBuilder(databaseName).build();
       return db;
     });
-    // await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }
 }

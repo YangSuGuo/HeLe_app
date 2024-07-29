@@ -57,7 +57,10 @@ class SubjectsStar {
   late final double rating;
 
   /// 用户标签
-  late final String tags;
+  late final String? tags;
+
+  /// 是否收藏
+  late final bool? isCollected;
 
   /// 创建时间
   late final int creationTime;
@@ -83,7 +86,8 @@ class SubjectsStar {
     this.isHidden,
     required this.status,
     required this.rating,
-    required this.tags,
+    this.tags,
+    this.isCollected,
     required this.creationTime,
   });
 }

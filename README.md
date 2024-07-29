@@ -81,10 +81,15 @@
 ## 项目打包
 
 ```sh
-flutter build apk --split-per-abi --obfuscate --split-debug-info=H:\code\CrossPlatformApps\HeLe\hele_app\.dart_tool\log
+flutter build apk --split-per-abi --obfuscate --split-debug-info=H:\Logs
 ```
 
 #### 国际化重新生成
 ```sh
 flutter gen-l10n
+```
+
+#### 数据库重新生成
+```sh
+dart run build_runner build
 ```

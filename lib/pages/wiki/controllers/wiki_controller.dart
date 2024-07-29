@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/math_utils.dart';
+import 'package:hele_app/db/database/app_database.dart';
 import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/character_list/character_list.dart';
@@ -10,12 +13,15 @@ import 'package:hele_app/model/subjects/subjects.dart';
 
 class WikiController extends GetxController {
   late LegacySubjectSmall legacySubjectSmall; // 番剧信息
-  // Rxn<Subjects> subjects = Rxn<Subjects>(); // 条目信息
-  // RxList<CharacterList> characterList = <CharacterList>[].obs; // 角色列表
-  // RxList<PersonCareer> person = <PersonCareer>[].obs; // 演员信息
-  // RxList<RelatedWorksQuery> derivation = <RelatedWorksQuery>[].obs; // 衍生相关作品
   List<String> tags = []; // 标签列表
+  final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
 
+  // 组件状态
+  RxBool recommendation = false.obs; // todo 推荐 占位
+  RxBool mark = false.obs; // 标记
+  RxBool favorite = false.obs; // 收藏
+
+  // 番剧信息
   int subjectId = 0;
   String title = '';
   String imgUrl = '';
@@ -26,22 +32,23 @@ class WikiController extends GetxController {
   RxString dispute = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    // 番剧信息
     legacySubjectSmall = Get.arguments['bangumiItem'];
     subjectId = legacySubjectSmall.id!;
-
-    // querySubjectDetails(subjectId); // 获取条目详情
-    // querySubjectCharacterList(subjectId); // 获取角色列表
-    // querySubjectPersons(subjectId); // 获取演员信息
-    // querySubjectDerivation(subjectId); // 获取衍生相关作品
-
     title = legacySubjectSmall.nameCn != "" || legacySubjectSmall.name != ""
         ? legacySubjectSmall.nameCn != ""
             ? legacySubjectSmall.nameCn!
             : legacySubjectSmall.name!
         : "获取失败！";
-    imgUrl = legacySubjectSmall.images?.large ?? "" /*?? 'https://img.picui.cn/free/2024/07/01/66824a43e0e23.png'*/;
+    imgUrl = legacySubjectSmall.images?.large ?? "";
+
+    // 组件状态
+    mark.value = await db.subjectsStarDao.isSubjectExists(subjectId) ?? false;
+    favorite.value = await db.subjectsStarDao.isSubjectCollectedById(subjectId, true) ?? false;
+    log("标记状态：${mark.value}");
+    log("收藏状态：${favorite.value}");
   }
 
   // 获取infobox
@@ -71,6 +78,7 @@ class WikiController extends GetxController {
     return '厨黑大战';
   }
 
+  // 获取副标题
   String? getSubTitle(String? subtitle, List<PersonCareer>? personCareerList) {
     if (subtitle != null && subtitle != "") {
       return subtitle;
@@ -82,14 +90,16 @@ class WikiController extends GetxController {
     return "暂无";
   }
 
+  /////////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////
   // 请求条目详情
   Future<Subjects> querySubjectDetails(int subjectId) async {
     Subjects result = await BangumiNet.bangumiSubject(subjectId);
-    // subjects.value = result;
     production.value = getInfobox(result.infobox!, '製作');
     // 标签列表
     tags = result.tags.map((tag) => tag.name).toList();
-    // 标准差
+    // 计算标准差
     deviation.value =
         MathUtils.calculateStandardDeviation(result.rating.total, result.rating.count, result.rating.score);
     dispute.value = getDispute(deviation.value);
@@ -99,24 +109,18 @@ class WikiController extends GetxController {
   // 请求条目人物信息列表
   Future<List<CharacterList>> querySubjectCharacterList(int subjectId) async {
     List<CharacterList> resultCharacterList = await BangumiNet.bangumiSubjectCharacterList(subjectId);
-
-    // characterList.value = resultCharacterList;
     return resultCharacterList;
   }
 
   // 请求条目演员信息列表
   Future<List<PersonCareer>> querySubjectPersons(int subjectId) async {
     List<PersonCareer> resultPersons = await BangumiNet.bangumiSubjectPersons(subjectId);
-
-    // person.value = resultPersons;
     return resultPersons;
   }
 
   // 请求条目衍生相关作品
   Future<List<RelatedWorksQuery>> querySubjectDerivation(int subjectId) async {
     List<RelatedWorksQuery> resultDerivation = await BangumiNet.bangumiSubjectDerivation(subjectId);
-
-    // derivation.value = resultDerivation;
     return resultDerivation;
   }
 }

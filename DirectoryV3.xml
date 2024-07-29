@@ -89,4 +89,9 @@
     <tree path="/lib/pages/rank_list/widget/scroll_year_picker.dart" title="滚动年份选择器"/>
     <tree path="/lib/pages/search/widget/search_text.dart" title="搜索历史标签"/>
     <tree path="/lib/pages/search_result" title="搜索结果"/>
+    <tree path="/lib/model" title="模型"/>
+    <tree path="/lib/http" title="网络"/>
+    <tree path="/lib/db/database/entity" title="实体"/>
+    <tree path="/lib/db/database/dao" title="dao"/>
+    <tree path="/lib/db/database/app_database.dart" title="数据库"/>
 </trees>

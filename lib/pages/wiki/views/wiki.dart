@@ -34,6 +34,8 @@ class Wiki extends StatefulWidget {
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   // final WikiController _wikiController = Get.put(WikiController());
   final WikiController _wikiController = Get.find<WikiController>();
+
+  // final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
   int subjectId = 0; // 条目id
   late Future _future;
 
@@ -98,7 +100,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                     )),
                     // 功能列表
                     SliverToBoxAdapter(
-                      child: actionGrid(context),
+                      child: actionGrid(context, s),
                     ),
                     SliverGap(16.h),
                   ]);
@@ -130,162 +132,161 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                       contentGrid(s.totalEpisodes != 0 ? s.totalEpisodes : s.eps),
                       SliverGap(24.h),
                     ]);
+                  }
 
-                    // 评分信息
-                    if (s.rating.total >= 10) {
-                      slivers.addAll([
-                        SliverToBoxAdapter(
+                  // 评分信息
+                  if (s.rating.total >= 10) {
+                    slivers.addAll([
+                      SliverToBoxAdapter(
+                        child: Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: '评分',
+                                    style: TextStyle(
+                                        fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                if (s.rating.score != 0)
+                                  TextSpan(
+                                      text: " ${s.rating.score}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: AppThemeColorScheme.top,
+                                          fontSize: 40.sp)),
+                              ])),
+                              if (s.rating.rank != 0)
+                                Container(
+                                  padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.bottomLeft,
+                                      end: Alignment.topRight,
+                                      colors: [
+                                        AppThemeColorScheme.top3,
+                                        AppThemeColorScheme.top,
+                                        AppThemeColorScheme.top2,
+                                      ],
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "${s.rating.rank} 名",
+                                    style: TextStyle(
+                                        color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                            ]),
+                      ),
+                      SliverGap(16.h),
+                      SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
+                      SliverGap(8.h),
+                      SliverToBoxAdapter(
                           child: Wrap(
                               alignment: WrapAlignment.spaceBetween,
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                                RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text: '评分',
-                                      style: TextStyle(
-                                          fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
-                                  if (s.rating.score != 0)
-                                    TextSpan(
-                                        text: " ${s.rating.score}",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: AppThemeColorScheme.top,
-                                            fontSize: 40.sp)),
-                                ])),
-                                if (s.rating.rank != 0)
-                                  Container(
-                                    padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      gradient: const LinearGradient(
-                                        begin: Alignment.bottomLeft,
-                                        end: Alignment.topRight,
-                                        colors: [
-                                          AppThemeColorScheme.top3,
-                                          AppThemeColorScheme.top,
-                                          AppThemeColorScheme.top2,
-                                        ],
-                                      ),
-                                    ),
-                                    child: Text(
-                                      "${s.rating.rank} 名",
-                                      style: TextStyle(
-                                          color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                              ]),
-                        ),
-                        SliverGap(16.h),
-                        SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
-                        SliverGap(8.h),
-                        SliverToBoxAdapter(
-                            child: Wrap(
-                                alignment: WrapAlignment.spaceBetween,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                              AutoSizeText(
-                                "共计 ${s.rating.total} 条评分",
+                            AutoSizeText(
+                              "共计 ${s.rating.total} 条评分",
+                              style: TextStyle(
+                                fontSize: 27.sp,
+                                fontWeight: FontWeight.bold,
+                                color: colorScheme.secondaryContainer.withOpacity(0.85),
+                              ),
+                            ),
+                            AutoSizeText("当前评价：${_wikiController.dispute}",
                                 style: TextStyle(
-                                  fontSize: 27.sp,
+                                  fontSize: 26.5.sp,
                                   fontWeight: FontWeight.bold,
                                   color: colorScheme.secondaryContainer.withOpacity(0.85),
-                                ),
-                              ),
-                              AutoSizeText("当前评价：${_wikiController.dispute}",
-                                  style: TextStyle(
-                                    fontSize: 26.5.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: colorScheme.secondaryContainer.withOpacity(0.85),
-                                  ))
-                            ])),
-                        SliverGap(24.h),
-                      ]);
-                    }
+                                ))
+                          ])),
+                      SliverGap(24.h),
+                    ]);
+                  }
 
-                    // 角色信息
-                    if (characters.isNotEmpty) {
-                      slivers.addAll([
-                        EntryTitle(
-                            title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        SliverGap(16.h),
-                        SliverToBoxAdapter(
-                            child: SizedBox(
-                                height: 200.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    return InfoSubitem(
-                                      src: characters[index].images?.medium,
-                                      radius: 5,
-                                      fit: BoxFit.fitHeight,
-                                      title: characters[index].name,
-                                      subtitle: _wikiController.getSubTitle(
-                                          characters[index].relation, characters[index].actors ?? []),
-                                      onTap: () {},
-                                    );
-                                  },
-                                  itemCount: characters.length,
-                                  scrollDirection: Axis.horizontal,
-                                ))),
-                        SliverGap(24.h),
-                      ]);
-                    }
+                  // 角色信息
+                  if (characters.isNotEmpty) {
+                    slivers.addAll([
+                      EntryTitle(title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                      SliverGap(16.h),
+                      SliverToBoxAdapter(
+                          child: SizedBox(
+                              height: 200.h,
+                              child: ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return InfoSubitem(
+                                    src: characters[index].images?.medium,
+                                    radius: 5,
+                                    fit: BoxFit.fitHeight,
+                                    title: characters[index].name,
+                                    subtitle: _wikiController.getSubTitle(
+                                        characters[index].relation, characters[index].actors ?? []),
+                                    onTap: () {},
+                                  );
+                                },
+                                itemCount: characters.length,
+                                scrollDirection: Axis.horizontal,
+                              ))),
+                      SliverGap(24.h),
+                    ]);
+                  }
 
-                    // 制作人员
-                    if (persons.isNotEmpty) {
-                      slivers.addAll([
-                        EntryTitle(
-                            title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        SliverGap(16.h),
-                        SliverToBoxAdapter(
-                            child: SizedBox(
-                                height: 200.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    return InfoSubitem(
-                                      src: persons[index].images?.medium,
-                                      title: persons[index].name,
-                                      subtitle: persons[index].relation,
-                                      onTap: () {},
-                                    );
-                                  },
-                                  itemCount: persons.length,
-                                  scrollDirection: Axis.horizontal,
-                                ))),
-                        SliverGap(24.h),
-                      ]);
-                    }
+                  // 制作人员
+                  if (persons.isNotEmpty) {
+                    slivers.addAll([
+                      EntryTitle(
+                          title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                      SliverGap(16.h),
+                      SliverToBoxAdapter(
+                          child: SizedBox(
+                              height: 200.h,
+                              child: ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return InfoSubitem(
+                                    src: persons[index].images?.medium,
+                                    title: persons[index].name,
+                                    subtitle: persons[index].relation,
+                                    onTap: () {},
+                                  );
+                                },
+                                itemCount: persons.length,
+                                scrollDirection: Axis.horizontal,
+                              ))),
+                      SliverGap(24.h),
+                    ]);
+                  }
 
-                    // 关联作品
-                    if (derivation.isNotEmpty) {
-                      slivers.addAll([
-                        EntryTitle(
-                            title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
-                        SliverGap(16.h),
-                        SliverToBoxAdapter(
-                            child: SizedBox(
-                                height: 330.h,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
-                                        ? derivation[index].nameCn
-                                        : derivation[index].name;
-                                    return InfoSubitem(
-                                      containerWidth: 200.w,
-                                      src: derivation[index].images?.medium,
-                                      width: 200.w,
-                                      height: 230.h,
-                                      fit: BoxFit.cover,
-                                      title: title,
-                                      subtitle: derivation[index].relation,
-                                      onTap: () {},
-                                    );
-                                  },
-                                  itemCount: derivation.length,
-                                  scrollDirection: Axis.horizontal,
-                                )))
-                      ]);
-                    }
+                  // 关联作品
+                  if (derivation.isNotEmpty) {
+                    slivers.addAll([
+                      EntryTitle(
+                          title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                      SliverGap(16.h),
+                      SliverToBoxAdapter(
+                          child: SizedBox(
+                              height: 330.h,
+                              child: ListView.builder(
+                                itemBuilder: (context, index) {
+                                  String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
+                                      ? derivation[index].nameCn
+                                      : derivation[index].name;
+                                  return InfoSubitem(
+                                    containerWidth: 200.w,
+                                    src: derivation[index].images?.medium,
+                                    width: 200.w,
+                                    height: 230.h,
+                                    fit: BoxFit.cover,
+                                    title: title,
+                                    subtitle: derivation[index].relation,
+                                    onTap: () {},
+                                  );
+                                },
+                                itemCount: derivation.length,
+                                scrollDirection: Axis.horizontal,
+                              )))
+                    ]);
                   }
 
                   return CustomScrollView(
@@ -322,7 +323,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   }
 
   // 功能模块
-  Widget actionGrid(BuildContext context) {
+  Widget actionGrid(BuildContext context, Subjects subject) {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
       return Container(
         margin: const EdgeInsets.only(top: 6, bottom: 4),
@@ -334,26 +335,28 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
           crossAxisCount: 4,
           childAspectRatio: 1.5,
           children: [
-            ActionItem(
+            Obx(() => ActionItem(
                 icon: const Icon(FontAwesomeIcons.thumbsUp),
                 selectIcon: const Icon(FontAwesomeIcons.solidThumbsUp),
-                onTap: () {},
-                selectStatus: false,
-                text: "推荐"),
-            ActionItem(
-              icon: const Icon(FontAwesomeIcons.b),
-              selectIcon: const Icon(FontAwesomeIcons.b),
-              onTap: () {},
-              selectStatus: false,
-              text: "标记",
-            ),
-            ActionItem(
-              icon: const Icon(FontAwesomeIcons.star),
-              selectIcon: const Icon(FontAwesomeIcons.solidStar),
-              onTap: () {},
-              selectStatus: false,
-              text: "收藏",
-            ),
+                onTap: () {
+                  _wikiController.recommendation.value = !_wikiController.recommendation.value;
+                },
+                selectStatus: _wikiController.recommendation.value,
+                text: "推荐")),
+            Obx(() => ActionItem(
+                  icon: const Icon(FontAwesomeIcons.b),
+                  selectIcon: const Icon(FontAwesomeIcons.b),
+                  onTap: () {},
+                  selectStatus: _wikiController.mark.value,
+                  text: "标记",
+                )),
+            Obx(() => ActionItem(
+                  icon: const Icon(FontAwesomeIcons.star),
+                  selectIcon: const Icon(FontAwesomeIcons.solidStar),
+                  onTap: () {},
+                  selectStatus: _wikiController.favorite.value,
+                  text: "收藏",
+                )),
             ActionItem(
               icon: const Icon(FontAwesomeIcons.shareFromSquare),
               onTap: () {},

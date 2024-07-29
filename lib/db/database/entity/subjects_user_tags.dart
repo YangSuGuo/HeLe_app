@@ -7,8 +7,8 @@ class SubjectsUserTags {
   late final String tag;
   late final int creationTime;
 
-  late final bool? isHidden;
-  late final bool? isPinned;
+  late final bool? isHidden; // 是否隐藏
+  late final bool? isPinned; // 是否置顶
 
   SubjectsUserTags({
     this.tagId,

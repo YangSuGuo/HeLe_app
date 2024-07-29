@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class SearchText extends StatelessWidget {
   final String searchText;
+  final bool? isSelected;
   final Function? onSelect;
   final Function? onLongSelect;
 
   const SearchText({
     super.key,
     required this.searchText,
+    this.isSelected,
     this.onSelect,
     this.onLongSelect,
   });
@@ -15,7 +17,9 @@ class SearchText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+      color: isSelected ?? false
+          ? Theme.of(context).colorScheme.primary.withAlpha(120)
+          : Theme.of(context).colorScheme.secondary.withOpacity(0.1),
       borderRadius: BorderRadius.circular(6),
       child: Padding(
         padding: EdgeInsets.zero,

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/math_utils.dart';
 import 'package:hele_app/db/database/app_database.dart';
+import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/character_list/character_list.dart';
@@ -20,6 +21,16 @@ class WikiController extends GetxController {
   RxBool recommendation = false.obs; // todo 推荐 占位
   RxBool mark = false.obs; // 标记
   RxBool favorite = false.obs; // 收藏
+
+  // 用户评分
+  RxDouble userRating = 0.0.obs;
+  RxString qualityRating = ''.obs;
+
+  // 用户标签
+  RxList<SubjectsUserTags> userTags = <SubjectsUserTags>[].obs;
+  RxList<SubjectsUserTags> userActiveTag = <SubjectsUserTags>[].obs;
+  RxList<bool> isUserTags = <bool>[].obs;
+  RxList<bool> isTags = <bool>[].obs;
 
   // 番剧信息
   int subjectId = 0;
@@ -44,11 +55,46 @@ class WikiController extends GetxController {
         : "获取失败！";
     imgUrl = legacySubjectSmall.images?.large ?? "";
 
+    if (false) {
+      SubjectsUserTags tags = SubjectsUserTags(
+        tag: "·测试-1·",
+        creationTime: DateTime.now().millisecondsSinceEpoch,
+      );
+
+      await db.subjectsUserTagsDao.insertTag(tags);
+    }
+
     // 组件状态
     mark.value = await db.subjectsStarDao.isSubjectExists(subjectId) ?? false;
     favorite.value = await db.subjectsStarDao.isSubjectCollectedById(subjectId, true) ?? false;
     log("标记状态：${mark.value}");
     log("收藏状态：${favorite.value}");
+    userTags.value = await db.subjectsUserTagsDao.findAllTags();
+    log(userTags[0].tag);
+    // 标签激活状态
+    isUserTags.value = userTags.map((tag) => tags.contains(tag.tag)).toList();
+    // todo 官方标签激活状态
+    // 1. 创建 tags 长度一致的 bool 列表
+    // 2. 遍历 userTags 列表，将每个标签的 tag 值与 tags 列表进行比较，如果存在则将对应的 bool 值设为 true，否则设为 false
+
+    // isTags.value = ;
+  }
+
+  // 添加标签
+  Future addTag(int index) async {
+    isUserTags[index] = !isUserTags[index];
+    if (isUserTags[index] == true) {
+      // 添加标签
+      final SubjectsUserTags tag =
+          SubjectsUserTags(tag: userTags[index].tag, creationTime: DateTime.now().millisecondsSinceEpoch);
+      userActiveTag.add(tag);
+
+      log("添加标签：${userActiveTag.length}");
+    } else if (isUserTags[index] == false) {
+      // 再次点击移除标签【去重】
+      userActiveTag.removeWhere((element) => element.tag == userTags[index].tag);
+      log("移除标签：${userActiveTag.length}");
+    }
   }
 
   // 获取infobox
@@ -76,6 +122,22 @@ class WikiController extends GetxController {
     if (deviation < 1.6) return '各执一词';
     if (deviation < 1.75) return '你死我活';
     return '厨黑大战';
+  }
+
+  // 计算推荐度
+  String getRecommendation(double deviation) {
+    if (deviation == 0) return '-';
+    if (deviation <= 0.5) return '不忍直视';
+    if (deviation <= 1) return '很差';
+    if (deviation <= 1.5) return '差';
+    if (deviation <= 2) return '较差';
+    if (deviation <= 2.5) return '不过不失';
+    if (deviation <= 3) return '还行';
+    if (deviation <= 3.5) return '推荐';
+    if (deviation <= 4) return '力荐';
+    if (deviation <= 4.5) return '神作';
+    if (deviation <= 5) return '超神作';
+    return '-';
   }
 
   // 获取副标题

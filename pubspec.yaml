@@ -16,38 +16,39 @@ dependencies:
   intl: ^0.19.0 # 国际化
 
   # 界面UI
-  cupertino_icons: ^1.0.6 # icon
+  custom_sliding_segmented_control: ^1.8.3 # 分段器
+  scroll_datetime_picker: ^0.1.2 # 滑动时间选择
+  loading_animation_widget: ^1.2.1 # 加载动画
+  animated_rating_stars: ^1.0.1 # 评分星标
+  flutter_smart_dialog: ^4.9.7+9 # 弹窗
   font_awesome_flutter: ^10.7.0 # icon
   auto_size_text: ^3.0.0 # 文本自适应
   expand_widget: ^3.1.1 # 文本折叠
-  animated_rating_stars: ^1.0.1 # 评分星标
-  loading_animation_widget: ^1.2.1 # 加载动画
+  cupertino_icons: ^1.0.6 # icon
   fl_chart: ^0.68.0 # 图表
-  flutter_smart_dialog: ^4.9.7+9 # 弹窗
-  custom_sliding_segmented_control: ^1.8.3 # 分段器
   gap: ^3.0.1 # 间隔
-  scroll_datetime_picker: ^0.1.2 # 滑动时间选择
 
   #  flutter_tilt: ^3.0.0 # 倾斜视差
   #  skeletonizer: ^1.2.0 # 骨架屏
 
   # 网络请求
+  dio_cookie_manager: ^3.1.1
+  connectivity_plus: ^6.0.1
   dio: ^5.4.3+1 # 网络请求
 
   #  cookie_jar: ^4.0.8
-  dio_cookie_manager: ^3.1.1
-  connectivity_plus: ^6.0.1
   #  dio_http2_adapter: ^2.3.1+1
 
   # 开发工具
   cached_network_image: ^3.3.1 # 图片缓存
   flutter_screenutil: ^5.9.0 # 屏幕适配
-  #  flutter_svg: ^2.0.10+1 # svg显示
   url_launcher: ^6.2.6 # url跳转
   easy_debounce: ^2.0.3 # 防抖
-  #  share_plus: ^9.0.0 # 分享
-  #  logger: ^2.3.0 # log
+  share_plus: ^9.0.0 # 分享
   nil: ^1.1.1 # 占位符
+
+  #  flutter_svg: ^2.0.10+1 # svg显示
+  #  logger: ^2.3.0 # log
 
   # 状态管理
   get: ^4.6.6 # 路由 & 状态管理

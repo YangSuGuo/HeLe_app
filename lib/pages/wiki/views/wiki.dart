@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,7 @@ import 'package:hele_app/model/derivation/related_works_query.dart';
 import 'package:hele_app/model/person_career/person_career.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
+import 'package:hele_app/pages/search/widget/search_text.dart';
 import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
 import 'package:hele_app/pages/wiki/widget/action_item.dart';
 import 'package:hele_app/pages/wiki/widget/info_subitem.dart';
@@ -325,6 +328,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   // 功能模块
   Widget actionGrid(BuildContext context, Subjects subject) {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      final ColorScheme colorScheme = Theme.of(context).colorScheme;
       return Container(
         margin: const EdgeInsets.only(top: 6, bottom: 4),
         height: constraints.maxWidth * 0.17,
@@ -346,7 +350,12 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
             Obx(() => ActionItem(
                   icon: const Icon(FontAwesomeIcons.b),
                   selectIcon: const Icon(FontAwesomeIcons.b),
-                  onTap: () {},
+                  onTap: () {
+                    _show(subject, colorScheme);
+                    // SubjectsStar subjectsStar = subject.toSubjectsStar(
+
+                    // );
+                  },
                   selectStatus: _wikiController.mark.value,
                   text: "标记",
                 )),
@@ -367,6 +376,179 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
         ),
       );
     });
+  }
+
+  void _show(Subjects subject, ColorScheme colorScheme) async {
+    await SmartDialog.show(
+        clickMaskDismiss: true,
+        usePenetrate: false,
+        debounce: true,
+        onDismiss: () => SmartDialog.config.attach = SmartConfigAttach(),
+        builder: (_) {
+          return Container(
+            width: Get.width * 0.85,
+            height: Get.height * 0.5,
+            padding: EdgeInsets.fromLTRB(36.w, 36.h, 36.w, 24.h),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(36.r),
+            ),
+            child: Column(
+              children: [
+                // 标题
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        AutoSizeText(
+                          _wikiController.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.secondary,
+                          ),
+                        ),
+                        // 副标题
+                        if (subject.name != "")
+                          Padding(
+                              padding: EdgeInsets.only(top: 6.h, bottom: 16.h),
+                              child: AutoSizeText(
+                                subject.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: colorScheme.secondary.withOpacity(0.7),
+                                ),
+                              )),
+                      ],
+                    ),
+                    const Spacer(),
+                    InkWell(
+                        onTap: () {},
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 30.h),
+                          child: FaIcon(FontAwesomeIcons.xmark, size: 66.sp, color: colorScheme.secondary),
+                        ))
+                    /*                   IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      // iconSize: 66.sp,
+                      icon: FaIcon(FontAwesomeIcons.xmark, size: 66.sp, color: colorScheme.secondary),
+                      style: IconButton.styleFrom(
+                        // backgroundColor: colorScheme.primary.withOpacity(0.12),
+                        minimumSize: Size(77.sp, 0),
+                      ),
+                    )*/
+                  ],
+                ),
+                // 评分
+                AnimatedRatingStars(
+                  initialRating: subject.rating.score / 2,
+                  maxRating: 5.0,
+                  minRating: 0.0,
+                  starSize: 64.sp,
+                  filledColor: colorScheme.primary.withOpacity(0.8),
+                  displayRatingValue: false,
+                  interactiveTooltips: true,
+                  readOnly: false,
+                  onChanged: (double rating) {
+                    _wikiController.userRating.value = rating;
+                    _wikiController.qualityRating.value = _wikiController.getRecommendation(rating);
+                  },
+                  customFilledIcon: Icons.star,
+                  customHalfFilledIcon: Icons.star_half,
+                  customEmptyIcon: Icons.star_border,
+                ),
+                // 评分描述
+                Obx(
+                  () => AutoSizeText(
+                    _wikiController.qualityRating.value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.secondary.withOpacity(0.8),
+                    ),
+                  ),
+                ),
+                // 标签选择
+                // todo【官方标签】【用户标签】
+                if (_wikiController.userTags.isNotEmpty)
+                  LayoutBuilder(builder: (context, constraints) {
+                    return Container(
+                      width: constraints.maxWidth,
+                      height: Get.height * 0.2,
+                      // color: Colors.teal,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                AutoSizeText(
+                                  "标签",
+                                  style: TextStyle(
+                                      fontSize: 34.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorScheme.secondary.withOpacity(0.8)),
+                                ),
+                              ]),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.only(top: 8.h),
+                                  child: PageView(children: [
+                                    ListView(children: [
+                                      Wrap(
+                                          spacing: 8,
+                                          runSpacing: 8,
+                                          direction: Axis.horizontal,
+                                          textDirection: TextDirection.ltr,
+                                          children: [
+                                            for (int i = 0; i < _wikiController.userTags.length; i++)
+                                              Obx(() => SearchText(
+                                                    searchText: _wikiController.userTags[i].tag,
+                                                    isSelected: _wikiController.isUserTags[i],
+                                                    onSelect: (value) {
+                                                      _wikiController.addTag(i);
+                                                    },
+                                                  ))
+                                          ]),
+                                    ]),
+                                    Wrap(
+                                        spacing: 8,
+                                        runSpacing: 8,
+                                        direction: Axis.horizontal,
+                                        textDirection: TextDirection.ltr,
+                                        children: [
+                                          for (int i = 0; i < _wikiController.userTags.length; i++)
+                                            Obx(() => SearchText(
+                                                  searchText: _wikiController.userTags[i].tag,
+                                                  isSelected: _wikiController.isUserTags[i],
+                                                  onSelect: (value) {
+                                                    _wikiController.addTag(i);
+                                                  },
+                                                ))
+                                        ]),
+                                  ]))),
+                        ],
+                      ),
+                    );
+                  })
+                // 标注选择
+              ],
+            ),
+          );
+        });
   }
 
   // 剧集列表

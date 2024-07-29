@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/model/collection.dart';
 import 'package:hele_app/model/images.dart';
 import 'package:hele_app/model/infobox.dart';
@@ -9,6 +10,8 @@ import 'package:hele_app/model/tag.dart';
 Subjects requestFromJson(String str) => Subjects.fromJson(json.decode(str));
 
 String requestToJson(Subjects data) => json.encode(data.toJson());
+
+
 
 class Subjects {
   ///条目收藏人数
@@ -88,9 +91,7 @@ class Subjects {
         eps: json["eps"],
         id: json["id"],
         images: Images.fromJson(json["images"]),
-        infobox: json["infobox"] == null
-            ? []
-            : List<Item>.from(json["infobox"]!.map((x) => Item.fromJson(x))),
+        infobox: json["infobox"] == null ? [] : List<Item>.from(json["infobox"]!.map((x) => Item.fromJson(x))),
         locked: json["locked"],
         name: json["name"],
         nameCn: json["name_cn"],
@@ -110,9 +111,7 @@ class Subjects {
         "eps": eps,
         "id": id,
         "images": images.toJson(),
-        "infobox": infobox == null
-            ? []
-            : List<dynamic>.from(infobox!.map((x) => x.toJson())),
+        "infobox": infobox == null ? [] : List<dynamic>.from(infobox!.map((x) => x.toJson())),
         "locked": locked,
         "name": name,
         "name_cn": nameCn,
@@ -125,4 +124,31 @@ class Subjects {
         "type": type,
         "volumes": volumes,
       };
+
+  /// 转换为 SubjectsStar 实体
+  SubjectsStar toSubjectsStar(bool isHidden, int status, double userRating, List<String> tags, bool isCollected) {
+    return SubjectsStar(
+      subjectId: id,
+      name: name,
+      nameCn: nameCn,
+      type: type,
+      url: images.large,
+      platform: platform,
+      summary: summary,
+      totalEpisodes: totalEpisodes,
+      volumes: volumes,
+      eps: eps,
+      airDate: date,
+      images: images.large,
+      score: rating.score,
+      rank: rating.rank,
+      ///////////////////////////////////////////////////////
+      isHidden: isHidden,
+      status: status,
+      rating: userRating,
+      tags: tags.toString(),
+      isCollected: isCollected,
+      creationTime: DateTime.now().millisecondsSinceEpoch, // 当前时间戳
+    );
+  }
 }

@@ -32,7 +32,6 @@ class SubjectsStar {
 
   ///放送开始日期
   late final String? airDate;
-  late final int? airWeekday;
 
   ///封面
   late final String? images;
@@ -76,10 +75,10 @@ class SubjectsStar {
     this.url,
     required this.platform,
     this.summary,
+    this.totalEpisodes,
     this.volumes,
     this.eps,
     this.airDate,
-    this.airWeekday,
     this.images,
     this.score,
     this.rank,

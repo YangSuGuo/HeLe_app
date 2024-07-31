@@ -98,7 +98,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `subjects_star` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `subjectId` INTEGER NOT NULL, `name` TEXT NOT NULL, `nameCn` TEXT NOT NULL, `type` INTEGER NOT NULL, `url` TEXT, `platform` TEXT NOT NULL, `summary` TEXT, `totalEpisodes` INTEGER, `volumes` INTEGER, `eps` INTEGER, `airDate` TEXT, `images` TEXT, `score` REAL, `rank` INTEGER, `isHidden` INTEGER, `status` INTEGER NOT NULL, `rating` REAL NOT NULL, `tags` TEXT, `isCollected` INTEGER, `creationTime` INTEGER NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `subjects_star` (`subjectId` INTEGER NOT NULL, `name` TEXT NOT NULL, `nameCn` TEXT NOT NULL, `type` INTEGER NOT NULL, `url` TEXT, `platform` TEXT NOT NULL, `summary` TEXT, `totalEpisodes` INTEGER, `volumes` INTEGER, `eps` INTEGER, `airDate` TEXT, `images` TEXT, `score` REAL, `rank` INTEGER, `isHidden` INTEGER, `status` INTEGER NOT NULL, `rating` REAL NOT NULL, `tags` TEXT, `isCollected` INTEGER, `creationTime` INTEGER NOT NULL, PRIMARY KEY (`subjectId`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `subjects_user_tags` (`tagId` INTEGER PRIMARY KEY AUTOINCREMENT, `tag` TEXT NOT NULL, `creationTime` INTEGER NOT NULL, `isHidden` INTEGER, `isPinned` INTEGER)');
 
@@ -130,7 +130,6 @@ class _$SubjectsStarDao extends SubjectsStarDao {
             database,
             'subjects_star',
             (SubjectsStar item) => <String, Object?>{
-                  'id': item.id,
                   'subjectId': item.subjectId,
                   'name': item.name,
                   'nameCn': item.nameCn,
@@ -158,9 +157,8 @@ class _$SubjectsStarDao extends SubjectsStarDao {
         _subjectsStarUpdateAdapter = UpdateAdapter(
             database,
             'subjects_star',
-            ['id'],
+            ['subjectId'],
             (SubjectsStar item) => <String, Object?>{
-                  'id': item.id,
                   'subjectId': item.subjectId,
                   'name': item.name,
                   'nameCn': item.nameCn,
@@ -188,9 +186,8 @@ class _$SubjectsStarDao extends SubjectsStarDao {
         _subjectsStarDeletionAdapter = DeletionAdapter(
             database,
             'subjects_star',
-            ['id'],
+            ['subjectId'],
             (SubjectsStar item) => <String, Object?>{
-                  'id': item.id,
                   'subjectId': item.subjectId,
                   'name': item.name,
                   'nameCn': item.nameCn,
@@ -232,7 +229,6 @@ class _$SubjectsStarDao extends SubjectsStarDao {
   Future<List<SubjectsStar>> findAllSubjectsStar() async {
     return _queryAdapter.queryList('SELECT * FROM subjects_star',
         mapper: (Map<String, Object?> row) => SubjectsStar(
-            id: row['id'] as int?,
             subjectId: row['subjectId'] as int,
             name: row['name'] as String,
             nameCn: row['nameCn'] as String,
@@ -270,7 +266,7 @@ class _$SubjectsStarDao extends SubjectsStarDao {
   ) async {
     return _queryAdapter.queryList(
         'SELECT * FROM subjects_star         WHERE type = ?1          AND status = ?2          AND (tags LIKE ?3 OR ?3 IS NULL)          AND isHidden = ?4         AND isCollected = ?5       ORDER BY ?6 DESC       LIMIT 20 OFFSET ?7;',
-        mapper: (Map<String, Object?> row) => SubjectsStar(id: row['id'] as int?, subjectId: row['subjectId'] as int, name: row['name'] as String, nameCn: row['nameCn'] as String, type: row['type'] as int, url: row['url'] as String?, platform: row['platform'] as String, summary: row['summary'] as String?, totalEpisodes: row['totalEpisodes'] as int?, volumes: row['volumes'] as int?, eps: row['eps'] as int?, airDate: row['airDate'] as String?, images: row['images'] as String?, score: row['score'] as double?, rank: row['rank'] as int?, isHidden: row['isHidden'] == null ? null : (row['isHidden'] as int) != 0, status: row['status'] as int, rating: row['rating'] as double, tags: row['tags'] as String?, isCollected: row['isCollected'] == null ? null : (row['isCollected'] as int) != 0, creationTime: row['creationTime'] as int),
+        mapper: (Map<String, Object?> row) => SubjectsStar(subjectId: row['subjectId'] as int, name: row['name'] as String, nameCn: row['nameCn'] as String, type: row['type'] as int, url: row['url'] as String?, platform: row['platform'] as String, summary: row['summary'] as String?, totalEpisodes: row['totalEpisodes'] as int?, volumes: row['volumes'] as int?, eps: row['eps'] as int?, airDate: row['airDate'] as String?, images: row['images'] as String?, score: row['score'] as double?, rank: row['rank'] as int?, isHidden: row['isHidden'] == null ? null : (row['isHidden'] as int) != 0, status: row['status'] as int, rating: row['rating'] as double, tags: row['tags'] as String?, isCollected: row['isCollected'] == null ? null : (row['isCollected'] as int) != 0, creationTime: row['creationTime'] as int),
         arguments: [
           type,
           status,
@@ -299,6 +295,14 @@ class _$SubjectsStarDao extends SubjectsStarDao {
         'SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = ?1 AND isCollected = ?2)',
         mapper: (Map<String, Object?> row) => (row.values.first as int) != 0,
         arguments: [subjectId, isCollected ? 1 : 0]);
+  }
+
+  @override
+  Future<String?> getTagsForSubject(int subjectId) async {
+    return _queryAdapter.query(
+        'SELECT tags FROM subjects_star WHERE subjectId = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as String,
+        arguments: [subjectId]);
   }
 
   @override

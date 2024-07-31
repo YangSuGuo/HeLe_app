@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:animated_rating_stars/animated_rating_stars.dart';
@@ -11,6 +12,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/entry_title.dart';
 import 'package:hele_app/common/Widget/network_img.dart';
+import 'package:hele_app/common/utils/evaluation_utils.dart';
 import 'package:hele_app/model/character_list/character_list.dart';
 import 'package:hele_app/model/derivation/related_works_query.dart';
 import 'package:hele_app/model/person_career/person_career.dart';
@@ -23,8 +25,10 @@ import 'package:hele_app/pages/wiki/widget/info_subitem.dart';
 import 'package:hele_app/pages/wiki/widget/introduction.dart';
 import 'package:hele_app/pages/wiki/widget/more_information.dart';
 import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
+import 'package:hele_app/routes/app_pages.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Wiki extends StatefulWidget {
   const Wiki({super.key});
@@ -231,7 +235,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                     radius: 5,
                                     fit: BoxFit.fitHeight,
                                     title: characters[index].name,
-                                    subtitle: _wikiController.getSubTitle(
+                                    subtitle: EvaluationUtils.getSubTitle(
                                         characters[index].relation, characters[index].actors ?? []),
                                     onTap: () {},
                                   );
@@ -355,13 +359,10 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 selectStatus: _wikiController.recommendation.value,
                 text: "推荐")),
             Obx(() => ActionItem(
-                  icon: const Icon(FontAwesomeIcons.b),
-                  selectIcon: const Icon(FontAwesomeIcons.b),
+                  icon: const Icon(FontAwesomeIcons.faceGrinWide),
+                  selectIcon: const Icon(FontAwesomeIcons.faceSmileWink),
                   onTap: () {
                     _show(subject, colorScheme);
-                    // SubjectsStar subjectsStar = subject.toSubjectsStar(
-
-                    // );
                   },
                   selectStatus: _wikiController.mark.value,
                   text: "标记",
@@ -369,13 +370,24 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
             Obx(() => ActionItem(
                   icon: const Icon(FontAwesomeIcons.star),
                   selectIcon: const Icon(FontAwesomeIcons.solidStar),
-                  onTap: () {},
+                  onTap: () {
+                    if (_wikiController.mark.value) {
+                      _wikiController.favorite.value = !_wikiController.favorite.value;
+                      _wikiController.save(subject, _wikiController.favorite.value);
+                    } else {
+                      SmartDialog.showToast('请先标注');
+                    }
+                  },
                   selectStatus: _wikiController.favorite.value,
                   text: "收藏",
                 )),
             ActionItem(
               icon: const Icon(FontAwesomeIcons.shareFromSquare),
-              onTap: () {},
+              onTap: () {
+                Share.share('''我正在关注《${_wikiController.title}》,快来一起吧！
+海报图片：${_wikiController.imgUrl}
+                ''');
+              },
               selectStatus: false,
               text: '分享',
             ),
@@ -385,7 +397,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
     });
   }
 
-  // 弹框
+  // 提交弹框
   void _show(Subjects subject, ColorScheme colorScheme) async {
     await SmartDialog.show(
         clickMaskDismiss: true,
@@ -395,13 +407,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
         builder: (_) {
           return Container(
             width: Get.width * 0.85,
-            height: Get.height * 0.53,
+            height: Get.height * 0.55,
             padding: EdgeInsets.fromLTRB(36.w, 36.h, 36.w, 24.h),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(36.r),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // 标题
                 Row(
@@ -465,7 +478,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                           readOnly: false,
                           onChanged: (double rating) {
                             _wikiController.userRating.value = rating;
-                            _wikiController.qualityRating.value = _wikiController.getRecommendation(rating);
+                            _wikiController.qualityRating.value = EvaluationUtils.getRecommendation(rating);
                           },
                           customFilledIcon: Icons.star,
                           customHalfFilledIcon: Icons.star_half,
@@ -489,57 +502,38 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
                 // 标签选择
                 // todo【官方标签】【用户标签】
-                LayoutBuilder(builder: (context, constraints) {
-                  return Container(
-                    width: constraints.maxWidth,
-                    height: Get.height * 0.21,
-                    // color: Colors.teal,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(alignment: WrapAlignment.start, crossAxisAlignment: WrapCrossAlignment.center, children: [
-                          AutoSizeText(
-                            "标签",
-                            style: TextStyle(
-                                fontSize: 34.sp,
-                                fontWeight: FontWeight.w600,
-                                color: colorScheme.secondary.withOpacity(0.8)),
-                          ),
-                          AutoSizeText(
-                            "（右划用户标签）",
-                            style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                                color: colorScheme.secondary.withOpacity(0.8)),
-                          ),
-                        ]),
-                        SizedBox(
-                            height: Get.height * 0.17,
-                            child: PageView(children: [
-                              ListView(
-                                padding: EdgeInsets.zero,
-                                children: [
-                                  Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
-                                      direction: Axis.horizontal,
-                                      textDirection: TextDirection.ltr,
-                                      children: [
-                                        for (int i = 0; i < _wikiController.tags.length; i++)
-                                          Obx(
-                                            () => SearchText(
-                                              searchText: _wikiController.tags[i],
-                                              isSelected: _wikiController.isTags[i],
-                                              onSelect: (value) {
-                                                _wikiController.addTag(false, i);
-                                              },
-                                            ),
-                                          ),
-                                      ]),
-                                ],
-                              ),
-                              if (_wikiController.userTags.isNotEmpty)
+                if (_wikiController.tags.isNotEmpty)
+                  LayoutBuilder(builder: (context, constraints) {
+                    return Container(
+                      width: constraints.maxWidth,
+                      height: Get.height * 0.21,
+                      // color: Colors.teal,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                              alignment: WrapAlignment.start,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                AutoSizeText(
+                                  "标签",
+                                  style: TextStyle(
+                                      fontSize: 34.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorScheme.secondary.withOpacity(0.8)),
+                                ),
+                                AutoSizeText(
+                                  "（右划用户标签）",
+                                  style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorScheme.secondary.withOpacity(0.8)),
+                                ),
+                              ]),
+                          SizedBox(
+                              height: Get.height * 0.17,
+                              child: PageView(children: [
                                 ListView(
                                   padding: EdgeInsets.zero,
                                   children: [
@@ -549,22 +543,45 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                         direction: Axis.horizontal,
                                         textDirection: TextDirection.ltr,
                                         children: [
-                                          for (int i = 0; i < _wikiController.userTags.length; i++)
-                                            Obx(() => SearchText(
-                                                  searchText: _wikiController.userTags[i].tag,
-                                                  isSelected: _wikiController.isUserTags[i],
-                                                  onSelect: (value) {
-                                                    _wikiController.addTag(true, i);
-                                                  },
-                                                ))
+                                          for (int i = 0; i < _wikiController.tags.length; i++)
+                                            Obx(
+                                              () => SearchText(
+                                                searchText: _wikiController.tags[i],
+                                                isSelected: _wikiController.isTags[i],
+                                                onSelect: (value) {
+                                                  _wikiController.addTag(false, i);
+                                                },
+                                              ),
+                                            ),
                                         ]),
                                   ],
-                                )
-                            ])),
-                      ],
-                    ),
-                  );
-                }),
+                                ),
+                                if (_wikiController.userTags.isNotEmpty)
+                                  ListView(
+                                    padding: EdgeInsets.zero,
+                                    children: [
+                                      Wrap(
+                                          spacing: 8,
+                                          runSpacing: 8,
+                                          direction: Axis.horizontal,
+                                          textDirection: TextDirection.ltr,
+                                          children: [
+                                            for (int i = 0; i < _wikiController.userTags.length; i++)
+                                              Obx(() => SearchText(
+                                                    searchText: _wikiController.userTags[i].tag,
+                                                    isSelected: _wikiController.isUserTags[i],
+                                                    onSelect: (value) {
+                                                      _wikiController.addTag(true, i);
+                                                    },
+                                                  ))
+                                          ]),
+                                    ],
+                                  )
+                              ])),
+                        ],
+                      ),
+                    );
+                  }),
 
                 // 状态
                 LayoutBuilder(builder: (context, constraints) {
@@ -601,7 +618,10 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                             dividerColor: Colors.transparent,
                             unselectedLabelColor: colorScheme.outline,
                             // tabAlignment: TabAlignment.start,
-                            onTap: (index) {},
+                            onTap: (index) {
+                              _wikiController.subjectType = index;
+                              log(index.toString());
+                            },
                           ),
                         ],
                       ));
@@ -619,11 +639,15 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                             color: colorScheme.tertiaryContainer.withOpacity(0.8),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                             textTheme: ButtonTextTheme.primary,
-                            onPressed: () {},
+                            onPressed: () {
+                              _wikiController.save(subject, _wikiController.favorite.value);
+                              SmartDialog.dismiss(force: true);
+                            },
                             child: const AutoSizeText("确定"))),
                     Padding(
                         padding: EdgeInsets.only(left: 10.w),
-                        child: Obx(() => MaterialButton(
+                        child: Obx(
+                          () => MaterialButton(
                             height: 65.h,
                             elevation: 0,
                             padding: EdgeInsets.zero,
@@ -640,7 +664,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                               children: [
                                 FaIcon(
                                   _wikiController.isHidden.value ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
-                                  size: 50.sp,
+                                  size: 35.sp,
                                   color: colorScheme.onPrimary,
                                 ),
                                 Gap(20.w),
@@ -649,7 +673,9 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                   minFontSize: 12,
                                 )
                               ],
-                            ))))
+                            ),
+                          ),
+                        ))
                   ],
                 )
               ],
@@ -691,7 +717,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
       forceMaterialTransparency: true,
       actions: [
         IconButton(
-          onPressed: () => Get.toNamed('/historySearch'),
+          onPressed: () => Get.toNamed(Routes.SEARCH),
           icon: const Icon(Icons.search_outlined),
         ),
         PopupMenuButton<String>(

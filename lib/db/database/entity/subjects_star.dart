@@ -2,10 +2,8 @@ import 'package:floor/floor.dart';
 
 @Entity(tableName: 'subjects_star')
 class SubjectsStar {
-  @PrimaryKey(autoGenerate: true)
-  late final int? id;
-
   ///条目 ID
+  @PrimaryKey()
   late final int subjectId;
 
   ///条目名称
@@ -67,7 +65,6 @@ class SubjectsStar {
 ///////////////////////////////////////////////
 
   SubjectsStar({
-    this.id,
     required this.subjectId,
     required this.name,
     required this.nameCn,

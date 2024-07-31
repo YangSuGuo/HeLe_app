@@ -17,7 +17,7 @@ abstract class AppDatabase extends FloorDatabase {
   // 用户标签
   SubjectsUserTagsDao get subjectsUserTagsDao;
 
-  // 清空所有表
+  // 清空所有表数据
   Future<void> clearAllTables() async {
     await database.execute('DELETE FROM subjects_star');
     await database.execute('DELETE FROM subjects_user_tags');

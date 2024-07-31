@@ -42,6 +42,10 @@ abstract class SubjectsStarDao {
     bool isCollected,
   );
 
+  // 根据 条目ID 指定 tags列 返回数据
+  @Query('SELECT tags FROM subjects_star WHERE subjectId = :subjectId')
+  Future<String?> getTagsForSubject(int subjectId);
+
   // 添加
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> addSubject(SubjectsStar subject);

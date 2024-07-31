@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class SearchText extends StatelessWidget {
@@ -33,8 +34,10 @@ class SearchText extends StatelessWidget {
           borderRadius: BorderRadius.circular(6),
           child: Padding(
             padding: const EdgeInsets.only(top: 5, bottom: 5, left: 11, right: 11),
-            child: Text(
+            child: AutoSizeText(
               searchText,
+              minFontSize: 12,
+              maxLines: 1,
               style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ),

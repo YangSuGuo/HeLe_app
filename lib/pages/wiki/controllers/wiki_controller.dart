@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/math_utils.dart';
 import 'package:hele_app/db/database/app_database.dart';
+import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/http/bangumi_net.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
@@ -13,8 +14,8 @@ import 'package:hele_app/model/person_career/person_career.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 
 class WikiController extends GetxController {
-  late LegacySubjectSmall legacySubjectSmall; // 番剧信息
-  List<String> tags = []; // 标签列表
+  late final LegacySubjectSmall legacySubjectSmall; // 番剧信息
+  late final RxList<String> tags = <String>[].obs; // 标签列表
   final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
 
   // 组件状态
@@ -27,10 +28,15 @@ class WikiController extends GetxController {
   RxString qualityRating = ''.obs;
 
   // 用户标签
-  RxList<SubjectsUserTags> userTags = <SubjectsUserTags>[].obs;
+  late final RxList<SubjectsUserTags> userTags = <SubjectsUserTags>[].obs;
   RxList<SubjectsUserTags> userActiveTag = <SubjectsUserTags>[].obs;
+
+  // 标签激活状态
   RxList<bool> isUserTags = <bool>[].obs;
   RxList<bool> isTags = <bool>[].obs;
+
+  // 是否隐藏
+  RxBool isHidden = false.obs;
 
   // 番剧信息
   int subjectId = 0;
@@ -64,36 +70,42 @@ class WikiController extends GetxController {
       await db.subjectsUserTagsDao.insertTag(tags);
     }
 
+    // 初始化评分评价
+    qualityRating.value = getRecommendation(0.0);
+
     // 组件状态
     mark.value = await db.subjectsStarDao.isSubjectExists(subjectId) ?? false;
     favorite.value = await db.subjectsStarDao.isSubjectCollectedById(subjectId, true) ?? false;
     log("标记状态：${mark.value}");
     log("收藏状态：${favorite.value}");
+
     userTags.value = await db.subjectsUserTagsDao.findAllTags();
     log(userTags[0].tag);
     // 标签激活状态
-    isUserTags.value = userTags.map((tag) => tags.contains(tag.tag)).toList();
-    // todo 官方标签激活状态
+
+    // todo 标签激活状态
     // 1. 创建 tags 长度一致的 bool 列表
     // 2. 遍历 userTags 列表，将每个标签的 tag 值与 tags 列表进行比较，如果存在则将对应的 bool 值设为 true，否则设为 false
-
-    // isTags.value = ;
+    syncUserActiveTags();
   }
 
-  // 添加标签
-  Future addTag(int index) async {
-    isUserTags[index] = !isUserTags[index];
-    if (isUserTags[index] == true) {
-      // 添加标签
-      final SubjectsUserTags tag =
-          SubjectsUserTags(tag: userTags[index].tag, creationTime: DateTime.now().millisecondsSinceEpoch);
-      userActiveTag.add(tag);
+  // 初始化激活标签
+  void syncUserActiveTags() {
+    // 初始化列表
+    isTags.value = List.filled(tags.length, false);
+    isUserTags.value = List.filled(userTags.length, false);
 
-      log("添加标签：${userActiveTag.length}");
-    } else if (isUserTags[index] == false) {
-      // 再次点击移除标签【去重】
-      userActiveTag.removeWhere((element) => element.tag == userTags[index].tag);
-      log("移除标签：${userActiveTag.length}");
+    log(isTags.length.toString());
+
+    if (userActiveTag.isEmpty) return;
+
+    // 初始化激活标签
+    for (var activeTag in userActiveTag) {
+      int indexInOfficialTags = tags.indexOf(activeTag.tag);
+      isTags[indexInOfficialTags] = true;
+
+      int indexInCustomTags = userTags.indexWhere((tag) => tag.tag == activeTag.tag);
+      isUserTags[indexInCustomTags] = true;
     }
   }
 
@@ -126,7 +138,7 @@ class WikiController extends GetxController {
 
   // 计算推荐度
   String getRecommendation(double deviation) {
-    if (deviation == 0) return '-';
+    if (deviation == 0) return '¬‿¬';
     if (deviation <= 0.5) return '不忍直视';
     if (deviation <= 1) return '很差';
     if (deviation <= 1.5) return '差';
@@ -154,13 +166,45 @@ class WikiController extends GetxController {
 
   /////////////////////////////////////////////////////////////////////////////
 
+  // 添加标签
+  Future<void> addTag(bool isUserTag, int index) async {
+    List<String> sourceTags = isUserTag ? userTags.map((tag) => tag.tag).toList() : tags;
+
+    isUserTag ? isUserTags[index] = !isUserTags[index] : isTags[index] = !isTags[index];
+
+    if (isUserTag ? isUserTags[index] : isTags[index]) {
+      final SubjectsUserTags newTag = SubjectsUserTags(
+        tag: sourceTags[index],
+        creationTime: DateTime.now().millisecondsSinceEpoch,
+      );
+      userActiveTag.add(newTag);
+      log("添加标签：${sourceTags[index]}");
+    } else {
+      userActiveTag.removeWhere((tag) => tag.tag == sourceTags[index]);
+      log("移除标签：${sourceTags[index]}");
+    }
+  }
+
+  // 保存到数据库
+  Future<void> save(Subjects subject) async {
+    SubjectsStar subjectsStar = subject.toSubjectsStar(
+      isHidden: isHidden.value,
+      status: 2,
+      userRating: userRating.value,
+      tags: userActiveTag.map((tag) => tag.tag).toList(),
+    );
+  }
+
   /////////////////////////////////////////////////////////////////////////////
+
   // 请求条目详情
   Future<Subjects> querySubjectDetails(int subjectId) async {
     Subjects result = await BangumiNet.bangumiSubject(subjectId);
     production.value = getInfobox(result.infobox!, '製作');
     // 标签列表
-    tags = result.tags.map((tag) => tag.name).toList();
+    tags.value = result.tags.map((tag) => tag.name).toList();
+    isTags.value = List.filled(tags.length, false);
+    log(tags.toString());
     // 计算标准差
     deviation.value =
         MathUtils.calculateStandardDeviation(result.rating.total, result.rating.count, result.rating.score);

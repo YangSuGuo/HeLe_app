@@ -11,8 +11,6 @@ Subjects requestFromJson(String str) => Subjects.fromJson(json.decode(str));
 
 String requestToJson(Subjects data) => json.encode(data.toJson());
 
-
-
 class Subjects {
   ///条目收藏人数
   Collection collection;
@@ -126,7 +124,13 @@ class Subjects {
       };
 
   /// 转换为 SubjectsStar 实体
-  SubjectsStar toSubjectsStar(bool isHidden, int status, double userRating, List<String> tags, bool isCollected) {
+  SubjectsStar toSubjectsStar({
+    required bool isHidden,
+    required int status,
+    required double userRating,
+    List<String>? tags,
+    bool? isCollected,
+  }) {
     return SubjectsStar(
       subjectId: id,
       name: name,

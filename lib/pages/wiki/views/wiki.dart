@@ -39,11 +39,9 @@ class Wiki extends StatefulWidget {
 
 // BUG 该页面在生产模式下会出现空指针解引用（null pointer dereference）
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
-  // final WikiController _wikiController = Get.put(WikiController());
   final WikiController _wikiController = Get.find<WikiController>();
   late TabController? _tabController;
 
-  // final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
   int subjectId = 0; // 条目id
   late Future _future;
 
@@ -724,24 +722,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
           onSelected: (String type) {
             // todo 处理菜单项选择的逻辑
           },
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-            const PopupMenuItem<String>(
-              value: 'pause',
-              child: Text("1"),
-            ),
-            const PopupMenuItem<String>(
-              value: 'clear',
-              child: Text('2'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'del',
-              child: Text('3'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'multiple',
-              child: Text('4'),
-            ),
-          ],
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[],
         ),
         const SizedBox(width: 6),
       ],

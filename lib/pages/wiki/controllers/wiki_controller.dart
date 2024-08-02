@@ -83,7 +83,6 @@ class WikiController extends GetxController {
 
     log("标记状态：${mark.value}");
     log("收藏状态：${favorite.value}");
-    // log(userTags[0].tag);
 
     // isTags.value = List.filled(tags.length, false);
     isUserTags.value = List.filled(userTags.length, false);

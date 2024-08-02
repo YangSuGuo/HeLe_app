@@ -95,4 +95,9 @@
     <tree path="/lib/db/database/dao" title="dao"/>
     <tree path="/lib/db/database/app_database.dart" title="数据库"/>
     <tree path="/lib/common/utils/evaluation_utils.dart" title="字符串计算"/>
+    <tree path="/lib/pages/manage_entries" title="管理条目"/>
+    <tree path="/lib/pages/my_favorites" title="我的收藏"/>
+    <tree path="/lib/pages/user_tags" title="用户标签"/>
+    <tree path="/lib/pages/browsing_history" title="浏览记录"/>
+    <tree path="/lib/pages/apply_data" title="应用数据"/>
 </trees>

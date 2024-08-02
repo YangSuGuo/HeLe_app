@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class ManageEntries extends StatefulWidget {
+  const ManageEntries({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<ManageEntries> createState() => _ManageEntriesState();
 }
 
-class _SettingsState extends State<Settings> {
+class _ManageEntriesState extends State<ManageEntries> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
         child: Text(
-          "设置",
+          "条目管理",
           style: TextStyle(fontSize: 40),
         ),
       ),

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class BrowsingHistory extends StatefulWidget {
+  const BrowsingHistory({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<BrowsingHistory> createState() => _BrowsingHistoryState();
 }
 
-class _SettingsState extends State<Settings> {
+class _BrowsingHistoryState extends State<BrowsingHistory> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
         child: Text(
-          "设置",
+          "浏览历史",
           style: TextStyle(fontSize: 40),
         ),
       ),

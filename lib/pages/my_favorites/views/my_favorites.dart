@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class MyFavorites extends StatefulWidget {
+  const MyFavorites({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<MyFavorites> createState() => _MyFavoritesState();
 }
 
-class _SettingsState extends State<Settings> {
+class _MyFavoritesState extends State<MyFavorites> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
         child: Text(
-          "设置",
+          "我的收藏",
           style: TextStyle(fontSize: 40),
         ),
       ),

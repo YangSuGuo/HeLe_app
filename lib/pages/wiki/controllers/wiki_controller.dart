@@ -67,7 +67,7 @@ class WikiController extends GetxController {
     // 初始化评分评价
     qualityRating.value = EvaluationUtils.getRecommendation(0.0);
 
-    if (false) {
+    if (true) {
       SubjectsUserTags tags = SubjectsUserTags(
         tag: "·测试-1·",
         creationTime: DateTime.now().millisecondsSinceEpoch,

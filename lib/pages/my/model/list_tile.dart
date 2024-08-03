@@ -2,6 +2,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/routes/app_pages.dart';
 
+// todo 国际化支持
 List listTile = [
   {
     'icon': FontAwesomeIcons.linesLeaning,

@@ -31,6 +31,11 @@ List listTile = [
     'onTap': () {
       Get.toNamed(Routes.BROWSINGHISTORY);
     },
+  },
+  {
+    'icon': FontAwesomeIcons.chartColumn,
+    'title': '阅读与统计',
+    'onTap': () {},
   }
 ];
 

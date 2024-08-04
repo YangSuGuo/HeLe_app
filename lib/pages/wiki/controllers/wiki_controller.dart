@@ -67,15 +67,6 @@ class WikiController extends GetxController {
     // 初始化评分评价
     qualityRating.value = EvaluationUtils.getRecommendation(0.0);
 
-    if (true) {
-      SubjectsUserTags tags = SubjectsUserTags(
-        tag: "·测试-1·",
-        creationTime: DateTime.now().millisecondsSinceEpoch,
-      );
-
-      await db.subjectsUserTagsDao.insertTag(tags);
-    }
-
     // 组件状态
     mark.value = await db.subjectsStarDao.isSubjectExists(subjectId) ?? false;
     favorite.value = await db.subjectsStarDao.isSubjectCollectedById(subjectId, true) ?? false;

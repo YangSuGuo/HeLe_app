@@ -4,7 +4,7 @@ import 'package:floor/floor.dart';
 class SubjectsUserTags {
   @PrimaryKey(autoGenerate: true)
   late final int? tagId;
-  late final String tag;
+  late String tag;
   late final int creationTime;
 
   late final bool? isHidden; // 是否隐藏

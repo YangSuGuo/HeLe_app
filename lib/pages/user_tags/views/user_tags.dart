@@ -1,13 +1,13 @@
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/pages/user_tags/controllers/user_tags_controllers.dart';
+import 'package:hele_app/pages/user_tags/widget/edit_popup.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UserTags extends StatefulWidget {
@@ -49,13 +49,12 @@ class _UserTagsState extends State<UserTags> {
             future: _userTags,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                List<SubjectsUserTags> s = snapshot.data;
-                log(s.length.toString());
-                return ListView.builder(
-                    itemCount: s.length,
+                // todo 统一空数据展示
+                return Obx(() => ListView.builder(
+                    itemCount: _userTagsControllers.tags.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return tagCard(s[index].tag, colorScheme);
-                    });
+                      return tagCard(_userTagsControllers.tags[index], colorScheme);
+                    }));
               } else {
                 return Center(
                   child: LoadingAnimationWidget.stretchedDots(
@@ -69,8 +68,19 @@ class _UserTagsState extends State<UserTags> {
           width: 170.w,
           // padding: EdgeInsets.only(right: 20.w),
           child: FloatingActionButton(
-            // todo 添加逻辑
-            onPressed: () {},
+            // todo 重复项检查
+            onPressed: () {
+              _show(EditPopup(
+                title: "添加标签",
+                controller: _userTagsControllers.controller.value,
+                onChanged: (value) {
+                  _userTagsControllers.tag.value = value;
+                },
+                onPressed: () {
+                  _userTagsControllers.editTag(true, null);
+                },
+              ));
+            },
             elevation: 0.4,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -91,7 +101,7 @@ class _UserTagsState extends State<UserTags> {
   }
 
   // todo 点击事件 修改与删除
-  Widget tagCard(String tag, ColorScheme colorScheme) {
+  Widget tagCard(SubjectsUserTags tag, ColorScheme colorScheme) {
     return Padding(
         padding: EdgeInsets.fromLTRB(25.w, 20.h, 25.w, 0.h),
         child: Container(
@@ -119,7 +129,7 @@ class _UserTagsState extends State<UserTags> {
                     ),
                     Expanded(
                         child: AutoSizeText(
-                      tag,
+                      tag.tag,
                       maxLines: 1,
                       style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w500),
                     ))
@@ -129,14 +139,29 @@ class _UserTagsState extends State<UserTags> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _userTagsControllers.controller.value.text = tag.tag;
+                          // _show(_addTag("修改标签", false, colorScheme, tag));
+                          _show(EditPopup(
+                            title: "修改标签",
+                            controller: _userTagsControllers.controller.value,
+                            onChanged: (value) {
+                              _userTagsControllers.tag.value = value;
+                            },
+                            onPressed: () {
+                              _userTagsControllers.editTag(false, tag);
+                            },
+                          ));
+                        },
                         iconSize: 45.sp,
                         color: colorScheme.primary,
                         icon: const FaIcon(
                           Icons.edit_outlined,
                         )),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _show(_deleteTag(tag, colorScheme));
+                        },
                         iconSize: 45.sp,
                         color: colorScheme.primary,
                         icon: const FaIcon(
@@ -146,5 +171,75 @@ class _UserTagsState extends State<UserTags> {
                 )
               ],
             )));
+  }
+
+  // 弹框
+  void _show(Widget child) async {
+    await SmartDialog.show(
+        clickMaskDismiss: true,
+        usePenetrate: false,
+        debounce: true,
+        onDismiss: () => SmartDialog.config.attach = SmartConfigAttach(),
+        builder: (_) {
+          return child;
+        });
+  }
+
+  // 删除
+  Widget _deleteTag(SubjectsUserTags tag, ColorScheme colorScheme) {
+    return Container(
+      width: Get.width * 0.8,
+      height: Get.height * 0.2,
+      padding: EdgeInsets.fromLTRB(36.w, 36.h, 36.w, 24.h),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(36.r),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // 标题
+          AutoSizeText(
+            "确定删除标签？",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 36.sp,
+              fontWeight: FontWeight.bold,
+              color: colorScheme.secondary,
+            ),
+          ),
+          Gap(12.h),
+          AutoSizeText(
+            tag.tag,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w500,
+              color: colorScheme.secondary.withOpacity(0.7),
+            ),
+          ),
+          Wrap(spacing: 100.w, children: [
+            ElevatedButton(
+              onPressed: () => SmartDialog.dismiss(force: true),
+              style:
+                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.3)),
+              child: const Text('取消'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _userTagsControllers.deleteSubjectsUserTags(tag);
+                _userTags = _userTagsControllers.querySubjectsUserTags();
+                SmartDialog.dismiss(force: true);
+              },
+              style:
+                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.4)),
+              child: const Text('确定'),
+            )
+          ]),
+        ],
+      ),
+    );
   }
 }

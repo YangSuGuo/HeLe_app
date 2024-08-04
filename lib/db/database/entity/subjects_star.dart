@@ -1,5 +1,8 @@
 import 'package:floor/floor.dart';
 
+// todo 抽象条目类 分为 【影视信息】【用户信息】
+// todo 继承影视信息类 增加浏览记录类
+
 @Entity(tableName: 'subjects_star')
 class SubjectsStar {
   ///条目 ID

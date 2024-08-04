@@ -48,7 +48,6 @@ class SearchPageController extends GetxController with GetTickerProviderStateMix
 
   // 提交搜索
   // 数组去重 【区分大小写】
-  // todo 跳转搜索结果页
   Future<void> submit() async {
     if (keyword.value.isNotEmpty) {
       List<String> history = historyList.value;

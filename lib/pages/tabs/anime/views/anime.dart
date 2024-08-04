@@ -89,7 +89,6 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       Pagination s = snapshot.data;
-                      // todo 显示推荐
                       return recommendations(s);
                     } else if (snapshot.hasError) {
                       return SliverToBoxAdapter(

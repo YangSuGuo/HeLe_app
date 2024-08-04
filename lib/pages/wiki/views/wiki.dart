@@ -496,7 +496,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                     )),
 
                 // 标签选择
-                // todo【官方标签】【用户标签】
                 if (_wikiController.tags.isNotEmpty)
                   LayoutBuilder(builder: (context, constraints) {
                     return Container(

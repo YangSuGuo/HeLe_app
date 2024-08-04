@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hele_app/themes/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// todo 更换更好的 hive: ^2.2.3
+// 单例模式 存储APP关键设置
 class PreferencesDB {
   PreferencesDB._();
 
@@ -15,6 +17,7 @@ class PreferencesDB {
   static const appMultipleThemesMode = 'appMultipleThemesMode'; // 多主题
   static const appLocale = 'appLocale'; // 语言
   static const appIsLocaleSystem = 'appIsLocaleSystem'; // 语言是否跟随系统
+
   /// ** 搜索相关 **
   static const appHistoryList = "historyList"; // 搜索历史
 

@@ -1,47 +1,8 @@
 import 'package:floor/floor.dart';
-
-// todo 抽象条目类 分为 【影视信息】【用户信息】
-// todo 继承影视信息类 增加浏览记录类
+import 'package:hele_app/db/database/entity/subjects.dart';
 
 @Entity(tableName: 'subjects_star')
-class SubjectsStar {
-  ///条目 ID
-  @PrimaryKey()
-  late final int subjectId;
-
-  ///条目名称
-  late final String name;
-
-  late final String nameCn;
-
-  ///条目类型
-  late final int type;
-
-  ///条目地址
-  late final String? url;
-
-  ///播放平台，TV, Web, 欧美剧, PS4...
-  late final String platform;
-
-  ///剧情简介
-  late final String? summary;
-
-  ///话数
-  late final int? totalEpisodes;
-  late final int? volumes;
-  late final int? eps;
-
-  ///放送开始日期
-  late final String? airDate;
-
-  ///封面
-  late final String? images;
-
-  ///评分
-  late final double? score;
-  late final int? rank;
-
-///////////////////////////////////////////////
+class SubjectsStar extends Subjects {
   /// 是否隐藏
   late final bool? isHidden;
 
@@ -65,23 +26,22 @@ class SubjectsStar {
   /// 创建时间
   late final int creationTime;
 
-///////////////////////////////////////////////
-
   SubjectsStar({
-    required this.subjectId,
-    required this.name,
-    required this.nameCn,
-    required this.type,
-    this.url,
-    required this.platform,
-    this.summary,
-    this.totalEpisodes,
-    this.volumes,
-    this.eps,
-    this.airDate,
-    this.images,
-    this.score,
-    this.rank,
+    required super.subjectId,
+    required super.name,
+    required super.nameCn,
+    required super.type,
+    super.url,
+    required super.platform,
+    super.summary,
+    super.totalEpisodes,
+    super.volumes,
+    super.eps,
+    super.airDate,
+    super.images,
+    super.score,
+    super.rank,
+    //////////////////////////////////
     this.isHidden,
     required this.status,
     required this.rating,

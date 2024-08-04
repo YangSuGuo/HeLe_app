@@ -22,8 +22,8 @@ abstract class SubjectsStarDao {
       LIMIT 20 OFFSET :offset;
   ''')
   Future<List<SubjectsStar>> findSubjectsStarByTypeStatusTagsHidden(
-    String type,
-    String status,
+    int type,
+    int status,
     String tags,
     bool isHidden,
     bool isCollected,

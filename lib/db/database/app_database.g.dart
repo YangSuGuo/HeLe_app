@@ -76,6 +76,8 @@ class _$AppDatabase extends AppDatabase {
 
   SubjectsUserTagsDao? _subjectsUserTagsDaoInstance;
 
+  SubjectsHistoryDao? _subjectsHistoryDaoInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -98,9 +100,11 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `subjects_star` (`subjectId` INTEGER NOT NULL, `name` TEXT NOT NULL, `nameCn` TEXT NOT NULL, `type` INTEGER NOT NULL, `url` TEXT, `platform` TEXT NOT NULL, `summary` TEXT, `totalEpisodes` INTEGER, `volumes` INTEGER, `eps` INTEGER, `airDate` TEXT, `images` TEXT, `score` REAL, `rank` INTEGER, `isHidden` INTEGER, `status` INTEGER NOT NULL, `rating` REAL NOT NULL, `tags` TEXT, `isCollected` INTEGER, `creationTime` INTEGER NOT NULL, PRIMARY KEY (`subjectId`))');
+            'CREATE TABLE IF NOT EXISTS `subjects_star` (`isHidden` INTEGER, `status` INTEGER NOT NULL, `rating` REAL NOT NULL, `tags` TEXT, `isCollected` INTEGER, `creationTime` INTEGER NOT NULL, `subjectId` INTEGER NOT NULL, `name` TEXT NOT NULL, `nameCn` TEXT NOT NULL, `type` INTEGER NOT NULL, `url` TEXT, `platform` TEXT NOT NULL, `summary` TEXT, `totalEpisodes` INTEGER, `volumes` INTEGER, `eps` INTEGER, `airDate` TEXT, `images` TEXT, `score` REAL, `rank` INTEGER, PRIMARY KEY (`subjectId`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `subjects_user_tags` (`tagId` INTEGER PRIMARY KEY AUTOINCREMENT, `tag` TEXT NOT NULL, `creationTime` INTEGER NOT NULL, `isHidden` INTEGER, `isPinned` INTEGER)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `subjects_history` (`creationTime` INTEGER NOT NULL, `subjectId` INTEGER NOT NULL, `name` TEXT NOT NULL, `nameCn` TEXT NOT NULL, `type` INTEGER NOT NULL, `url` TEXT, `platform` TEXT NOT NULL, `summary` TEXT, `totalEpisodes` INTEGER, `volumes` INTEGER, `eps` INTEGER, `airDate` TEXT, `images` TEXT, `score` REAL, `rank` INTEGER, PRIMARY KEY (`subjectId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -119,6 +123,12 @@ class _$AppDatabase extends AppDatabase {
     return _subjectsUserTagsDaoInstance ??=
         _$SubjectsUserTagsDao(database, changeListener);
   }
+
+  @override
+  SubjectsHistoryDao get subjectsHistoryDao {
+    return _subjectsHistoryDaoInstance ??=
+        _$SubjectsHistoryDao(database, changeListener);
+  }
 }
 
 class _$SubjectsStarDao extends SubjectsStarDao {
@@ -130,6 +140,15 @@ class _$SubjectsStarDao extends SubjectsStarDao {
             database,
             'subjects_star',
             (SubjectsStar item) => <String, Object?>{
+                  'isHidden':
+                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
+                  'status': item.status,
+                  'rating': item.rating,
+                  'tags': item.tags,
+                  'isCollected': item.isCollected == null
+                      ? null
+                      : (item.isCollected! ? 1 : 0),
+                  'creationTime': item.creationTime,
                   'subjectId': item.subjectId,
                   'name': item.name,
                   'nameCn': item.nameCn,
@@ -143,22 +162,22 @@ class _$SubjectsStarDao extends SubjectsStarDao {
                   'airDate': item.airDate,
                   'images': item.images,
                   'score': item.score,
-                  'rank': item.rank,
-                  'isHidden':
-                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
-                  'status': item.status,
-                  'rating': item.rating,
-                  'tags': item.tags,
-                  'isCollected': item.isCollected == null
-                      ? null
-                      : (item.isCollected! ? 1 : 0),
-                  'creationTime': item.creationTime
+                  'rank': item.rank
                 }),
         _subjectsStarUpdateAdapter = UpdateAdapter(
             database,
             'subjects_star',
             ['subjectId'],
             (SubjectsStar item) => <String, Object?>{
+                  'isHidden':
+                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
+                  'status': item.status,
+                  'rating': item.rating,
+                  'tags': item.tags,
+                  'isCollected': item.isCollected == null
+                      ? null
+                      : (item.isCollected! ? 1 : 0),
+                  'creationTime': item.creationTime,
                   'subjectId': item.subjectId,
                   'name': item.name,
                   'nameCn': item.nameCn,
@@ -172,22 +191,22 @@ class _$SubjectsStarDao extends SubjectsStarDao {
                   'airDate': item.airDate,
                   'images': item.images,
                   'score': item.score,
-                  'rank': item.rank,
-                  'isHidden':
-                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
-                  'status': item.status,
-                  'rating': item.rating,
-                  'tags': item.tags,
-                  'isCollected': item.isCollected == null
-                      ? null
-                      : (item.isCollected! ? 1 : 0),
-                  'creationTime': item.creationTime
+                  'rank': item.rank
                 }),
         _subjectsStarDeletionAdapter = DeletionAdapter(
             database,
             'subjects_star',
             ['subjectId'],
             (SubjectsStar item) => <String, Object?>{
+                  'isHidden':
+                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
+                  'status': item.status,
+                  'rating': item.rating,
+                  'tags': item.tags,
+                  'isCollected': item.isCollected == null
+                      ? null
+                      : (item.isCollected! ? 1 : 0),
+                  'creationTime': item.creationTime,
                   'subjectId': item.subjectId,
                   'name': item.name,
                   'nameCn': item.nameCn,
@@ -201,16 +220,7 @@ class _$SubjectsStarDao extends SubjectsStarDao {
                   'airDate': item.airDate,
                   'images': item.images,
                   'score': item.score,
-                  'rank': item.rank,
-                  'isHidden':
-                      item.isHidden == null ? null : (item.isHidden! ? 1 : 0),
-                  'status': item.status,
-                  'rating': item.rating,
-                  'tags': item.tags,
-                  'isCollected': item.isCollected == null
-                      ? null
-                      : (item.isCollected! ? 1 : 0),
-                  'creationTime': item.creationTime
+                  'rank': item.rank
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -256,8 +266,8 @@ class _$SubjectsStarDao extends SubjectsStarDao {
 
   @override
   Future<List<SubjectsStar>> findSubjectsStarByTypeStatusTagsHidden(
-    String type,
-    String status,
+    int type,
+    int status,
     String tags,
     bool isHidden,
     bool isCollected,
@@ -408,5 +418,39 @@ class _$SubjectsUserTagsDao extends SubjectsUserTagsDao {
   @override
   Future<void> deleteTag(SubjectsUserTags tag) async {
     await _subjectsUserTagsDeletionAdapter.delete(tag);
+  }
+}
+
+class _$SubjectsHistoryDao extends SubjectsHistoryDao {
+  _$SubjectsHistoryDao(
+    this.database,
+    this.changeListener,
+  ) : _queryAdapter = QueryAdapter(database);
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  @override
+  Future<List<SubjectsHistory>> findAllSubjectsHistory() async {
+    return _queryAdapter.queryList('SELECT * FROM subjects_history',
+        mapper: (Map<String, Object?> row) => SubjectsHistory(
+            subjectId: row['subjectId'] as int,
+            name: row['name'] as String,
+            nameCn: row['nameCn'] as String,
+            type: row['type'] as int,
+            url: row['url'] as String?,
+            platform: row['platform'] as String,
+            summary: row['summary'] as String?,
+            totalEpisodes: row['totalEpisodes'] as int?,
+            volumes: row['volumes'] as int?,
+            eps: row['eps'] as int?,
+            airDate: row['airDate'] as String?,
+            images: row['images'] as String?,
+            score: row['score'] as double?,
+            rank: row['rank'] as int?,
+            creationTime: row['creationTime'] as int));
   }
 }

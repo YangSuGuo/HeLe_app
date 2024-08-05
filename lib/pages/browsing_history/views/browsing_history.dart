@@ -37,7 +37,7 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
         titleSpacing: 0,
         centerTitle: false,
         title: Text(
-          "编辑分类",
+          "浏览历史",
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
@@ -55,8 +55,8 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
                   ),
                   slivers: [
 
-                  ])*/
-              ;
+                  ]);*/
+
             } else {
               return Center(
                 child: LoadingAnimationWidget.stretchedDots(

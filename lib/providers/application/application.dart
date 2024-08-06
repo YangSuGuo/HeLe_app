@@ -16,7 +16,6 @@ class ApplicationProvider extends ChangeNotifier {
 
   bool get localeSystem => _localeSystem;
 
-
   /// 获取-主题模式
   void loadThemeMode() async {
     _themeMode = await PreferencesDB.db.getAppThemeDarkMode();

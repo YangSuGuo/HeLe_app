@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 class RequestBody {
-
   ///不同条件之间是 `且` 的关系
   Filter? filter;
   String keyword;
@@ -20,27 +19,26 @@ class RequestBody {
     this.sort,
   });
 
-  factory RequestBody.fromRawJson(String str) => RequestBody.fromJson(json.decode(str));
+  factory RequestBody.fromRawJson(String str) =>
+      RequestBody.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory RequestBody.fromJson(Map<String, dynamic> json) => RequestBody(
-    filter: json["filter"] == null ? null : Filter.fromJson(json["filter"]),
-    keyword: json["keyword"],
-    sort: sortValues.map[json["sort"]]!,
-  );
+        filter: json["filter"] == null ? null : Filter.fromJson(json["filter"]),
+        keyword: json["keyword"],
+        sort: sortValues.map[json["sort"]]!,
+      );
 
   Map<String, dynamic> toJson() => {
-    "filter": filter?.toJson(),
-    "keyword": keyword,
-    "sort": sortValues.reverse[sort],
-  };
+        "filter": filter?.toJson(),
+        "keyword": keyword,
+        "sort": sortValues.reverse[sort],
+      };
 }
-
 
 ///不同条件之间是 `且` 的关系
 class Filter {
-
   ///播出日期/发售日期，日期必需为 `YYYY-MM-DD` 格式。多值之间为 `且` 关系。
   List<String>? airDate;
 
@@ -79,24 +77,35 @@ class Filter {
   String toRawJson() => json.encode(toJson());
 
   factory Filter.fromJson(Map<String, dynamic> json) => Filter(
-    airDate: json["air_date"] == null ? [] : List<String>.from(json["air_date"]!.map((x) => x)),
-    nsfw: json["nsfw"],
-    rank: json["rank"] == null ? [] : List<String>.from(json["rank"]!.map((x) => x)),
-    rating: json["rating"] == null ? [] : List<String>.from(json["rating"]!.map((x) => x)),
-    tag: json["tag"] == null ? [] : List<String>.from(json["tag"]!.map((x) => x)),
-    type: json["type"] == null ? [] : List<int>.from(json["type"]!.map((x) => x)),
-  );
+        airDate: json["air_date"] == null
+            ? []
+            : List<String>.from(json["air_date"]!.map((x) => x)),
+        nsfw: json["nsfw"],
+        rank: json["rank"] == null
+            ? []
+            : List<String>.from(json["rank"]!.map((x) => x)),
+        rating: json["rating"] == null
+            ? []
+            : List<String>.from(json["rating"]!.map((x) => x)),
+        tag: json["tag"] == null
+            ? []
+            : List<String>.from(json["tag"]!.map((x) => x)),
+        type: json["type"] == null
+            ? []
+            : List<int>.from(json["type"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "air_date": airDate == null ? [] : List<dynamic>.from(airDate!.map((x) => x)),
-    "nsfw": nsfw,
-    "rank": rank == null ? [] : List<dynamic>.from(rank!.map((x) => x)),
-    "rating": rating == null ? [] : List<dynamic>.from(rating!.map((x) => x)),
-    "tag": tag == null ? [] : List<dynamic>.from(tag!.map((x) => x)),
-    "type": type == null ? [] : List<dynamic>.from(type!.map((x) => x)),
-  };
+        "air_date":
+            airDate == null ? [] : List<dynamic>.from(airDate!.map((x) => x)),
+        "nsfw": nsfw,
+        "rank": rank == null ? [] : List<dynamic>.from(rank!.map((x) => x)),
+        "rating":
+            rating == null ? [] : List<dynamic>.from(rating!.map((x) => x)),
+        "tag": tag == null ? [] : List<dynamic>.from(tag!.map((x) => x)),
+        "type": type == null ? [] : List<dynamic>.from(type!.map((x) => x)),
+      };
 }
-
 
 ///排序规则
 ///
@@ -104,12 +113,7 @@ class Filter {
 ///- `heat` 收藏人数
 ///- `rank` 排名由高到低
 ///- `score` 评分
-enum Sort {
-  HEAT,
-  MATCH,
-  RANK,
-  SCORE
-}
+enum Sort { HEAT, MATCH, RANK, SCORE }
 
 final sortValues = EnumValues({
   "heat": Sort.HEAT,

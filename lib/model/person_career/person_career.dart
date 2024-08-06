@@ -37,13 +37,14 @@ class PersonCareer {
     this.shortSummary,
   });
 
-  factory PersonCareer.fromRawJson(String str) => PersonCareer.fromJson(json.decode(str));
+  factory PersonCareer.fromRawJson(String str) =>
+      PersonCareer.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory PersonCareer.fromJson(Map<String, dynamic> json) => PersonCareer(
-        career:
-            List<CareerElement>.from(json["career"].map((x) => careerElementValues.map[x] ?? CareerElement.UNKNOWN)),
+        career: List<CareerElement>.from(json["career"]
+            .map((x) => careerElementValues.map[x] ?? CareerElement.UNKNOWN)),
         id: json["id"],
         images: json["images"] == null ? null : Images.fromJson(json["images"]),
         name: json["name"],
@@ -54,7 +55,8 @@ class PersonCareer {
       );
 
   Map<String, dynamic> toJson() => {
-        "career": List<dynamic>.from(career ?? [CareerElement.UNKNOWN].map((x) => careerElementValues.reverse[x])),
+        "career": List<dynamic>.from(career ??
+            [CareerElement.UNKNOWN].map((x) => careerElementValues.reverse[x])),
         "id": id,
         "images": images?.toJson(),
         "name": name,
@@ -66,7 +68,16 @@ class PersonCareer {
 }
 
 ///PersonCareer，An enumeration.
-enum CareerElement { ACTOR, ARTIST, ILLUSTRATOR, MANGAKA, PRODUCER, SEIYU, WRITER, UNKNOWN }
+enum CareerElement {
+  ACTOR,
+  ARTIST,
+  ILLUSTRATOR,
+  MANGAKA,
+  PRODUCER,
+  SEIYU,
+  WRITER,
+  UNKNOWN
+}
 
 final careerElementValues = EnumValues({
   "actor": CareerElement.ACTOR,

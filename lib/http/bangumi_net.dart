@@ -19,7 +19,8 @@ class BangumiNet {
     var res = await Request().get(BangumiApi.calendar);
     if (res.statusCode == 200) {
       List<dynamic> jsonData = res.data;
-      List<Calendar> calendars = jsonData.map((item) => Calendar.fromJson(item)).toList();
+      List<Calendar> calendars =
+          jsonData.map((item) => Calendar.fromJson(item)).toList();
       return calendars;
     } else {
       throw Exception('获取追番表数据失败');
@@ -39,11 +40,13 @@ class BangumiNet {
   }
 
   // 获取影视条目人物信息列表
-  static Future<List<CharacterList>> bangumiSubjectCharacterList(int subjectId) async {
+  static Future<List<CharacterList>> bangumiSubjectCharacterList(
+      int subjectId) async {
     var res = await Request().get("${BangumiApi.subject}$subjectId/characters");
     if (res.statusCode == 200) {
       List<dynamic> data = res.data;
-      List<CharacterList> characters = data.map((item) => CharacterList.fromJson(item)).toList();
+      List<CharacterList> characters =
+          data.map((item) => CharacterList.fromJson(item)).toList();
       return characters;
     } else {
       log("报错：$res");
@@ -56,7 +59,8 @@ class BangumiNet {
     var res = await Request().get("${BangumiApi.subject}$subjectId/persons");
     if (res.statusCode == 200) {
       List<dynamic> data = res.data;
-      List<PersonCareer> persons = data.map((item) => PersonCareer.fromJson(item)).toList();
+      List<PersonCareer> persons =
+          data.map((item) => PersonCareer.fromJson(item)).toList();
       return persons;
     } else {
       log("报错：$res");
@@ -65,11 +69,13 @@ class BangumiNet {
   }
 
   // 获取影视条目衍生相关作品信息
-  static Future<List<RelatedWorksQuery>> bangumiSubjectDerivation(int subjectId) async {
+  static Future<List<RelatedWorksQuery>> bangumiSubjectDerivation(
+      int subjectId) async {
     var res = await Request().get("${BangumiApi.subject}$subjectId/subjects");
     if (res.statusCode == 200) {
       List<dynamic> data = res.data;
-      List<RelatedWorksQuery> derivation = data.map((item) => RelatedWorksQuery.fromJson(item)).toList();
+      List<RelatedWorksQuery> derivation =
+          data.map((item) => RelatedWorksQuery.fromJson(item)).toList();
       return derivation;
     } else {
       log("报错：$res");
@@ -98,8 +104,8 @@ class BangumiNet {
       offset: 0,
     );
 
-    var res = await Request()
-        .post(BangumiApi.searchSubject, queryParameters: queryParameters.toJson(), data: requestBody.toJson());
+    var res = await Request().post(BangumiApi.searchSubject,
+        queryParameters: queryParameters.toJson(), data: requestBody.toJson());
 
     if (res.statusCode == 200) {
       Pagination pagination = Pagination.fromJson(res.data);
@@ -111,9 +117,10 @@ class BangumiNet {
   }
 
   // 获取热门推荐
-  static Future<Pagination> getHotRecommendedComics(QueryParameters queryParameters, RequestBody requestBody) async {
-    var res = await Request()
-        .post(BangumiApi.searchSubject, queryParameters: queryParameters.toJson(), data: requestBody.toJson());
+  static Future<Pagination> getHotRecommendedComics(
+      QueryParameters queryParameters, RequestBody requestBody) async {
+    var res = await Request().post(BangumiApi.searchSubject,
+        queryParameters: queryParameters.toJson(), data: requestBody.toJson());
 
     if (res.statusCode == 200) {
       Pagination pagination = Pagination.fromJson(res.data);

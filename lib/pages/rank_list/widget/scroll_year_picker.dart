@@ -40,7 +40,8 @@ class ScrollYearPicker extends StatelessWidget {
                     centerWidget: DateTimePickerCenterWidget(
                       builder: (context, constraints, child) => DecoratedBox(
                         decoration: ShapeDecoration(
-                          shape: const StadiumBorder(side: BorderSide(width: 0)),
+                          shape:
+                              const StadiumBorder(side: BorderSide(width: 0)),
                           color: colorScheme.primary.withOpacity(0.3),
                         ),
                       ),
@@ -64,7 +65,10 @@ class ScrollYearPicker extends StatelessWidget {
                     onChange: startOnChange)),
             AutoSizeText(
               "-",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 66.sp, color: colorScheme.secondary),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 66.sp,
+                  color: colorScheme.secondary),
             ),
             SizedBox(
                 width: constraints.maxWidth / 2 - 30.w,
@@ -80,7 +84,8 @@ class ScrollYearPicker extends StatelessWidget {
                     centerWidget: DateTimePickerCenterWidget(
                       builder: (context, constraints, child) => DecoratedBox(
                         decoration: ShapeDecoration(
-                          shape: const StadiumBorder(side: BorderSide(width: 0)),
+                          shape:
+                              const StadiumBorder(side: BorderSide(width: 0)),
                           color: colorScheme.primary.withOpacity(0.3),
                         ),
                       ),

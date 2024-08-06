@@ -7,7 +7,8 @@ import 'package:hele_app/model/search/query_parameters.dart';
 import 'package:hele_app/model/search/request_body.dart';
 import 'package:hele_app/model/search/search.dart';
 
-class SearchResultControllers extends GetxController with GetSingleTickerProviderStateMixin {
+class SearchResultControllers extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final ScrollController scrollController = ScrollController();
   late RxList<Datum> searchResults = <Datum>[].obs;
   late int limit = 50;
@@ -49,7 +50,8 @@ class SearchResultControllers extends GetxController with GetSingleTickerProvide
       offset: offset,
     );
 
-    var result = await BangumiNet.getHotRecommendedComics(queryParameters, requestBody);
+    var result =
+        await BangumiNet.getHotRecommendedComics(queryParameters, requestBody);
     List<Datum>? res = result.data;
 
     if (offset > 0) {

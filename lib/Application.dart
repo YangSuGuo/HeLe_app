@@ -39,8 +39,10 @@ class _ApplicationState extends State<Application> {
                     title: "HeLe",
                     // 主题
                     themeMode: watchApplicationProvider.themeMode,
-                    theme: AppTheme(getMultipleThemesMode(context)).multipleThemesLightMode(),
-                    darkTheme: AppTheme(getMultipleThemesMode(context)).multipleThemesDarkMode(),
+                    theme: AppTheme(getMultipleThemesMode(context))
+                        .multipleThemesLightMode(),
+                    darkTheme: AppTheme(getMultipleThemesMode(context))
+                        .multipleThemesDarkMode(),
                     // 路由
                     initialRoute: AppPages.INITIAL,
                     getPages: AppPages.routes,
@@ -49,7 +51,9 @@ class _ApplicationState extends State<Application> {
                     // 国际化
                     supportedLocales: S.supportedLocales,
                     localizationsDelegates: S.localizationsDelegates,
-                    locale: watchApplicationProvider.localeSystem ? null : watchApplicationProvider.locale,
+                    locale: watchApplicationProvider.localeSystem
+                        ? null
+                        : watchApplicationProvider.locale,
                     localeListResolutionCallback: (locales, supportedLocales) {
                       log('当前地区语言$locales');
                       log('设备支持的地区语言$supportedLocales');

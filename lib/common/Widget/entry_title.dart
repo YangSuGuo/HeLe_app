@@ -4,7 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EntryTitle extends StatelessWidget {
   const EntryTitle(
-      {super.key, required this.title, this.semanticsLabel, this.size, required this.fontWeight, this.child});
+      {super.key,
+      required this.title,
+      this.semanticsLabel,
+      this.size,
+      required this.fontWeight,
+      this.child});
 
   final String title;
   final String? semanticsLabel;
@@ -16,18 +21,20 @@ class EntryTitle extends StatelessWidget {
   SliverToBoxAdapter build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return SliverToBoxAdapter(
-      child: Wrap(alignment: WrapAlignment.spaceBetween, crossAxisAlignment: WrapCrossAlignment.center, children: [
-        AutoSizeText(
-          title,
-          style: TextStyle(
-            fontSize: size,
-            fontWeight: fontWeight,
-            color: colorScheme.secondary
-          ),
-          semanticsLabel: semanticsLabel,
-        ),
-        SizedBox(height: 50.h, child: child)
-      ]),
+      child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            AutoSizeText(
+              title,
+              style: TextStyle(
+                  fontSize: size,
+                  fontWeight: fontWeight,
+                  color: colorScheme.secondary),
+              semanticsLabel: semanticsLabel,
+            ),
+            SizedBox(height: 50.h, child: child)
+          ]),
     );
   }
 }

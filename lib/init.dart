@@ -5,6 +5,7 @@ import 'package:hele_app/db/database/app_database.dart';
 import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/themes/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:hele_app/src/rust/api/api.dart' as api;
 
 class Init extends StatefulWidget {
   const Init({super.key, required this.child});
@@ -80,7 +81,8 @@ class _InitState extends State<Init> {
 
   /// 应用初始化
   void init() async {
-    final ApplicationProvider applicationProvider = context.read<ApplicationProvider>();
+    final ApplicationProvider applicationProvider =
+        context.read<ApplicationProvider>();
 
     // 获取APP主题深色模式
     applicationProvider.loadThemeMode();
@@ -98,5 +100,7 @@ class _InitState extends State<Init> {
       final db = await $FloorAppDatabase.databaseBuilder(databaseName).build();
       return db;
     });
+
+    // await api.init(root: await MethodChannel("cross").invokeMethod("root"));
   }
 }

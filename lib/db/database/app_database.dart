@@ -12,7 +12,9 @@ import 'package:sqflite/sqflite.dart' as sqflite;
 
 part 'app_database.g.dart';
 
-@Database(version: 1, entities: [Subjects, SubjectsStar, SubjectsUserTags, SubjectsHistory])
+@Database(
+    version: 1,
+    entities: [Subjects, SubjectsStar, SubjectsUserTags, SubjectsHistory])
 abstract class AppDatabase extends FloorDatabase {
   // 用户收藏
   SubjectsStarDao get subjectsStarDao;

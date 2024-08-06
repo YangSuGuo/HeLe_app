@@ -27,7 +27,8 @@ class Introduction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
       return Row(children: [
         // 封面图片
         Stack(children: [
@@ -37,7 +38,12 @@ class Introduction extends StatelessWidget {
             height: 240.h,
           ),
           if (s.rating.score != 0.0 && s.rating.score != null)
-            PBadge(text: s.rating.score.toString(), top: 6, right: 6, bottom: null, left: null),
+            PBadge(
+                text: s.rating.score.toString(),
+                top: 6,
+                right: 6,
+                bottom: null,
+                left: null),
         ]),
         Gap(25.w),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -57,7 +63,8 @@ class Introduction extends StatelessWidget {
             s.totalEpisodes != 0 || s.eps != 0
                 // 剧集
                 ? Subheading(
-                    title: "${s.totalEpisodes != 0 ? s.totalEpisodes : s.eps} 集",
+                    title:
+                        "${s.totalEpisodes != 0 ? s.totalEpisodes : s.eps} 集",
                     minFontSize: 12,
                     icon: FontAwesomeIcons.circlePlay,
                     isOverflow: false,

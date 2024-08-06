@@ -22,7 +22,8 @@ class Manga extends StatefulWidget {
 
 class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
   final MangaController _mangaController = Get.put(MangaController());
-  StreamController<bool> searchBarStream = Get.find<HomeController>().searchBarStream;
+  StreamController<bool> searchBarStream =
+      Get.find<HomeController>().searchBarStream;
   late Future? _hotRecommendations;
   late ScrollController scrollController;
 
@@ -38,13 +39,15 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
     scrollController.addListener(
       () async {
         // 触底加载
-        if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
+        if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 200) {
           EasyThrottle.throttle('Manga', const Duration(seconds: 1), () {
             _mangaController.next();
           });
         }
         // 收起搜索栏
-        final ScrollDirection direction = scrollController.position.userScrollDirection;
+        final ScrollDirection direction =
+            scrollController.position.userScrollDirection;
         if (direction == ScrollDirection.forward) {
           searchBarStream.add(true);
         } else if (direction == ScrollDirection.reverse) {
@@ -69,26 +72,30 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        child: CustomScrollView(controller: _mangaController.scrollController, slivers: [
-          EntryTitle(title: "热门推荐", fontWeight: FontWeight.bold, size: 44.sp),
-          SliverGap(16.h),
-          FutureBuilder(
-              future: _hotRecommendations,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  // List<LegacySubjectSmall> s = snapshot.data;
-                  return Obx(() => contentGrid(_mangaController.bangumiList));
-                } else {
-                  return SliverToBoxAdapter(
-                      child: Center(
-                    child: LoadingAnimationWidget.stretchedDots(
-                      color: colorScheme.primary,
-                      size: 140.sp,
-                    ),
-                  ));
-                }
-              })
-        ]));
+        child: CustomScrollView(
+            controller: _mangaController.scrollController,
+            slivers: [
+              EntryTitle(
+                  title: "热门推荐", fontWeight: FontWeight.bold, size: 44.sp),
+              SliverGap(16.h),
+              FutureBuilder(
+                  future: _hotRecommendations,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      // List<LegacySubjectSmall> s = snapshot.data;
+                      return Obx(
+                          () => contentGrid(_mangaController.bangumiList));
+                    } else {
+                      return SliverToBoxAdapter(
+                          child: Center(
+                        child: LoadingAnimationWidget.stretchedDots(
+                          color: colorScheme.primary,
+                          size: 140.sp,
+                        ),
+                      ));
+                    }
+                  })
+            ]));
   }
 
   // 推荐
@@ -98,7 +105,8 @@ class _MangaState extends State<Manga> with AutomaticKeepAliveClientMixin {
         mainAxisSpacing: 6,
         crossAxisSpacing: 6,
         crossAxisCount: 3,
-        mainAxisExtent: Get.size.width / 2 + MediaQuery.textScalerOf(context).scale(16),
+        mainAxisExtent:
+            Get.size.width / 2 + MediaQuery.textScalerOf(context).scale(16),
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {

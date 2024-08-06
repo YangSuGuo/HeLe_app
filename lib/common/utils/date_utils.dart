@@ -38,7 +38,8 @@ class DateUtils {
       // 判断是否为当前季度的第一天
       if (quarterStartMonth == currentMonth && now.day == 1) {
         // 减去3个月获取上一季度
-        DateTime previousQuarterStart = DateTime(now.year, quarterStartMonth - 3, 1);
+        DateTime previousQuarterStart =
+            DateTime(now.year, quarterStartMonth - 3, 1);
         return DateFormat('yyyy-MM-dd').format(previousQuarterStart);
       } else {
         // 不是则直接返回当前季度的开始日期

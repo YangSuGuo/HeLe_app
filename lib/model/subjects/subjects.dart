@@ -89,7 +89,9 @@ class Subjects {
         eps: json["eps"],
         id: json["id"],
         images: Images.fromJson(json["images"]),
-        infobox: json["infobox"] == null ? [] : List<Item>.from(json["infobox"]!.map((x) => Item.fromJson(x))),
+        infobox: json["infobox"] == null
+            ? []
+            : List<Item>.from(json["infobox"]!.map((x) => Item.fromJson(x))),
         locked: json["locked"],
         name: json["name"],
         nameCn: json["name_cn"],
@@ -109,7 +111,9 @@ class Subjects {
         "eps": eps,
         "id": id,
         "images": images.toJson(),
-        "infobox": infobox == null ? [] : List<dynamic>.from(infobox!.map((x) => x.toJson())),
+        "infobox": infobox == null
+            ? []
+            : List<dynamic>.from(infobox!.map((x) => x.toJson())),
         "locked": locked,
         "name": name,
         "name_cn": nameCn,

@@ -30,11 +30,13 @@ class RelatedWorksQuery {
     required this.type,
   });
 
-  factory RelatedWorksQuery.fromRawJson(String str) => RelatedWorksQuery.fromJson(json.decode(str));
+  factory RelatedWorksQuery.fromRawJson(String str) =>
+      RelatedWorksQuery.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory RelatedWorksQuery.fromJson(Map<String, dynamic> json) => RelatedWorksQuery(
+  factory RelatedWorksQuery.fromJson(Map<String, dynamic> json) =>
+      RelatedWorksQuery(
         id: json["id"],
         images: json["images"] == null ? null : Images.fromJson(json["images"]),
         name: json["name"],

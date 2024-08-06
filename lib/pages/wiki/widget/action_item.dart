@@ -27,13 +27,17 @@ class ActionItem extends StatelessWidget {
         children: [
           const SizedBox(height: 4),
           selectStatus
-              ? Icon(selectIcon!.icon!, size: 18, color: Theme.of(context).colorScheme.primary)
-              : Icon(icon!.icon!, size: 18, color: Theme.of(context).colorScheme.outline),
+              ? Icon(selectIcon!.icon!,
+                  size: 18, color: Theme.of(context).colorScheme.primary)
+              : Icon(icon!.icon!,
+                  size: 18, color: Theme.of(context).colorScheme.outline),
           const SizedBox(height: 6),
           Text(
             text ?? '',
             style: TextStyle(
-              color: selectStatus ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline,
+              color: selectStatus
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.outline,
               fontSize: Theme.of(context).textTheme.labelSmall!.fontSize,
             ),
           )

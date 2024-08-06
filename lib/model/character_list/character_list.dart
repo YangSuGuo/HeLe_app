@@ -31,13 +31,16 @@ class CharacterList {
     this.type,
   });
 
-  factory CharacterList.fromRawJson(String str) => CharacterList.fromJson(json.decode(str));
+  factory CharacterList.fromRawJson(String str) =>
+      CharacterList.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory CharacterList.fromJson(Map<String, dynamic> json) => CharacterList(
-        actors:
-            json["actors"] == null ? [] : List<PersonCareer>.from(json["actors"]!.map((x) => PersonCareer.fromJson(x))),
+        actors: json["actors"] == null
+            ? []
+            : List<PersonCareer>.from(
+                json["actors"]!.map((x) => PersonCareer.fromJson(x))),
         id: json["id"] ?? 0,
         images: json["images"] == null ? null : Images.fromJson(json["images"]),
         name: json["name"] ?? "",
@@ -46,7 +49,9 @@ class CharacterList {
       );
 
   Map<String, dynamic> toJson() => {
-        "actors": actors == null ? [] : List<dynamic>.from(actors!.map((x) => x.toJson())),
+        "actors": actors == null
+            ? []
+            : List<dynamic>.from(actors!.map((x) => x.toJson())),
         "id": id,
         "images": images?.toJson(),
         "name": name,

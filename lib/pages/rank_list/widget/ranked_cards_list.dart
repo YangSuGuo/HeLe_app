@@ -42,7 +42,9 @@ class RankedCardsList extends StatelessWidget {
                     width: 210.w,
                     height: 240.h,
                   ),
-                  if (isRank ?? true) PBadge(text: "TOP ${(index + 1).toString()}", top: 6, left: 6),
+                  if (isRank ?? true)
+                    PBadge(
+                        text: "TOP ${(index + 1).toString()}", top: 6, left: 6),
                   if (datum.date != "")
                     PBadge(
                       text: DateTime.parse(datum.date).year.toString(),
@@ -68,7 +70,9 @@ class RankedCardsList extends StatelessWidget {
                       maxLines: 1,
                       minFontSize: 17,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold, color: colorScheme.secondary),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.secondary),
                     ),
                     if (datum.name != "")
                       AutoSizeText(
@@ -76,7 +80,9 @@ class RankedCardsList extends StatelessWidget {
                         maxLines: 1,
                         minFontSize: 14,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.w500, color: colorScheme.secondary.withOpacity(0.7)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: colorScheme.secondary.withOpacity(0.7)),
                       ),
                     // 星级评定
                     Gap(6.h),
@@ -115,7 +121,9 @@ class RankedCardsList extends StatelessWidget {
                         maxFontSize: 20,
                         minFontSize: 16,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.w500, color: colorScheme.secondary.withOpacity(0.7)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: colorScheme.secondary.withOpacity(0.7)),
                       ),
                     // 简介
                     Padding(

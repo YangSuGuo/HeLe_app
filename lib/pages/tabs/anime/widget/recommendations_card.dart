@@ -21,10 +21,13 @@ class RecommendationsCard extends StatelessWidget {
     return Card(
         clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: InkWell(onTap: () async {
-          LegacySubjectSmall toLegacySubjectSmall = data!.toLegacySubjectSmall();
-          await Get.toNamed(Routes.WIKI, arguments: {"bangumiItem": toLegacySubjectSmall});
+          LegacySubjectSmall toLegacySubjectSmall =
+              data!.toLegacySubjectSmall();
+          await Get.toNamed(Routes.WIKI,
+              arguments: {"bangumiItem": toLegacySubjectSmall});
         }, child: LayoutBuilder(builder: (context, constraints) {
           final double maxWidth = MediaQuery.of(context).size.width * 0.65;
           final double maxHeight = constraints.maxHeight;
@@ -40,12 +43,15 @@ class RecommendationsCard extends StatelessWidget {
               Positioned.fill(
                   child: Container(
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
-                Theme.of(context).colorScheme.primary.withOpacity(0),
-                Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                Theme.of(context).colorScheme.primary.withOpacity(0.8),
-              ])))),
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                    Theme.of(context).colorScheme.primary.withOpacity(0),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                    Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                  ])))),
               Positioned(
                   bottom: 20.h,
                   left: 20.w,

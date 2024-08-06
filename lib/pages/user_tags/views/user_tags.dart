@@ -18,7 +18,8 @@ class UserTags extends StatefulWidget {
 }
 
 class _UserTagsState extends State<UserTags> {
-  final UserTagsControllers _userTagsControllers = Get.put(UserTagsControllers());
+  final UserTagsControllers _userTagsControllers =
+      Get.put(UserTagsControllers());
   Future? _userTags;
 
   @override
@@ -53,7 +54,8 @@ class _UserTagsState extends State<UserTags> {
                 return Obx(() => ListView.builder(
                     itemCount: _userTagsControllers.tags.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return tagCard(_userTagsControllers.tags[index], colorScheme);
+                      return tagCard(
+                          _userTagsControllers.tags[index], colorScheme);
                     }));
               } else {
                 return Center(
@@ -91,7 +93,9 @@ class _UserTagsState extends State<UserTags> {
                 ),
                 Text(
                   "添加",
-                  style: TextStyle(color: colorScheme.onPrimary, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
@@ -130,7 +134,9 @@ class _UserTagsState extends State<UserTags> {
                         child: AutoSizeText(
                       tag.tag,
                       maxLines: 1,
-                      style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.w500),
                     ))
                   ],
                 ),
@@ -222,8 +228,9 @@ class _UserTagsState extends State<UserTags> {
           Wrap(spacing: 100.w, children: [
             ElevatedButton(
               onPressed: () => SmartDialog.dismiss(force: true),
-              style:
-                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.3)),
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: colorScheme.inversePrimary.withOpacity(0.3)),
               child: const Text('取消'),
             ),
             ElevatedButton(
@@ -232,8 +239,9 @@ class _UserTagsState extends State<UserTags> {
                 _userTags = _userTagsControllers.querySubjectsUserTags();
                 SmartDialog.dismiss(force: true);
               },
-              style:
-                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.4)),
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: colorScheme.inversePrimary.withOpacity(0.4)),
               child: const Text('确定'),
             )
           ]),

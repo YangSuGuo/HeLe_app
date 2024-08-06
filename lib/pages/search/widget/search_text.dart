@@ -33,12 +33,14 @@ class SearchText extends StatelessWidget {
           },
           borderRadius: BorderRadius.circular(6),
           child: Padding(
-            padding: const EdgeInsets.only(top: 5, bottom: 5, left: 11, right: 11),
+            padding:
+                const EdgeInsets.only(top: 5, bottom: 5, left: 11, right: 11),
             child: AutoSizeText(
               searchText,
               minFontSize: 12,
               maxLines: 1,
-              style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ),
         ),

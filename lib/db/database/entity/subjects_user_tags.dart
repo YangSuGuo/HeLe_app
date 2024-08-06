@@ -14,7 +14,6 @@ class SubjectsUserTags {
     this.tagId,
     required this.tag,
     required this.creationTime,
-
     this.isHidden,
     this.isPinned,
   });

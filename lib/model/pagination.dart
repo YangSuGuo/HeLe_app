@@ -21,21 +21,26 @@ class Pagination {
     this.total,
   });
 
-  factory Pagination.fromRawJson(String str) => Pagination.fromJson(json.decode(str));
+  factory Pagination.fromRawJson(String str) =>
+      Pagination.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Pagination.fromJson(Map<String, dynamic> json) => Pagination(
-    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
-    limit: json["limit"],
-    offset: json["offset"],
-    total: json["total"],
-  );
+        data: json["data"] == null
+            ? []
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        limit: json["limit"],
+        offset: json["offset"],
+        total: json["total"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "limit": limit,
-    "offset": offset,
-    "total": total,
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "limit": limit,
+        "offset": offset,
+        "total": total,
+      };
 }

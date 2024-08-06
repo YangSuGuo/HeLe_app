@@ -45,9 +45,11 @@ class _MainAppState extends State<MainApp> {
             child:*/
             NavigationBar(
               height: 100.h,
-              backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.9),
+              backgroundColor:
+                  Theme.of(context).colorScheme.surface.withOpacity(0.9),
               animationDuration: const Duration(milliseconds: 300),
-              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+              labelBehavior:
+                  NavigationDestinationLabelBehavior.onlyShowSelected,
               onDestinationSelected: (value) => _mainController.setIndex(value),
               selectedIndex: _mainController.selectedIndex.value,
               destinations: [

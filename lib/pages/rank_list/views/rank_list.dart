@@ -23,7 +23,8 @@ class RankList extends StatefulWidget {
   State<RankList> createState() => _RankListState();
 }
 
-class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin {
+class _RankListState extends State<RankList>
+    with AutomaticKeepAliveClientMixin {
   final RankController _rankController = Get.put(RankController());
   Future? _rankList;
   late ScrollController scrollController;
@@ -39,7 +40,8 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
     scrollController = _rankController.scrollController;
     scrollController.addListener(() async {
       // 触底加载
-      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 200) {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 200) {
         EasyThrottle.throttle('Rank', const Duration(seconds: 1), () {
           if (_rankController.offset < 50) {
             _rankController.next();
@@ -74,12 +76,14 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                   expandedHeight: Get.height * 0.2,
                   pinned: true,
                   stretch: true,
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   elevation: 0,
                   forceMaterialTransparency: true,
                   flexibleSpace: ExtendedFlexibleSpace(
                       centerTitle: false,
-                      titlePadding: EdgeInsets.only(left: 40.w, top: 0.h, bottom: 20.h),
+                      titlePadding:
+                          EdgeInsets.only(left: 40.w, top: 0.h, bottom: 20.h),
                       collapseMode: CollapseMode.parallax,
                       stretchModes: const [
                         StretchMode.blurBackground,
@@ -100,26 +104,30 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                               onPressed: () {
                                 HapticFeedback.lightImpact();
                                 showModalBottomDetail(
-                                    height: Get.height * 0.41, context: context, child: bottomSheet(context));
+                                    height: Get.height * 0.41,
+                                    context: context,
+                                    child: bottomSheet(context));
                               },
                               iconSize: 35.sp,
                               color: colorScheme.secondary,
-                              padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 5.h),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 0.w, vertical: 5.h),
                               icon: const FaIcon(FontAwesomeIcons.sliders),
                               style: IconButton.styleFrom(
-                                backgroundColor: colorScheme.primary.withOpacity(0.12),
+                                backgroundColor:
+                                    colorScheme.primary.withOpacity(0.12),
                                 minimumSize: const Size(52, 0),
                               ),
                             ));
                       },
-                      subtitle:
-                          Obx(() => AutoSizeText("精选${_rankController.tags[_rankController.type.value - 1]}Top 100",
-                              minFontSize: 12,
-                              style: TextStyle(
-                                fontSize: 25.sp,
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.secondary.withOpacity(0.7),
-                              ))))),
+                      subtitle: Obx(() => AutoSizeText(
+                          "精选${_rankController.tags[_rankController.type.value - 1]}Top 100",
+                          minFontSize: 12,
+                          style: TextStyle(
+                            fontSize: 25.sp,
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.secondary.withOpacity(0.7),
+                          ))))),
               FutureBuilder(
                   future: _rankList,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -170,7 +178,8 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
                 backgroundColor: colorScheme.primary.withAlpha(40),
                 side: const BorderSide(color: Colors.transparent),
                 showCheckmark: true,
-                visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
+                visualDensity:
+                    const VisualDensity(horizontal: 0.0, vertical: -2.0),
                 onSelected: (bool value) {
                   _rankController.onSelected(value, index);
                 }));
@@ -191,13 +200,17 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
               children: [
                 AutoSizeText(
                   "分类排行",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42.sp, color: colorScheme.secondary),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 42.sp,
+                      color: colorScheme.secondary),
                 ),
                 MaterialButton(
                     minWidth: 10.w,
                     height: 45.h,
                     color: colorScheme.primary.withOpacity(0.8),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.r)),
                     textTheme: ButtonTextTheme.primary,
                     onPressed: () {
                       HapticFeedback.lightImpact();
@@ -217,7 +230,10 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
             children: [
               AutoSizeText(
                 "年份筛选",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42.sp, color: colorScheme.secondary),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 42.sp,
+                    color: colorScheme.secondary),
               ),
               AutoSizeText(
                 "（长按筛选重置）",

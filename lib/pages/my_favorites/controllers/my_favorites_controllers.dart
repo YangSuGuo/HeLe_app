@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:hele_app/db/database/app_database.dart';
 
-class MyFavoritesControllers extends GetxController with GetTickerProviderStateMixin {
+class MyFavoritesControllers extends GetxController
+    with GetTickerProviderStateMixin {
   final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
 
   @override
@@ -11,7 +12,7 @@ class MyFavoritesControllers extends GetxController with GetTickerProviderStateM
 
   Future<void> getAllUserFavorites() async {
     await db.subjectsStarDao.findSubjectsStarByTypeStatusTagsHidden(
-      1,1,"",false,true,"rating",0,
+      1, 1, "", false, true, "rating", 0,
       // type: 1,
       // status: 1,
       // tags: "",

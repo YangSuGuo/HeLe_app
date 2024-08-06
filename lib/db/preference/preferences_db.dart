@@ -10,7 +10,8 @@ class PreferencesDB {
   static final PreferencesDB db = PreferencesDB._();
   SharedPreferences? _db;
 
-  Future<SharedPreferences> get database async => _db ??= await SharedPreferences.getInstance();
+  Future<SharedPreferences> get database async =>
+      _db ??= await SharedPreferences.getInstance();
 
   /// ** APP相关 **
   static const appThemeDarkMode = "themes"; // app主题

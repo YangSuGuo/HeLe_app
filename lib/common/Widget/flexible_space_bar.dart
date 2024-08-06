@@ -40,7 +40,11 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
   bool _getEffectiveCenterTitle(ThemeData theme) {
     return widget.centerTitle ??
         switch (theme.platform) {
-          TargetPlatform.android || TargetPlatform.fuchsia || TargetPlatform.linux || TargetPlatform.windows => false,
+          TargetPlatform.android ||
+          TargetPlatform.fuchsia ||
+          TargetPlatform.linux ||
+          TargetPlatform.windows =>
+            false,
           TargetPlatform.iOS || TargetPlatform.macOS => true,
         };
   }
@@ -71,28 +75,34 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final FlexibleSpaceBarSettings settings =
-            context.dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>()!;
+        final FlexibleSpaceBarSettings settings = context
+            .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>()!;
         assert(
           settings != null,
           'A FlexibleSpaceBar must be wrapped in the widget returned by FlexibleSpaceBar.createSettings().',
         );
         final List<Widget> children = <Widget>[];
         final double deltaExtent = settings.maxExtent - settings.minExtent;
-        final double t = clampDouble(1.0 - (settings.currentExtent - settings.minExtent) / deltaExtent, 0.0, 1.0);
+        final double t = clampDouble(
+            1.0 - (settings.currentExtent - settings.minExtent) / deltaExtent,
+            0.0,
+            1.0);
         // background
         if (widget.background != null) {
-          final double fadeStart = math.max(0.0, 1.0 - kToolbarHeight / deltaExtent);
+          final double fadeStart =
+              math.max(0.0, 1.0 - kToolbarHeight / deltaExtent);
           const double fadeEnd = 1.0;
           assert(fadeStart <= fadeEnd);
 
-          final double opacity =
-              settings.maxExtent == settings.minExtent ? 1.0 : 1.0 - Interval(fadeStart, fadeEnd).transform(t);
+          final double opacity = settings.maxExtent == settings.minExtent
+              ? 1.0
+              : 1.0 - Interval(fadeStart, fadeEnd).transform(t);
 
           double height = settings.maxExtent;
 
           // StretchMode.zoomBackground
-          if (widget.stretchModes.contains(StretchMode.zoomBackground) && constraints.maxHeight > height) {
+          if (widget.stretchModes.contains(StretchMode.zoomBackground) &&
+              constraints.maxHeight > height) {
             height = constraints.maxHeight;
           }
           children.add(Positioned(
@@ -108,8 +118,10 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
           ));
 
           // StretchMode.blurBackground
-          if (widget.stretchModes.contains(StretchMode.blurBackground) && constraints.maxHeight > settings.maxExtent) {
-            final double blurAmount = (constraints.maxHeight - settings.maxExtent) / 10;
+          if (widget.stretchModes.contains(StretchMode.blurBackground) &&
+              constraints.maxHeight > settings.maxExtent) {
+            final double blurAmount =
+                (constraints.maxHeight - settings.maxExtent) / 10;
             children.add(Positioned.fill(
               child: BackdropFilter(
                 filter: ui.ImageFilter.blur(
@@ -146,8 +158,11 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
           }
 
           // StretchMode.fadeTitle
-          if (widget.stretchModes.contains(StretchMode.fadeTitle) && constraints.maxHeight > settings.maxExtent) {
-            final double stretchOpacity = 1 - clampDouble((constraints.maxHeight - settings.maxExtent) / 100, 0.0, 1.0);
+          if (widget.stretchModes.contains(StretchMode.fadeTitle) &&
+              constraints.maxHeight > settings.maxExtent) {
+            final double stretchOpacity = 1 -
+                clampDouble((constraints.maxHeight - settings.maxExtent) / 100,
+                    0.0, 1.0);
             title = Opacity(
               opacity: stretchOpacity,
               child: title,
@@ -156,29 +171,37 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
 
           final double opacity = settings.toolbarOpacity;
           if (opacity > 0.0) {
-            TextStyle titleStyle =
-                theme.useMaterial3 ? theme.textTheme.titleLarge! : theme.primaryTextTheme.titleLarge!;
+            TextStyle titleStyle = theme.useMaterial3
+                ? theme.textTheme.titleLarge!
+                : theme.primaryTextTheme.titleLarge!;
             titleStyle = titleStyle.copyWith(
               color: titleStyle.color!.withOpacity(opacity),
             );
             final bool effectiveCenterTitle = _getEffectiveCenterTitle(theme);
-            final double leadingPadding = (settings.hasLeading ?? true) ? 72.0 : 0.0;
+            final double leadingPadding =
+                (settings.hasLeading ?? true) ? 72.0 : 0.0;
             final EdgeInsetsGeometry padding = widget.titlePadding ??
                 EdgeInsetsDirectional.only(
                   start: effectiveCenterTitle ? 0.0 : leadingPadding,
                   bottom: 16.0,
                 );
-            final double scaleValue = Tween<double>(begin: widget.expandedTitleScale, end: 1.0).transform(t);
-            final Matrix4 scaleTransform = Matrix4.identity()..scale(scaleValue, scaleValue, 1.0);
-            final Alignment titleAlignment = _getTitleAlignment(effectiveCenterTitle);
-            final Matrix4 translateTransform = Matrix4.identity()..scale(scaleValue, scaleValue, 1.0);
+            final double scaleValue =
+                Tween<double>(begin: widget.expandedTitleScale, end: 1.0)
+                    .transform(t);
+            final Matrix4 scaleTransform = Matrix4.identity()
+              ..scale(scaleValue, scaleValue, 1.0);
+            final Alignment titleAlignment =
+                _getTitleAlignment(effectiveCenterTitle);
+            final Matrix4 translateTransform = Matrix4.identity()
+              ..scale(scaleValue, scaleValue, 1.0);
             final double subtitleFadeProgress = 1 - t > 0.2 ? 1.0 : 0.0;
             double easeIn = pow(t, 3).toDouble();
             children.add(
               Container(
                 padding: padding,
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.surfaceContainerLow.withOpacity(easeIn),
+                  color:
+                      theme.colorScheme.surfaceContainerLow.withOpacity(easeIn),
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     bottomRight: Radius.circular(15),
@@ -195,26 +218,37 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
                             alignment: titleAlignment,
                             child: DefaultTextStyle(
                                 style: titleStyle,
-                                child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+                                child: LayoutBuilder(builder:
+                                    (BuildContext context,
+                                        BoxConstraints constraints) {
                                   return Container(
-                                    width: constraints.maxWidth / scaleValue,
+                                      width: constraints.maxWidth / scaleValue,
                                       alignment: titleAlignment,
                                       child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         // spacing: constraints.maxWidth / scaleValue - 120,
-                                        children: [title!, if (widget.iconBuilder != null) widget.iconBuilder!(t)],
+                                        children: [
+                                          title!,
+                                          if (widget.iconBuilder != null)
+                                            widget.iconBuilder!(t)
+                                        ],
                                       ));
                                 })))),
                     if (t < 0.8 && widget.subtitle != null)
                       // todo 动画
                       AnimatedOpacity(
-                          duration: const Duration(milliseconds: 500), // 淡入淡出持续时间
+                          duration:
+                              const Duration(milliseconds: 500), // 淡入淡出持续时间
                           opacity: subtitleFadeProgress,
                           child: Padding(
                               padding: const EdgeInsets.only(top: 3),
                               child: Transform(
-                                  alignment: titleAlignment, transform: translateTransform, child: widget.subtitle!)))
+                                  alignment: titleAlignment,
+                                  transform: translateTransform,
+                                  child: widget.subtitle!)))
                   ],
                 ),
               ),

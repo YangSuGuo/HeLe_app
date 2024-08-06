@@ -31,7 +31,8 @@ class EvaluationUtils {
   }
 
   // 获取副标题
-  static String? getSubTitle(String? subtitle, List<PersonCareer>? personCareerList) {
+  static String? getSubTitle(
+      String? subtitle, List<PersonCareer>? personCareerList) {
     if (subtitle != null && subtitle != "") {
       return subtitle;
     } else if (personCareerList != null && !personCareerList.isNotEmpty) {
@@ -47,7 +48,9 @@ class EvaluationUtils {
     for (var item in infobox) {
       if (item.key == key) {
         // 检查是否是列表且列表不为空且第一个元素包含键
-        if (item.value is List && item.value.isNotEmpty && item.value.first.containsKey('v')) {
+        if (item.value is List &&
+            item.value.isNotEmpty &&
+            item.value.first.containsKey('v')) {
           return item.value.first['v'].toString();
         } else {
           return item.value.toString();
@@ -59,7 +62,8 @@ class EvaluationUtils {
 
   static List<String> toTagsList(String tag) {
     String trimmedString = tag.substring(1, tag.length - 1);
-    List<String> tags = trimmedString.split(', ').map((tag) => tag.trim()).toList();
+    List<String> tags =
+        trimmedString.split(', ').map((tag) => tag.trim()).toList();
     return tags;
   }
 }

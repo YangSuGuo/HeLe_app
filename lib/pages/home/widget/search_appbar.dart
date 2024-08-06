@@ -68,7 +68,8 @@ class SearchAppBar extends StatelessWidget {
           style: ButtonStyle(
             alignment: Alignment.center,
             padding: WidgetStateProperty.all(EdgeInsets.zero),
-            backgroundColor: ButtonStyleButton.allOrNull(Theme.of(context).colorScheme.onInverseSurface),
+            backgroundColor: ButtonStyleButton.allOrNull(
+                Theme.of(context).colorScheme.onInverseSurface),
           ),
           onPressed: () => {
             HapticFeedback.lightImpact(),
@@ -87,7 +88,10 @@ class SearchAppBar extends StatelessWidget {
                       children: [
                         AutoSizeText(
                           "快捷功能",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42.sp, color: colorScheme.secondary),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 42.sp,
+                              color: colorScheme.secondary),
                         ),
                         Gap(16.h),
                         Wrap(
@@ -101,7 +105,8 @@ class SearchAppBar extends StatelessWidget {
                               borderCurvature: 24.5.r,
                               containerCurvature: 20.r,
                               showBorder: false,
-                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              iconOffset:
+                                  EdgeInsets.only(right: 12.w, bottom: 10.h),
                               onTap: () {},
                               child: Container(
                                 alignment: Alignment.center,
@@ -110,11 +115,15 @@ class SearchAppBar extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.image_outlined, size: 64.sp, color: colorScheme.secondary),
+                                    Icon(Icons.image_outlined,
+                                        size: 64.sp,
+                                        color: colorScheme.secondary),
                                     Gap(6.h),
                                     Text("功能入口",
-                                        style:
-                                            TextStyle(fontSize: 24.sp, color: colorScheme.secondary.withOpacity(0.8))),
+                                        style: TextStyle(
+                                            fontSize: 24.sp,
+                                            color: colorScheme.secondary
+                                                .withOpacity(0.8))),
                                   ],
                                 ),
                               ),
@@ -126,7 +135,8 @@ class SearchAppBar extends StatelessWidget {
                               borderCurvature: 24.5.r,
                               containerCurvature: 20.r,
                               showBorder: false,
-                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              iconOffset:
+                                  EdgeInsets.only(right: 12.w, bottom: 10.h),
                               onTap: () {},
                               child: Container(
                                 alignment: Alignment.center,
@@ -135,11 +145,15 @@ class SearchAppBar extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.image_outlined, size: 64.sp, color: colorScheme.secondary),
+                                    Icon(Icons.image_outlined,
+                                        size: 64.sp,
+                                        color: colorScheme.secondary),
                                     Gap(6.h),
                                     Text("功能入口",
-                                        style:
-                                            TextStyle(fontSize: 24.sp, color: colorScheme.secondary.withOpacity(0.8))),
+                                        style: TextStyle(
+                                            fontSize: 24.sp,
+                                            color: colorScheme.secondary
+                                                .withOpacity(0.8))),
                                   ],
                                 ),
                               ),
@@ -151,7 +165,8 @@ class SearchAppBar extends StatelessWidget {
                               borderCurvature: 24.5.r,
                               containerCurvature: 20.r,
                               showBorder: false,
-                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              iconOffset:
+                                  EdgeInsets.only(right: 12.w, bottom: 10.h),
                               onTap: () {},
                               child: Container(
                                 alignment: Alignment.center,
@@ -160,11 +175,15 @@ class SearchAppBar extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.image_outlined, size: 64.sp, color: colorScheme.secondary),
+                                    Icon(Icons.image_outlined,
+                                        size: 64.sp,
+                                        color: colorScheme.secondary),
                                     Gap(6.h),
                                     Text("功能入口",
-                                        style:
-                                            TextStyle(fontSize: 24.sp, color: colorScheme.secondary.withOpacity(0.8))),
+                                        style: TextStyle(
+                                            fontSize: 24.sp,
+                                            color: colorScheme.secondary
+                                                .withOpacity(0.8))),
                                   ],
                                 ),
                               ),
@@ -176,7 +195,8 @@ class SearchAppBar extends StatelessWidget {
                               borderCurvature: 24.5.r,
                               containerCurvature: 20.r,
                               showBorder: false,
-                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              iconOffset:
+                                  EdgeInsets.only(right: 12.w, bottom: 10.h),
                               onTap: () {},
                               child: Container(
                                 alignment: Alignment.center,
@@ -185,11 +205,15 @@ class SearchAppBar extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.image_outlined, size: 64.sp, color: colorScheme.secondary),
+                                    Icon(Icons.image_outlined,
+                                        size: 64.sp,
+                                        color: colorScheme.secondary),
                                     Gap(6.h),
                                     Text("功能入口",
-                                        style:
-                                            TextStyle(fontSize: 24.sp, color: colorScheme.secondary.withOpacity(0.8))),
+                                        style: TextStyle(
+                                            fontSize: 24.sp,
+                                            color: colorScheme.secondary
+                                                .withOpacity(0.8))),
                                   ],
                                 ),
                               ),
@@ -203,7 +227,10 @@ class SearchAppBar extends StatelessWidget {
                   /// 主题外观设置
                   AutoSizeText(
                     "主题外观",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42.sp, color: colorScheme.secondary),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 42.sp,
+                        color: colorScheme.secondary),
                   ),
                   Gap(16.h),
                   Consumer<ApplicationProvider>(
@@ -222,7 +249,8 @@ class SearchAppBar extends StatelessWidget {
                               borderCurvature: 24.5.r,
                               containerCurvature: 20.r,
                               showBorder: true,
-                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              iconOffset:
+                                  EdgeInsets.only(right: 12.w, bottom: 10.h),
                               isExplanationText: true,
                               child: Row(
                                 children: [
@@ -233,7 +261,9 @@ class SearchAppBar extends StatelessWidget {
                                       child: Text(
                                         'Aa',
                                         style: TextStyle(
-                                          color: AppThemeColorScheme.lightDefaultScheme().onSecondary,
+                                          color: AppThemeColorScheme
+                                                  .lightDefaultScheme()
+                                              .onSecondary,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 32.sp,
                                         ),
@@ -243,11 +273,15 @@ class SearchAppBar extends StatelessWidget {
                                   Expanded(
                                     child: Container(
                                       alignment: Alignment.center,
-                                      color: AppThemeColorScheme.lightDefaultScheme().onPrimary,
+                                      color: AppThemeColorScheme
+                                              .lightDefaultScheme()
+                                          .onPrimary,
                                       child: Text(
                                         'Aa',
                                         style: TextStyle(
-                                          color: AppThemeColorScheme.lightDefaultScheme().secondary,
+                                          color: AppThemeColorScheme
+                                                  .lightDefaultScheme()
+                                              .secondary,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 32.sp,
                                         ),
@@ -258,7 +292,8 @@ class SearchAppBar extends StatelessWidget {
                               ),
                               onTap: () {
                                 HapticFeedback.lightImpact();
-                                applicationProvider.themeMode = ThemeMode.system;
+                                applicationProvider.themeMode =
+                                    ThemeMode.system;
                               }),
                           ThemeCard(
                               title: "日间模式",
@@ -268,15 +303,19 @@ class SearchAppBar extends StatelessWidget {
                               borderCurvature: 24.5.r,
                               containerCurvature: 20.r,
                               showBorder: true,
-                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              iconOffset:
+                                  EdgeInsets.only(right: 12.w, bottom: 10.h),
                               isExplanationText: true,
                               child: Container(
                                 alignment: Alignment.center,
-                                color: AppThemeColorScheme.lightDefaultScheme().onPrimary,
+                                color: AppThemeColorScheme.lightDefaultScheme()
+                                    .onPrimary,
                                 child: Text(
                                   'Aa',
                                   style: TextStyle(
-                                    color: AppThemeColorScheme.lightDefaultScheme().secondary,
+                                    color:
+                                        AppThemeColorScheme.lightDefaultScheme()
+                                            .secondary,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 36.sp,
                                   ),
@@ -294,7 +333,8 @@ class SearchAppBar extends StatelessWidget {
                               borderCurvature: 24.5.r,
                               containerCurvature: 20.r,
                               showBorder: true,
-                              iconOffset: EdgeInsets.only(right: 12.w, bottom: 10.h),
+                              iconOffset:
+                                  EdgeInsets.only(right: 12.w, bottom: 10.h),
                               isExplanationText: true,
                               child: Container(
                                 alignment: Alignment.center,
@@ -302,7 +342,9 @@ class SearchAppBar extends StatelessWidget {
                                 child: Text(
                                   'Aa',
                                   style: TextStyle(
-                                    color: AppThemeColorScheme.lightDefaultScheme().onSecondary,
+                                    color:
+                                        AppThemeColorScheme.lightDefaultScheme()
+                                            .onSecondary,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 36.sp,
                                   ),
@@ -321,7 +363,10 @@ class SearchAppBar extends StatelessWidget {
                   /// 多主题设置
                   AutoSizeText(
                     "种子颜色",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 42.sp, color: colorScheme.secondary),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 42.sp,
+                        color: colorScheme.secondary),
                   ),
                   Gap(16.h),
                   const MultipleThemesBody(),
@@ -353,7 +398,8 @@ class _MultipleThemesBodyState extends State<MultipleThemesBody> {
   Widget build(BuildContext context) {
     /// 获取多主题Key
     final List appMultipleThemesModeKey = [];
-    appMultipleThemesMode.forEach((key, value) => appMultipleThemesModeKey.add(key));
+    appMultipleThemesMode
+        .forEach((key, value) => appMultipleThemesModeKey.add(key));
 
     return Consumer<ApplicationProvider>(
       builder: (_, applicationProvider, child) {
@@ -368,7 +414,9 @@ class _MultipleThemesBodyState extends State<MultipleThemesBody> {
               appMultipleThemesModeKey.length,
               (generator) {
                 final String key = appMultipleThemesModeKey[generator];
-                final Color primaryColor = appMultipleThemesMode[key]![AppMultipleThemesMode.light]!.primaryColor;
+                final Color primaryColor =
+                    appMultipleThemesMode[key]![AppMultipleThemesMode.light]!
+                        .primaryColor;
                 return ThemeCard(
                   width: 110.w,
                   height: 110.w,

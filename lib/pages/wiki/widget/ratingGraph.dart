@@ -75,7 +75,8 @@ class RatingGraph extends StatelessWidget {
           ),
           width: 32.w,
           borderRadius: BorderRadius.circular(14.w),
-          backDrawRodData: BackgroundBarChartRodData(show: true, color: colorScheme.onPrimary, fromY: maxY),
+          backDrawRodData: BackgroundBarChartRodData(
+              show: true, color: colorScheme.onPrimary, fromY: maxY),
         ),
       ],
       showingTooltipIndicators: showTooltips,

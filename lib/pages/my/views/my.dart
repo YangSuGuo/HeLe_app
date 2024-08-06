@@ -52,7 +52,8 @@ class _MyState extends State<My> {
                           color: colorScheme.primary,
                         ),
                       ))),
-              contentPadding: const EdgeInsets.only(left: 15, top: 2, bottom: 2),
+              contentPadding:
+                  const EdgeInsets.only(left: 15, top: 2, bottom: 2),
               minLeadingWidth: 0,
               title: Text(
                 i['title'],
@@ -80,7 +81,8 @@ class _MyState extends State<My> {
                           color: colorScheme.primary,
                         ),
                       ))),
-              contentPadding: const EdgeInsets.only(left: 15, top: 2, bottom: 2),
+              contentPadding:
+                  const EdgeInsets.only(left: 15, top: 2, bottom: 2),
               minLeadingWidth: 0,
               title: Text(
                 i['title'],

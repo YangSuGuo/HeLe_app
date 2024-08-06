@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/http/bangumi_net.dart';
@@ -5,6 +7,7 @@ import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/model/search/query_parameters.dart';
 import 'package:hele_app/model/search/request_body.dart';
 import 'package:hele_app/model/search/search.dart';
+import 'package:hele_app/src/rust/api/api.dart' as api;
 
 class MangaController extends GetxController {
   final ScrollController scrollController = ScrollController();
@@ -13,15 +16,25 @@ class MangaController extends GetxController {
   RxList<LegacySubjectSmall> bangumiList = <LegacySubjectSmall>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    // var result = await api.rank(dateType: "total", offset: 0, limit: 25);
+    // log(result.toString());
+    // getHot();
   }
 
   // 触底加载
   Future next() async {
     offset += 20;
     await getHotRecommendations();
+
   }
+
+/*  Future<dynamic> getHot() async {
+
+
+    return result;
+  }*/
 
   // 获取漫画热门推荐
   Future getHotRecommendations() async {

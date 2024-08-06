@@ -7,7 +7,8 @@ import 'package:hele_app/pages/rank_list/views/rank_list.dart';
 class MainController extends GetxController {
   List<Widget> pages = <Widget>[const Home(), const RankList(), const My()];
   var selectedIndex = 0.obs;
-  late PageController pageController = PageController(initialPage: selectedIndex.value);
+  late PageController pageController =
+      PageController(initialPage: selectedIndex.value);
 
   void setIndex(int i) {
     selectedIndex.value = i;

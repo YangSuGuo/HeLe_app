@@ -26,7 +26,8 @@ class Anime extends StatefulWidget {
 
 class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
   final AnimeController _animeController = Get.put(AnimeController());
-  StreamController<bool> searchBarStream = Get.find<HomeController>().searchBarStream;
+  StreamController<bool> searchBarStream =
+      Get.find<HomeController>().searchBarStream;
   late Future? _futureBuilderFuture;
   late Future? _getRecommendations;
   late ScrollController scrollController;
@@ -43,7 +44,8 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
     scrollController = _animeController.scrollController;
     scrollController.addListener(
       () async {
-        final ScrollDirection direction = scrollController.position.userScrollDirection;
+        final ScrollDirection direction =
+            scrollController.position.userScrollDirection;
         if (direction == ScrollDirection.forward) {
           searchBarStream.add(true);
         } else if (direction == ScrollDirection.reverse) {
@@ -130,7 +132,8 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       List<Calendar> data = snapshot.data;
-                      return Obx(() => contentGrid(data[_animeController.dayOfWeekIndex.value].items!));
+                      return Obx(() => contentGrid(
+                          data[_animeController.dayOfWeekIndex.value].items!));
                     } else if (snapshot.hasError) {
                       return SliverToBoxAdapter(
                           child: Center(
@@ -179,7 +182,8 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
         mainAxisSpacing: 6,
         crossAxisSpacing: 6,
         crossAxisCount: 3,
-        mainAxisExtent: Get.size.width / 2 + MediaQuery.textScalerOf(context).scale(16),
+        mainAxisExtent:
+            Get.size.width / 2 + MediaQuery.textScalerOf(context).scale(16),
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
@@ -197,18 +201,22 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
       children: {
         1: Text(
           _animeController.yesterday.value,
-          style: TextStyle(fontSize: Theme.of(context).textTheme.labelMedium!.fontSize),
+          style: TextStyle(
+              fontSize: Theme.of(context).textTheme.labelMedium!.fontSize),
         ),
         2: Text(_animeController.today.value,
-            style: TextStyle(fontSize: Theme.of(context).textTheme.labelMedium!.fontSize)),
+            style: TextStyle(
+                fontSize: Theme.of(context).textTheme.labelMedium!.fontSize)),
         3: Text(_animeController.tomorrow.value,
-            style: TextStyle(fontSize: Theme.of(context).textTheme.labelMedium!.fontSize))
+            style: TextStyle(
+                fontSize: Theme.of(context).textTheme.labelMedium!.fontSize))
       },
       // innerPadding: EdgeInsets.zero,
       // height: 50,
       padding: 12.0,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.1),
+        color:
+            Theme.of(context).colorScheme.secondaryContainer.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),
       ),
       thumbDecoration: BoxDecoration(

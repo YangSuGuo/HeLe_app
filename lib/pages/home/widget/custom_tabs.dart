@@ -73,15 +73,17 @@ class CustomChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final Color selectedColor = colorScheme.secondaryContainer;
-    final TextStyle chipTextStyle =
-        selected ? TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp) : TextStyle(fontSize: 24.sp);
+    final TextStyle chipTextStyle = selected
+        ? TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp)
+        : TextStyle(fontSize: 24.sp);
 
     return isTranslucent
         ? InputChip(
             side: const BorderSide(
               color: Colors.transparent,
             ),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r)),
             selectedColor: colorScheme.primary.withAlpha(120),
             backgroundColor: colorScheme.primary.withAlpha(40),
             padding: isPadding ?? true
@@ -102,8 +104,11 @@ class CustomChip extends StatelessWidget {
             side: const BorderSide(
               color: Colors.transparent,
             ),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-            padding: selected ? EdgeInsets.fromLTRB(24.w, 5.h, 24.w, 5.h) : EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.w),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r)),
+            padding: selected
+                ? EdgeInsets.fromLTRB(24.w, 5.h, 24.w, 5.h)
+                : EdgeInsets.fromLTRB(12.w, 5.h, 12.w, 5.w),
             label: Text(label),
             labelStyle: chipTextStyle,
             onPressed: () => onTap(),

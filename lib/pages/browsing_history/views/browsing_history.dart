@@ -14,7 +14,8 @@ class BrowsingHistory extends StatefulWidget {
 }
 
 class _BrowsingHistoryState extends State<BrowsingHistory> {
-  final BrowsingHistoryControllers _browsingHistoryControllers = Get.put(BrowsingHistoryControllers());
+  final BrowsingHistoryControllers _browsingHistoryControllers =
+      Get.put(BrowsingHistoryControllers());
   Future? _history;
 
   @override
@@ -48,15 +49,13 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
               log(snapshot.data.toString());
               return Text("ok");
 
-
-            /*  return CustomScrollView(
+              /*  return CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(
                     parent: BouncingScrollPhysics(),
                   ),
                   slivers: [
 
                   ]);*/
-
             } else {
               return Center(
                 child: LoadingAnimationWidget.stretchedDots(

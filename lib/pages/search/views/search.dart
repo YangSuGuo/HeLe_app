@@ -14,7 +14,8 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  final SearchPageController _searchController = Get.find<SearchPageController>();
+  final SearchPageController _searchController =
+      Get.find<SearchPageController>();
 
   @override
   void initState() {
@@ -52,7 +53,8 @@ class _SearchState extends State<Search> {
       titleSpacing: 0,
       actions: [
         IconButton(
-            onPressed: () => _searchController.submit(), icon: FaIcon(FontAwesomeIcons.magnifyingGlass, size: 40.sp)),
+            onPressed: () => _searchController.submit(),
+            icon: FaIcon(FontAwesomeIcons.magnifyingGlass, size: 40.sp)),
         Gap(20.w)
       ],
       title: Obx(
@@ -101,7 +103,8 @@ class _SearchState extends State<Search> {
                 backgroundColor: colorScheme.primary.withAlpha(40),
                 side: const BorderSide(color: Colors.transparent),
                 showCheckmark: true,
-                visualDensity: const VisualDensity(horizontal: 0.0, vertical: -2.0),
+                visualDensity:
+                    const VisualDensity(horizontal: 0.0, vertical: -2.0),
                 onSelected: (bool value) {
                   _searchController.type.value = index;
                 }));
@@ -121,7 +124,10 @@ class _SearchState extends State<Search> {
               children: [
                 Text(
                   '搜索历史',
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
                 TextButton(
                   onPressed: () => _searchController.onClearHis(),
@@ -129,14 +135,21 @@ class _SearchState extends State<Search> {
                 )
               ],
             ),
-          Obx(() =>
-              Wrap(spacing: 8, runSpacing: 8, direction: Axis.horizontal, textDirection: TextDirection.ltr, children: [
-                for (int i = 0; i < _searchController.historyList.length; i++)
-                  SearchText(
-                    searchText: _searchController.historyList[i],
-                    onSelect: (value) => _searchController.onTagClick(value),
-                  )
-              ]))
+          Obx(() => Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  direction: Axis.horizontal,
+                  textDirection: TextDirection.ltr,
+                  children: [
+                    for (int i = 0;
+                        i < _searchController.historyList.length;
+                        i++)
+                      SearchText(
+                        searchText: _searchController.historyList[i],
+                        onSelect: (value) =>
+                            _searchController.onTagClick(value),
+                      )
+                  ]))
         ])));
   }
 }

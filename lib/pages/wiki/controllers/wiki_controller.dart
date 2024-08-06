@@ -69,7 +69,9 @@ class WikiController extends GetxController {
 
     // 组件状态
     mark.value = await db.subjectsStarDao.isSubjectExists(subjectId) ?? false;
-    favorite.value = await db.subjectsStarDao.isSubjectCollectedById(subjectId, true) ?? false;
+    favorite.value =
+        await db.subjectsStarDao.isSubjectCollectedById(subjectId, true) ??
+            false;
     userTags.value = await db.subjectsUserTagsDao.findAllTags();
 
     log("标记状态：${mark.value}");
@@ -100,7 +102,8 @@ class WikiController extends GetxController {
       }
 
       // 查找用户自定义标签中的索引
-      int indexInCustomTags = userTags.indexWhere((tag) => tag.tag == activeTag);
+      int indexInCustomTags =
+          userTags.indexWhere((tag) => tag.tag == activeTag);
       if (indexInCustomTags != -1) {
         isUserTags[indexInCustomTags] = true;
       }
@@ -111,9 +114,12 @@ class WikiController extends GetxController {
 
   // 添加标签
   Future<void> addTag(bool isUserTag, int index) async {
-    List<String> sourceTags = isUserTag ? userTags.map((tag) => tag.tag).toList() : tags;
+    List<String> sourceTags =
+        isUserTag ? userTags.map((tag) => tag.tag).toList() : tags;
 
-    isUserTag ? isUserTags[index] = !isUserTags[index] : isTags[index] = !isTags[index];
+    isUserTag
+        ? isUserTags[index] = !isUserTags[index]
+        : isTags[index] = !isTags[index];
 
     if (isUserTag ? isUserTags[index] : isTags[index]) {
       userActiveTag.add(sourceTags[index]);
@@ -160,27 +166,30 @@ class WikiController extends GetxController {
     log(tags.toString());
 
     // 计算标准差
-    deviation.value =
-        MathUtils.calculateStandardDeviation(result.rating.total, result.rating.count, result.rating.score);
+    deviation.value = MathUtils.calculateStandardDeviation(
+        result.rating.total, result.rating.count, result.rating.score);
     dispute.value = EvaluationUtils.getDispute(deviation.value);
     return result;
   }
 
   // 请求条目人物信息列表
   Future<List<CharacterList>> querySubjectCharacterList(int subjectId) async {
-    List<CharacterList> resultCharacterList = await BangumiNet.bangumiSubjectCharacterList(subjectId);
+    List<CharacterList> resultCharacterList =
+        await BangumiNet.bangumiSubjectCharacterList(subjectId);
     return resultCharacterList;
   }
 
   // 请求条目演员信息列表
   Future<List<PersonCareer>> querySubjectPersons(int subjectId) async {
-    List<PersonCareer> resultPersons = await BangumiNet.bangumiSubjectPersons(subjectId);
+    List<PersonCareer> resultPersons =
+        await BangumiNet.bangumiSubjectPersons(subjectId);
     return resultPersons;
   }
 
   // 请求条目衍生相关作品
   Future<List<RelatedWorksQuery>> querySubjectDerivation(int subjectId) async {
-    List<RelatedWorksQuery> resultDerivation = await BangumiNet.bangumiSubjectDerivation(subjectId);
+    List<RelatedWorksQuery> resultDerivation =
+        await BangumiNet.bangumiSubjectDerivation(subjectId);
     return resultDerivation;
   }
 }

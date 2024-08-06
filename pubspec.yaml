@@ -47,6 +47,14 @@ dependencies:
   share_plus: ^10.0.0 # 分享
   nil: ^1.1.1 # 占位符
 
+  # Rust 支持
+  flutter_rust_bridge: 2.1.0
+  ffi: ^2.1.2
+  rust_lib_hele_app:
+    path: rust_builder
+  integration_test:
+    sdk: flutter
+
   #  flutter_svg: ^2.0.10+1 # svg显示
   #  logger: ^2.3.0 # log
 
@@ -68,6 +76,8 @@ dev_dependencies:
   # 本地数据库
   floor_generator: ^1.5.0
   build_runner: ^2.4.11
+
+
 
 flutter:
   uses-material-design: true

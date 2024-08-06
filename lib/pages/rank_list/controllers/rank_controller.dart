@@ -9,7 +9,8 @@ import 'package:hele_app/model/search/query_parameters.dart';
 import 'package:hele_app/model/search/request_body.dart';
 import 'package:hele_app/model/search/search.dart';
 
-class RankController extends GetxController with GetSingleTickerProviderStateMixin {
+class RankController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final ScrollController scrollController = ScrollController();
   late RxList<Datum> rankList = <Datum>[].obs;
   List<String> tags = ["书籍", "动漫", "电影", "电视剧"];
@@ -80,7 +81,8 @@ class RankController extends GetxController with GetSingleTickerProviderStateMix
     final RequestBody requestBody = RequestBody(
       keyword: "",
       sort: Sort.RANK,
-      filter: Filter(type: [type.value], rank: [">0", "<=100"], airDate: airDate ?? []),
+      filter: Filter(
+          type: [type.value], rank: [">0", "<=100"], airDate: airDate ?? []),
     );
 
     final QueryParameters queryParameters = QueryParameters(
@@ -88,7 +90,8 @@ class RankController extends GetxController with GetSingleTickerProviderStateMix
       offset: offset,
     );
 
-    var result = await BangumiNet.getHotRecommendedComics(queryParameters, requestBody);
+    var result =
+        await BangumiNet.getHotRecommendedComics(queryParameters, requestBody);
     List<Datum>? res = result.data;
     if (offset > 0) {
       rankList.addAll(res ?? []);

@@ -128,12 +128,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                           child: ExpandText(
                             s.summary,
                             maxLines: 4,
-                            style: TextStyle(color: colorScheme.secondary.withOpacity(0.85)),
+                            style: TextStyle(
+                                color: colorScheme.secondary.withOpacity(0.85)),
                           ))));
                 }
 
                 // 剧集
-                if ((s.eps != 0 && s.eps < 60) || (s.totalEpisodes != 0 && s.totalEpisodes < 60)) {
+                if ((s.eps != 0 && s.eps < 60) ||
+                    (s.totalEpisodes != 0 && s.totalEpisodes < 60)) {
                   slivers.addAll([
                     EntryTitle(
                       title: "剧集",
@@ -159,16 +161,21 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                               TextSpan(
                                   text: '评分',
                                   style: TextStyle(
-                                      fontSize: 42.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary)),
+                                      fontSize: 42.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme.secondary)),
                               if (s.rating.score != 0)
                                 TextSpan(
                                     text: " ${s.rating.score}",
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold, color: AppThemeColorScheme.top, fontSize: 40.sp)),
+                                        fontWeight: FontWeight.bold,
+                                        color: AppThemeColorScheme.top,
+                                        fontSize: 40.sp)),
                             ])),
                             if (s.rating.rank != 0)
                               Container(
-                                padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 28.w),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 0.h, horizontal: 28.w),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.r),
                                   gradient: const LinearGradient(
@@ -184,13 +191,18 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                 child: Text(
                                   "${s.rating.rank} 名",
                                   style: TextStyle(
-                                      color: colorScheme.onPrimary, fontSize: 28.sp, fontWeight: FontWeight.bold),
+                                      color: colorScheme.onPrimary,
+                                      fontSize: 28.sp,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               )
                           ]),
                     ),
                     SliverGap(16.h),
-                    SliverToBoxAdapter(child: SizedBox(height: 250.h, child: RatingGraph(count: s.rating.count))),
+                    SliverToBoxAdapter(
+                        child: SizedBox(
+                            height: 250.h,
+                            child: RatingGraph(count: s.rating.count))),
                     SliverGap(8.h),
                     SliverToBoxAdapter(
                         child: Wrap(
@@ -202,14 +214,16 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                             style: TextStyle(
                               fontSize: 27.sp,
                               fontWeight: FontWeight.bold,
-                              color: colorScheme.secondaryContainer.withOpacity(0.85),
+                              color: colorScheme.secondaryContainer
+                                  .withOpacity(0.85),
                             ),
                           ),
                           AutoSizeText("当前评价：${_wikiController.dispute}",
                               style: TextStyle(
                                 fontSize: 26.5.sp,
                                 fontWeight: FontWeight.bold,
-                                color: colorScheme.secondaryContainer.withOpacity(0.85),
+                                color: colorScheme.secondaryContainer
+                                    .withOpacity(0.85),
                               ))
                         ])),
                     SliverGap(24.h),
@@ -219,7 +233,11 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 // 角色信息
                 if (characters.isNotEmpty) {
                   slivers.addAll([
-                    EntryTitle(title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                    EntryTitle(
+                        title: "角色",
+                        fontWeight: FontWeight.bold,
+                        size: 42.sp,
+                        child: const MoreInformation()),
                     SliverGap(16.h),
                     SliverToBoxAdapter(
                         child: SizedBox(
@@ -232,7 +250,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                   fit: BoxFit.fitHeight,
                                   title: characters[index].name,
                                   subtitle: EvaluationUtils.getSubTitle(
-                                      characters[index].relation, characters[index].actors ?? []),
+                                      characters[index].relation,
+                                      characters[index].actors ?? []),
                                   onTap: () {},
                                 );
                               },
@@ -246,7 +265,11 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 // 制作人员
                 if (persons.isNotEmpty) {
                   slivers.addAll([
-                    EntryTitle(title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                    EntryTitle(
+                        title: "制作人员",
+                        fontWeight: FontWeight.bold,
+                        size: 42.sp,
+                        child: const MoreInformation()),
                     SliverGap(16.h),
                     SliverToBoxAdapter(
                         child: SizedBox(
@@ -270,16 +293,22 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 // 关联作品
                 if (derivation.isNotEmpty) {
                   slivers.addAll([
-                    EntryTitle(title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                    EntryTitle(
+                        title: "相关作品",
+                        fontWeight: FontWeight.bold,
+                        size: 42.sp,
+                        child: const MoreInformation()),
                     SliverGap(16.h),
                     SliverToBoxAdapter(
                         child: SizedBox(
                             height: 330.h,
                             child: ListView.builder(
                               itemBuilder: (context, index) {
-                                String? title = derivation[index].nameCn != "" && derivation[index].nameCn != null
-                                    ? derivation[index].nameCn
-                                    : derivation[index].name;
+                                String? title =
+                                    derivation[index].nameCn != "" &&
+                                            derivation[index].nameCn != null
+                                        ? derivation[index].nameCn
+                                        : derivation[index].name;
                                 return InfoSubitem(
                                   containerWidth: 200.w,
                                   src: derivation[index].images?.medium,
@@ -313,9 +342,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                           children: [
                             AutoSizeText("网络异常，请稍后重试！",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 40.sp, color: colorScheme.secondary)),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 40.sp,
+                                    color: colorScheme.secondary)),
                             Gap(8.w),
-                            AutoSizeText(":(", style: TextStyle(fontSize: 70.sp, color: colorScheme.secondary)),
+                            AutoSizeText(":(",
+                                style: TextStyle(
+                                    fontSize: 70.sp,
+                                    color: colorScheme.secondary)),
                           ],
                         )));
               } else {
@@ -333,7 +367,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
 
   // 功能模块
   Widget actionGrid(BuildContext context, Subjects subject) {
-    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
       final ColorScheme colorScheme = Theme.of(context).colorScheme;
       return Container(
         margin: const EdgeInsets.only(top: 6, bottom: 4),
@@ -349,7 +384,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 icon: const Icon(FontAwesomeIcons.thumbsUp),
                 selectIcon: const Icon(FontAwesomeIcons.solidThumbsUp),
                 onTap: () {
-                  _wikiController.recommendation.value = !_wikiController.recommendation.value;
+                  _wikiController.recommendation.value =
+                      !_wikiController.recommendation.value;
                 },
                 selectStatus: _wikiController.recommendation.value,
                 text: "推荐")),
@@ -367,8 +403,10 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                   selectIcon: const Icon(FontAwesomeIcons.solidStar),
                   onTap: () {
                     if (_wikiController.mark.value) {
-                      _wikiController.favorite.value = !_wikiController.favorite.value;
-                      _wikiController.save(subject, _wikiController.favorite.value);
+                      _wikiController.favorite.value =
+                          !_wikiController.favorite.value;
+                      _wikiController.save(
+                          subject, _wikiController.favorite.value);
                     } else {
                       SmartDialog.showToast('请先标注');
                     }
@@ -450,7 +488,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         onTap: () => SmartDialog.dismiss(force: true),
                         child: Padding(
                           padding: EdgeInsets.only(bottom: 30.h),
-                          child: FaIcon(FontAwesomeIcons.xmark, size: 66.sp, color: colorScheme.secondary),
+                          child: FaIcon(FontAwesomeIcons.xmark,
+                              size: 66.sp, color: colorScheme.secondary),
                         ))
                   ],
                 ),
@@ -473,7 +512,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                           readOnly: false,
                           onChanged: (double rating) {
                             _wikiController.userRating.value = rating;
-                            _wikiController.qualityRating.value = EvaluationUtils.getRecommendation(rating);
+                            _wikiController.qualityRating.value =
+                                EvaluationUtils.getRecommendation(rating);
                           },
                           customFilledIcon: Icons.star,
                           customHalfFilledIcon: Icons.star_half,
@@ -515,14 +555,16 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                   style: TextStyle(
                                       fontSize: 34.sp,
                                       fontWeight: FontWeight.w600,
-                                      color: colorScheme.secondary.withOpacity(0.8)),
+                                      color: colorScheme.secondary
+                                          .withOpacity(0.8)),
                                 ),
                                 AutoSizeText(
                                   "（右划用户标签）",
                                   style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w600,
-                                      color: colorScheme.secondary.withOpacity(0.8)),
+                                      color: colorScheme.secondary
+                                          .withOpacity(0.8)),
                                 ),
                               ]),
                           SizedBox(
@@ -537,13 +579,18 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                         direction: Axis.horizontal,
                                         textDirection: TextDirection.ltr,
                                         children: [
-                                          for (int i = 0; i < _wikiController.tags.length; i++)
+                                          for (int i = 0;
+                                              i < _wikiController.tags.length;
+                                              i++)
                                             Obx(
                                               () => SearchText(
-                                                searchText: _wikiController.tags[i],
-                                                isSelected: _wikiController.isTags[i],
+                                                searchText:
+                                                    _wikiController.tags[i],
+                                                isSelected:
+                                                    _wikiController.isTags[i],
                                                 onSelect: (value) {
-                                                  _wikiController.addTag(false, i);
+                                                  _wikiController.addTag(
+                                                      false, i);
                                                 },
                                               ),
                                             ),
@@ -560,12 +607,19 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                           direction: Axis.horizontal,
                                           textDirection: TextDirection.ltr,
                                           children: [
-                                            for (int i = 0; i < _wikiController.userTags.length; i++)
+                                            for (int i = 0;
+                                                i <
+                                                    _wikiController
+                                                        .userTags.length;
+                                                i++)
                                               Obx(() => SearchText(
-                                                    searchText: _wikiController.userTags[i].tag,
-                                                    isSelected: _wikiController.isUserTags[i],
+                                                    searchText: _wikiController
+                                                        .userTags[i].tag,
+                                                    isSelected: _wikiController
+                                                        .isUserTags[i],
                                                     onSelect: (value) {
-                                                      _wikiController.addTag(true, i);
+                                                      _wikiController.addTag(
+                                                          true, i);
                                                     },
                                                   ))
                                           ]),
@@ -603,7 +657,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                             // indicatorPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                             indicator: BoxDecoration(
                               color: colorScheme.primary.withOpacity(0.8),
-                              borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.r)),
                             ),
                             indicatorSize: TabBarIndicatorSize.tab,
                             labelColor: colorScheme.onSecondaryContainer,
@@ -630,11 +685,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                         child: MaterialButton(
                             height: 65.h,
                             elevation: 0,
-                            color: colorScheme.tertiaryContainer.withOpacity(0.8),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                            color:
+                                colorScheme.tertiaryContainer.withOpacity(0.8),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.r)),
                             textTheme: ButtonTextTheme.primary,
                             onPressed: () {
-                              _wikiController.save(subject, _wikiController.favorite.value);
+                              _wikiController.save(
+                                  subject, _wikiController.favorite.value);
                               SmartDialog.dismiss(force: true);
                             },
                             child: const AutoSizeText("确定"))),
@@ -648,16 +706,20 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                             color: _wikiController.isHidden.value
                                 ? colorScheme.secondary.withOpacity(0.7)
                                 : colorScheme.primary.withOpacity(0.7),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.r)),
                             textTheme: ButtonTextTheme.primary,
                             onPressed: () {
-                              _wikiController.isHidden.value = !_wikiController.isHidden.value;
+                              _wikiController.isHidden.value =
+                                  !_wikiController.isHidden.value;
                             },
                             child: Row(
                               // mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 FaIcon(
-                                  _wikiController.isHidden.value ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                                  _wikiController.isHidden.value
+                                      ? FontAwesomeIcons.eyeSlash
+                                      : FontAwesomeIcons.eye,
                                   size: 35.sp,
                                   color: colorScheme.onPrimary,
                                 ),
@@ -751,11 +813,14 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
           Positioned.fill(
               child: Container(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.7),
-            Theme.of(context).colorScheme.primary.withOpacity(0.5),
-            Theme.of(context).colorScheme.surface,
-          ]))))
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                Theme.of(context).colorScheme.surface,
+              ]))))
         ])));
   }
 }

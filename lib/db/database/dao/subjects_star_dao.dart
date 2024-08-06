@@ -32,11 +32,13 @@ abstract class SubjectsStarDao {
   );
 
   // 根据 条目ID 查询条目是否存在 返回布尔值
-  @Query('SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = :subjectId)')
+  @Query(
+      'SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = :subjectId)')
   Future<bool?> isSubjectExists(int subjectId);
 
   // 根据 条目ID 与 是否收藏 同时满足 查询条目是否存在 返回布尔值
-  @Query('SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = :subjectId AND isCollected = :isCollected)')
+  @Query(
+      'SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = :subjectId AND isCollected = :isCollected)')
   Future<bool?> isSubjectCollectedById(
     int subjectId,
     bool isCollected,

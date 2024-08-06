@@ -84,7 +84,10 @@ class ThemeCard extends StatelessWidget {
               padding: EdgeInsets.only(top: 8.h),
               child: Text(
                 title ?? '',
-                style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold, color: colorScheme.secondary),
+                style: TextStyle(
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.secondary),
               ),
             ),
         ],

@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import '../model/tab_type.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
-  late final StreamController<bool> searchBarStream = StreamController<bool>.broadcast();
+  late final StreamController<bool> searchBarStream =
+      StreamController<bool>.broadcast();
   RxString defaultSearch = '推荐搜索'.obs; // 默认搜索内容
 
   late TabController tabController;
@@ -28,9 +29,11 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   void setTabConfig() async {
     defaultTabs = [...tabsConfig];
-    defaultTabs.retainWhere((item) => tabbarSort.contains((item['type'] as TabType).id));
-    defaultTabs.sort((a, b) =>
-        tabbarSort.indexOf((a['type'] as TabType).id).compareTo(tabbarSort.indexOf((b['type'] as TabType).id)));
+    defaultTabs.retainWhere(
+        (item) => tabbarSort.contains((item['type'] as TabType).id));
+    defaultTabs.sort((a, b) => tabbarSort
+        .indexOf((a['type'] as TabType).id)
+        .compareTo(tabbarSort.indexOf((b['type'] as TabType).id)));
 
     tabs.value = defaultTabs;
     // tabsCtrList = tabs.map((e) => e['controller']).toList();

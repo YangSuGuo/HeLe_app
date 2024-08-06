@@ -425,13 +425,35 @@ class _$SubjectsHistoryDao extends SubjectsHistoryDao {
   _$SubjectsHistoryDao(
     this.database,
     this.changeListener,
-  ) : _queryAdapter = QueryAdapter(database);
+  )   : _queryAdapter = QueryAdapter(database),
+        _subjectsHistoryInsertionAdapter = InsertionAdapter(
+            database,
+            'subjects_history',
+            (SubjectsHistory item) => <String, Object?>{
+                  'creationTime': item.creationTime,
+                  'subjectId': item.subjectId,
+                  'name': item.name,
+                  'nameCn': item.nameCn,
+                  'type': item.type,
+                  'url': item.url,
+                  'platform': item.platform,
+                  'summary': item.summary,
+                  'totalEpisodes': item.totalEpisodes,
+                  'volumes': item.volumes,
+                  'eps': item.eps,
+                  'airDate': item.airDate,
+                  'images': item.images,
+                  'score': item.score,
+                  'rank': item.rank
+                });
 
   final sqflite.DatabaseExecutor database;
 
   final StreamController<String> changeListener;
 
   final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<SubjectsHistory> _subjectsHistoryInsertionAdapter;
 
   @override
   Future<List<SubjectsHistory>> findAllSubjectsHistory() async {
@@ -452,5 +474,16 @@ class _$SubjectsHistoryDao extends SubjectsHistoryDao {
             score: row['score'] as double?,
             rank: row['rank'] as int?,
             creationTime: row['creationTime'] as int));
+  }
+
+  @override
+  Future<void> deleteAllSubjectsHistory() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM subjects_history');
+  }
+
+  @override
+  Future<void> insertSubjectsHistory(SubjectsHistory subjectsHistory) async {
+    await _subjectsHistoryInsertionAdapter.insert(
+        subjectsHistory, OnConflictStrategy.replace);
   }
 }

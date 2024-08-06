@@ -101,4 +101,6 @@
     <tree path="/lib/pages/browsing_history" title="浏览记录"/>
     <tree path="/lib/pages/apply_data" title="应用数据"/>
     <tree path="/lib/pages/user_tags/widget/edit_popup.dart" title="修改弹框"/>
+    <tree path="/lib/pages/apply_data/widget/info_header.dart" title="标题"/>
+    <tree path="/lib/pages/apply_data/widget/common_card.dart" title="卡片展示"/>
 </trees>

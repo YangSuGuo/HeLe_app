@@ -10,7 +10,7 @@ import 'package:hele_app/model/search/search.dart';
 class SearchResultControllers extends GetxController with GetSingleTickerProviderStateMixin {
   final ScrollController scrollController = ScrollController();
   late RxList<Datum> searchResults = <Datum>[].obs;
-  late int limit = 50;
+  late int limit = 20;
   late int offset = 0;
 
   // 筛选条件
@@ -30,9 +30,9 @@ class SearchResultControllers extends GetxController with GetSingleTickerProvide
   }
 
   // 下一页
-  // todo 暂未实现
   Future next() async {
-    offset += 50;
+    offset += 20;
+    getSearchResults();
   }
 
   // 获取搜索结果

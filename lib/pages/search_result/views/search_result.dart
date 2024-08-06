@@ -72,16 +72,16 @@ class _SearchResultState extends State<SearchResult> {
           future: _searchResults,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return ListView.builder(
+              return Obx(() => ListView.builder(
                   controller: scrollController,
                   itemCount: _searchResultController.searchResults.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Obx(() => RankedCardsList(
-                          datum: _searchResultController.searchResults[index],
-                          index: index,
-                          isRank: false,
-                        ));
-                  });
+                    return RankedCardsList(
+                      datum: _searchResultController.searchResults[index],
+                      index: index,
+                      isRank: false,
+                    );
+                  }));
             } else {
               return Center(
                   child: LoadingAnimationWidget.stretchedDots(

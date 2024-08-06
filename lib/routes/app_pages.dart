@@ -14,8 +14,6 @@ import 'package:hele_app/pages/settings/views/settings.dart';
 import 'package:hele_app/pages/tabs/anime/views/anime.dart';
 import 'package:hele_app/pages/tabs/lightNovel/views/light_novel.dart';
 import 'package:hele_app/pages/tabs/manga/views/manga.dart';
-import 'package:hele_app/pages/tabs/movie/views/movie.dart';
-import 'package:hele_app/pages/tabs/series/views/series.dart';
 import 'package:hele_app/pages/user_tags/views/user_tags.dart';
 import 'package:hele_app/pages/wiki/bindings/wiki_bindings.dart';
 import 'package:hele_app/pages/wiki/views/wiki.dart';
@@ -48,16 +46,6 @@ class AppPages {
             name: Routes.MANGA,
             page: () => const Manga(),
             // binding: MangaBindings(),
-          ),
-          GetPage(
-            name: Routes.MOVIE,
-            page: () => const Movie(),
-            // binding: MovieBindings(),
-          ),
-          GetPage(
-            name: Routes.SERIES,
-            page: () => const Series(),
-            // binding: SeriesBindings(),
           ),
           GetPage(
             name: Routes.LIGHT_NOVEL,

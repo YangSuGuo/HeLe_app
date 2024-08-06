@@ -48,15 +48,13 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
               log(snapshot.data.toString());
               return Text("ok");
 
-
-            /*  return CustomScrollView(
+              /*  return CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(
                     parent: BouncingScrollPhysics(),
                   ),
                   slivers: [
 
                   ]);*/
-
             } else {
               return Center(
                 child: LoadingAnimationWidget.stretchedDots(

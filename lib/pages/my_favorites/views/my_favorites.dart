@@ -17,7 +17,6 @@ class _MyFavoritesState extends State<MyFavorites> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -42,12 +41,12 @@ class _MyFavoritesState extends State<MyFavorites> {
           future: _userFavorites,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-
-              return Obx(() => ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AutoSizeText("ok");
-                  }),
+              return Obx(
+                () => ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AutoSizeText("ok");
+                    }),
               );
             } else {
               return Center(

@@ -16,6 +16,7 @@ class SearchResult extends StatefulWidget {
 
 class _SearchResultState extends State<SearchResult> {
   final SearchResultControllers _searchResultController = Get.find<SearchResultControllers>();
+
   // final SearchResultControllers _searchResultController = Get.put(SearchResultControllers());
   late ScrollController scrollController;
   Future? _searchResults;

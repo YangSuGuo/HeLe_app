@@ -31,8 +31,9 @@ class UserTagsControllers extends GetxController with GetTickerProviderStateMixi
   }
 
   // 编辑 & 添加
-  void editTag(bool isEdit , SubjectsUserTags? tags) {
-    if (isEdit) { // 添加
+  void editTag(bool isEdit, SubjectsUserTags? tags) {
+    if (isEdit) {
+      // 添加
       if (tag.trim().isNotEmpty) {
         insertSubjectsUserTags();
         SmartDialog.dismiss(force: true);
@@ -40,7 +41,8 @@ class UserTagsControllers extends GetxController with GetTickerProviderStateMixi
         onClear();
         SmartDialog.showToast("标签不能为空");
       }
-    } else { // 编辑
+    } else {
+      // 编辑
       if (tag.trim().isNotEmpty && tags != null) {
         tags.tag = tag.value;
         updateSubjectsUserTags(tags);

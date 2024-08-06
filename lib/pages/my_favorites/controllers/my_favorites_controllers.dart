@@ -11,7 +11,13 @@ class MyFavoritesControllers extends GetxController with GetTickerProviderStateM
 
   Future<void> getAllUserFavorites() async {
     await db.subjectsStarDao.findSubjectsStarByTypeStatusTagsHidden(
-      1,1,"",false,true,"rating",0,
+      1,
+      1,
+      "",
+      false,
+      true,
+      "rating",
+      0,
       // type: 1,
       // status: 1,
       // tags: "",

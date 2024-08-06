@@ -64,13 +64,13 @@ class EditPopup extends StatelessWidget {
             ElevatedButton(
               onPressed: () => SmartDialog.dismiss(force: true),
               style:
-              ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.3)),
+                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.3)),
               child: const Text('取消'),
             ),
             ElevatedButton(
               onPressed: onPressed,
               style:
-              ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.4)),
+                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.4)),
               child: const Text('确定'),
             )
           ]),

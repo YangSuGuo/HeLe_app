@@ -1,0 +1,70 @@
+{
+	"activeGroup":"Default",
+	"apiParamGroup":{},
+	"apifoxRequestId":202139952,
+	"childList":[],
+	"classDescription":"",
+	"description":"",
+	"directory":"/.fastRequest/collections/Root/Default Group/Temp Group",
+	"domain":"https://api.bgm.tv",
+	"enableEnv":"bangumi",
+	"enableProject":"hele_app",
+	"filePath":"/.fastRequest/collections/Root/Default Group/Temp Group~20240807175238523.rapi",
+	"id":"20240807175238523",
+	"mark":false,
+	"module":"Default Group",
+	"name":"",
+	"paramGroup":{
+		"bodyKeyValueListJson":"{\n  \"keyword\": \"\",\n  \"sort\": \"rank\",\n  \"filter\": {\n    \"type\": [],\n    \"rank\": [\n      \">0\",\n      \"<100\"\n    ]\n  }\n}",
+		"classDescription":"",
+		"className":"",
+		"headerParamsKeyValueList":[
+			{
+				"enabled":true,
+				"type":"User-Agent",
+				"value":"Apifox/1.0.0 (https://apifox.com)"
+			},
+			{
+				"enabled":true,
+				"type":"Content-Type",
+				"value":"application/json"
+			},
+			{
+				"enabled":true,
+				"type":"Accept",
+				"value":"*/*"
+			},
+			{
+				"enabled":true,
+				"type":"Host",
+				"value":"api.bgm.tv"
+			},
+			{
+				"enabled":true,
+				"type":"Connection",
+				"value":"keep-alive"
+			}
+		],
+		"jsonDocument":"",
+		"methodDescription":"",
+		"methodType":"POST",
+		"multipartKeyValueListJson":"[]",
+		"originUrl":"/v0/search/subjects",
+		"pathParamsKeyValueListJson":"[]",
+		"postScript":"",
+		"postType":"json",
+		"preScript":"",
+		"returnDocument":"",
+		"returnTypeParamMap":{},
+		"tempId":"",
+		"url":"/v0/search/subjects",
+		"urlEncodedKeyValueListJson":"[]",
+		"urlEncodedKeyValueListText":"",
+		"urlParamsKeyValueListJson":"[]",
+		"urlParamsKeyValueListText":""
+	},
+	"pmRequestId":"",
+	"pmResponseId":"",
+	"tempId":"20240807175238523",
+	"type":2
+}

@@ -28,6 +28,8 @@ dependencies:
   fl_chart: ^0.68.0 # 图表
   gap: ^3.0.1 # 间隔
 
+  flutter_slidable: ^3.1.1 # 滑动控制
+
   #  flutter_tilt: ^3.0.0 # 倾斜视差
   #  skeletonizer: ^1.2.0 # 骨架屏
 

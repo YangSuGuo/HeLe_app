@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hele_app/common/utils/evaluation_utils.dart';
 import 'package:hele_app/common/utils/math_utils.dart';
 import 'package:hele_app/db/database/app_database.dart';
+import 'package:hele_app/db/database/entity/subjects_history.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/http/bangumi_net.dart';
@@ -143,6 +144,12 @@ class WikiController extends GetxController {
     }
   }
 
+  // 添加历史记录
+  Future<void> addHistory(Subjects subject) async {
+    SubjectsHistory subjectsHistory = subject.toSubjectsHistory();
+    await db.subjectsHistoryDao.insertSubjectsHistory(subjectsHistory);
+  }
+
   /////////////////////////////////////////////////////////////////////////////
 
   // 请求条目详情
@@ -158,6 +165,9 @@ class WikiController extends GetxController {
       syncUserActiveTags();
     }
     log(tags.toString());
+
+    // 添加历史记录
+    addHistory(result);
 
     // 计算标准差
     deviation.value =

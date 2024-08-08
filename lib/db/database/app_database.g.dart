@@ -457,7 +457,8 @@ class _$SubjectsHistoryDao extends SubjectsHistoryDao {
 
   @override
   Future<List<SubjectsHistory>> findAllSubjectsHistory() async {
-    return _queryAdapter.queryList('SELECT * FROM subjects_history',
+    return _queryAdapter.queryList(
+        'SELECT * FROM subjects_history ORDER BY creationTime DESC',
         mapper: (Map<String, Object?> row) => SubjectsHistory(
             subjectId: row['subjectId'] as int,
             name: row['name'] as String,

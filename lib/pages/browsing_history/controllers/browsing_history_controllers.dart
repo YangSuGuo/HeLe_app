@@ -31,7 +31,7 @@ class BrowsingHistoryControllers extends GetxController with GetTickerProviderSt
   @override
   void onInit() async {
     super.onInit();
-    if (true) {
+    if (false) {
       await db.subjectsHistoryDao.insertSubjectsHistory(subjectsHistory);
     }
   }

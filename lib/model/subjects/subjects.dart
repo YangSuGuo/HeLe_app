@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:hele_app/db/database/entity/subjects_history.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/model/collection.dart';
 import 'package:hele_app/model/images.dart';
@@ -153,6 +154,27 @@ class Subjects {
       tags: tags.toString(),
       isCollected: isCollected,
       creationTime: DateTime.now().millisecondsSinceEpoch, // 当前时间戳
+    );
+  }
+
+  // 转换为 SubjectsHistory 实体
+  SubjectsHistory toSubjectsHistory() {
+    return SubjectsHistory(
+      subjectId: id,
+      name: name,
+      nameCn: nameCn,
+      type: type,
+      url: images.large,
+      platform: platform,
+      summary: summary,
+      totalEpisodes: totalEpisodes,
+      volumes: volumes,
+      eps: eps,
+      airDate: date,
+      images: images.large,
+      score: rating.score,
+      rank: rating.rank,
+      creationTime: DateTime.now().millisecondsSinceEpoch,
     );
   }
 }

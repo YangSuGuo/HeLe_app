@@ -103,4 +103,8 @@
     <tree path="/lib/pages/user_tags/widget/edit_popup.dart" title="修改弹框"/>
     <tree path="/lib/pages/apply_data/widget/info_header.dart" title="标题"/>
     <tree path="/lib/pages/apply_data/widget/common_card.dart" title="卡片展示"/>
+    <tree path="/lib/db/database/entity/subjects.dart" title="番剧信息"/>
+    <tree path="/lib/db/database/entity/subjects_history.dart" title="历史记录"/>
+    <tree path="/lib/db/database/entity/subjects_star.dart" title="标注记录"/>
+    <tree path="/lib/db/database/entity/subjects_user_tags.dart" title="用户标签"/>
 </trees>

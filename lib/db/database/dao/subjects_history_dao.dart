@@ -4,7 +4,7 @@ import 'package:hele_app/db/database/entity/subjects_history.dart';
 @dao
 abstract class SubjectsHistoryDao {
   // 查询全部
-  @Query('SELECT * FROM subjects_history')
+  @Query('SELECT * FROM subjects_history ORDER BY creationTime DESC')
   Future<List<SubjectsHistory>> findAllSubjectsHistory();
 
   // 清空历史记录

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hele_app/db/preference/preferences_db.dart';
 import 'package:hele_app/routes/app_pages.dart';
 
-class SearchPageController extends GetxController with GetTickerProviderStateMixin {
+class SearchPageController extends GetxController {
   final FocusNode searchFocusNode = FocusNode();
   Rx<TextEditingController> controller = TextEditingController().obs;
 

@@ -7,7 +7,7 @@ abstract class SubjectsStarDao {
   @Query('SELECT * FROM subjects_star')
   Future<List<SubjectsStar>> findAllSubjectsStar();
 
-  /// 按照 条目类型 条目状态 用户标签 是否隐藏 是否收藏 查询数据库
+  /// 按照 条目类型 条目状态  是否隐藏 是否收藏 查询数据库
   /// 设置排序规则
   /// - 默认：按照创建时间进行倒序排序
   /// - 评分：按照用户评分进行倒序排序
@@ -15,18 +15,14 @@ abstract class SubjectsStarDao {
       SELECT * FROM subjects_star
         WHERE type = :type 
         AND status = :status 
-        AND (tags LIKE :tags OR :tags IS NULL) 
         AND isHidden = :isHidden
-        AND isCollected = :isCollected
       ORDER BY :sortBy DESC
       LIMIT 20 OFFSET :offset;
   ''')
   Future<List<SubjectsStar>> findSubjectsStarByTypeStatusTagsHidden(
     int type,
     int status,
-    String tags,
     bool isHidden,
-    bool isCollected,
     String sortBy,
     int offset,
   );
@@ -50,7 +46,7 @@ abstract class SubjectsStarDao {
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> addSubject(SubjectsStar subject);
 
-  // 取消
+  // 删除
   @delete
   Future<void> removeSubject(SubjectsStar subject);
 

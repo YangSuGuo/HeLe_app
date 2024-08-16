@@ -38,6 +38,7 @@ class Wiki extends StatefulWidget {
 }
 
 // BUG 该页面在生产模式下会出现空指针解引用（null pointer dereference）
+// todo 初始化标记数据
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   final WikiController _wikiController = Get.find<WikiController>();
   late TabController? _tabController;

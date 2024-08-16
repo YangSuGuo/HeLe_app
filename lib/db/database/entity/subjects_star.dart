@@ -12,7 +12,7 @@ class SubjectsStar extends Subjects {
   /// - 2: 已完成
   /// - 3: 搁置
   /// - 4: 抛弃
-  late final int status;
+  late int status;
 
   /// 用户评分
   late final double rating;

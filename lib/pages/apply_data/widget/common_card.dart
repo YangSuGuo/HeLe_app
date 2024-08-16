@@ -108,6 +108,8 @@ class CommonCard extends StatelessWidget {
           if (selectWidget == null) {
             return childWidget;
           }
+
+          // 添加覆盖层
           List<Widget> children = [];
           children.add(childWidget);
           if (isSelected) {

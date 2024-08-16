@@ -57,9 +57,13 @@ class EvaluationUtils {
     return "";
   }
 
+  // tags 字符串转换为列表
   static List<String> toTagsList(String tag) {
-    String trimmedString = tag.substring(1, tag.length - 1);
-    List<String> tags = trimmedString.split(', ').map((tag) => tag.trim()).toList();
-    return tags;
+    if (tag != "[]") {
+      String trimmedString = tag.substring(1, tag.length - 1).trim();
+      List<String> tags = trimmedString.split(', ').map((tag) => tag.trim()).toList();
+      return tags;
+    }
+    return [];
   }
 }

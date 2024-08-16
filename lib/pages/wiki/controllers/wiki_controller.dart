@@ -38,7 +38,7 @@ class WikiController extends GetxController {
   RxList<bool> isTags = <bool>[].obs;
 
   // 番剧标注进度
-  int subjectType = 0;
+  int subjectType = 2;
 
   // 是否隐藏
   RxBool isHidden = false.obs;

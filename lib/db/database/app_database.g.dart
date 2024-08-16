@@ -268,24 +268,14 @@ class _$SubjectsStarDao extends SubjectsStarDao {
   Future<List<SubjectsStar>> findSubjectsStarByTypeStatusTagsHidden(
     int type,
     int status,
-    String tags,
     bool isHidden,
-    bool isCollected,
     String sortBy,
     int offset,
   ) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM subjects_star         WHERE type = ?1          AND status = ?2          AND (tags LIKE ?3 OR ?3 IS NULL)          AND isHidden = ?4         AND isCollected = ?5       ORDER BY ?6 DESC       LIMIT 20 OFFSET ?7;',
+        'SELECT * FROM subjects_star         WHERE type = ?1          AND status = ?2          AND isHidden = ?3       ORDER BY ?4 DESC       LIMIT 20 OFFSET ?5;',
         mapper: (Map<String, Object?> row) => SubjectsStar(subjectId: row['subjectId'] as int, name: row['name'] as String, nameCn: row['nameCn'] as String, type: row['type'] as int, url: row['url'] as String?, platform: row['platform'] as String, summary: row['summary'] as String?, totalEpisodes: row['totalEpisodes'] as int?, volumes: row['volumes'] as int?, eps: row['eps'] as int?, airDate: row['airDate'] as String?, images: row['images'] as String?, score: row['score'] as double?, rank: row['rank'] as int?, isHidden: row['isHidden'] == null ? null : (row['isHidden'] as int) != 0, status: row['status'] as int, rating: row['rating'] as double, tags: row['tags'] as String?, isCollected: row['isCollected'] == null ? null : (row['isCollected'] as int) != 0, creationTime: row['creationTime'] as int),
-        arguments: [
-          type,
-          status,
-          tags,
-          isHidden ? 1 : 0,
-          isCollected ? 1 : 0,
-          sortBy,
-          offset
-        ]);
+        arguments: [type, status, isHidden ? 1 : 0, sortBy, offset]);
   }
 
   @override

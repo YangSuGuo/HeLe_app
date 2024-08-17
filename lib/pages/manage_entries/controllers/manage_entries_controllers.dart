@@ -10,7 +10,7 @@ class ManageEntriesControllers extends GetxController {
   final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
   ScrollController scrollController = ScrollController();
   List<String> trackingType = [
-    "想读",
+    "想看",
     "在看",
     "看过",
     "搁置",
@@ -25,6 +25,7 @@ class ManageEntriesControllers extends GetxController {
   TrackingTypeList trackingTypeList = TrackingTypeList([], [], [], [], []);
   late RxList length = [].obs;
   List<String> buttonList = ["在看", "看过", "收藏", "想看", "想看"];
+  List<int> statusList = [1, 2, 5, 0, 0];
 
   @override
   void onInit() {
@@ -70,6 +71,7 @@ class ManageEntriesControllers extends GetxController {
     return trackingTypeList;
   }
 
+  // 获取当前tab下数据
   List<SubjectsStar> getTrackingListByIndex(int index) {
     switch (index) {
       case 0:
@@ -87,12 +89,21 @@ class ManageEntriesControllers extends GetxController {
     }
   }
 
+  // 更新阅读条目
+  Future updateSubjectsStarStatus(SubjectsStar subjectsStar, int status) async {
+    if (status == 5) {
+      subjectsStar.isCollected = !subjectsStar.isCollected!;
+      await db.subjectsStarDao.updateSubject(subjectsStar);
+      log("收藏更新");
+    } else {
+      subjectsStar.status = status;
+      await db.subjectsStarDao.updateSubject(subjectsStar);
+      log("状态更新");
+    }
+  }
+
   // 删除条目
   Future deleteSubjectsStar(SubjectsStar subjectsStar) async {
     await db.subjectsStarDao.removeSubject(subjectsStar);
-  }
-
-  Future updateSubjectsStar(SubjectsStar subjectsStar) async {
-    await db.subjectsStarDao.updateSubject(subjectsStar);
   }
 }

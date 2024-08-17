@@ -1,5 +1,7 @@
 import 'package:floor/floor.dart';
 import 'package:hele_app/db/database/entity/subjects.dart';
+import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/model/images.dart';
 
 @Entity(tableName: 'subjects_star')
 class SubjectsStar extends Subjects {
@@ -21,7 +23,7 @@ class SubjectsStar extends Subjects {
   late final String? tags;
 
   /// 是否收藏
-  late final bool? isCollected;
+  late bool? isCollected;
 
   /// 创建时间
   late final int creationTime;
@@ -49,4 +51,13 @@ class SubjectsStar extends Subjects {
     this.isCollected,
     required this.creationTime,
   });
+
+  LegacySubjectSmall toLegacySubjectSmall() {
+    return LegacySubjectSmall(
+      id: subjectId,
+      images: Images.allSame(images!),
+      name: name,
+      nameCn: nameCn,
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/utils/evaluation_utils.dart';
@@ -55,6 +56,16 @@ class _TrackingTypeState extends State<TrackingType> with AutomaticKeepAliveClie
                         subjectsStar: subjectsStar,
                         tags: tags,
                         buttonText: _manageEntriesControllers.buttonList[widget.index],
+                        isSelected: subjectsStar.isCollected,
+                        onPressed: () {
+                          int s = _manageEntriesControllers.statusList[widget.index];
+                          _manageEntriesControllers.updateSubjectsStarStatus(subjectsStar, s);
+                          _manageEntriesControllers.getTrackingType();
+                        },
+                        edit: () {},
+                        delete: () {
+                          _show(_deleteTag(subjectsStar, colorScheme));
+                        },
                       );
                     });
               } else {
@@ -86,5 +97,79 @@ class _TrackingTypeState extends State<TrackingType> with AutomaticKeepAliveClie
             );
           }
         });
+  }
+
+  // 弹框
+  void _show(Widget child) async {
+    await SmartDialog.show(
+        clickMaskDismiss: true,
+        usePenetrate: false,
+        debounce: true,
+        onDismiss: () => SmartDialog.config.attach = SmartConfigAttach(),
+        builder: (_) {
+          return child;
+        });
+  }
+
+  // 删除
+  Widget _deleteTag(SubjectsStar subjectsStar, ColorScheme colorScheme) {
+    return Container(
+      width: Get.width * 0.8,
+      height: Get.height * 0.2,
+      padding: EdgeInsets.fromLTRB(36.w, 36.h, 36.w, 24.h),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(36.r),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // 标题
+          AutoSizeText(
+            "确定删除？",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 36.sp,
+              fontWeight: FontWeight.bold,
+              color: colorScheme.secondary,
+            ),
+          ),
+          Gap(12.h),
+          AutoSizeText(
+            subjectsStar.nameCn != "" || subjectsStar.name != ""
+                ? subjectsStar.nameCn != ""
+                    ? subjectsStar.nameCn
+                    : subjectsStar.name
+                : "获取失败！",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w500,
+              color: colorScheme.secondary.withOpacity(0.7),
+            ),
+          ),
+          Wrap(spacing: 100.w, children: [
+            ElevatedButton(
+              onPressed: () => SmartDialog.dismiss(force: true),
+              style:
+                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.3)),
+              child: const Text('取消'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _manageEntriesControllers.deleteSubjectsStar(subjectsStar);
+                _manageEntriesControllers.getTrackingType();
+                SmartDialog.dismiss(force: true);
+              },
+              style:
+                  ElevatedButton.styleFrom(elevation: 0, backgroundColor: colorScheme.inversePrimary.withOpacity(0.4)),
+              child: const Text('确定'),
+            )
+          ]),
+        ],
+      ),
+    );
   }
 }

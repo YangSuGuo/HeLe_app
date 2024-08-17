@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/network_img.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
+import 'package:hele_app/model/calendar/calendar.dart';
 import 'package:hele_app/pages/apply_data/widget/common_card.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
+import 'package:hele_app/routes/app_pages.dart';
+import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 
 class SeriesInfoPanel extends StatelessWidget {
   const SeriesInfoPanel({
@@ -15,11 +19,19 @@ class SeriesInfoPanel extends StatelessWidget {
     required this.subjectsStar,
     this.tags,
     required this.buttonText,
+    required this.edit,
+    required this.delete,
+    required this.onPressed,
+    this.isSelected,
   });
 
   final SubjectsStar subjectsStar;
   final List<String>? tags;
   final String buttonText;
+  final VoidCallback edit;
+  final VoidCallback onPressed;
+  final VoidCallback delete;
+  final bool? isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +41,13 @@ class SeriesInfoPanel extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 20.h, left: 24.w, right: 24.w),
         child: CommonCard(
             type: CommonCardType.plain,
-            onPressed: () {},
+            onPressed: () {
+              final LegacySubjectSmall bangumiItem = subjectsStar.toLegacySubjectSmall();
+              Get.toNamed(Routes.WIKI, arguments: {"bangumiItem": bangumiItem});
+            },
             child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
               return Container(
-                  height: tags!.isNotEmpty?  250.h : 250.h,
+                  height: tags!.isNotEmpty ? 250.h : 250.h,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +90,7 @@ class SeriesInfoPanel extends StatelessWidget {
                                 Icons.delete_outlined,
                               ),
                               color: colorScheme.secondary,
-                              onPressed: () {},
+                              onPressed: delete,
                             )
                           ]),
                           // 评分
@@ -130,7 +145,7 @@ class SeriesInfoPanel extends StatelessWidget {
                             children: [
                               const Spacer(),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: edit,
                                 icon: const FaIcon(Icons.edit_outlined),
                                 color: colorScheme.secondary,
                                 iconSize: 48.sp,
@@ -140,10 +155,13 @@ class SeriesInfoPanel extends StatelessWidget {
                                 ),
                               ),
                               Gap(8.w),
+
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: onPressed,
                                   style: TextButton.styleFrom(
-                                    backgroundColor: colorScheme.secondary.withOpacity(1),
+                                    backgroundColor: isSelected ?? false
+                                        ? AppThemeColorScheme.top2
+                                        : colorScheme.secondary.withOpacity(1),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 25.w),

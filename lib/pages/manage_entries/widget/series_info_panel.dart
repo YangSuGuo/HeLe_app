@@ -28,10 +28,11 @@ class SeriesInfoPanel extends StatelessWidget {
   final SubjectsStar subjectsStar;
   final List<String>? tags;
   final String buttonText;
-  final VoidCallback edit;
   final VoidCallback onPressed;
   final VoidCallback delete;
   final bool? isSelected;
+  final void Function(int index) edit;
+
 
   @override
   Widget build(BuildContext context) {
@@ -144,24 +145,33 @@ class SeriesInfoPanel extends StatelessWidget {
                           Row(
                             children: [
                               const Spacer(),
-                              IconButton(
-                                onPressed: edit,
-                                icon: const FaIcon(Icons.edit_outlined),
-                                color: colorScheme.secondary,
-                                iconSize: 48.sp,
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      WidgetStateProperty.all(colorScheme.secondaryContainer.withOpacity(0.1)),
-                                ),
-                              ),
+                              PopupMenuButton<int>(
+                                  icon: const FaIcon(Icons.edit_outlined),
+                                  offset: const Offset(-50, 0),
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        WidgetStateProperty.all(colorScheme.secondaryContainer.withOpacity(0.1)),
+                                  ),
+                                  onSelected: edit,
+                                  itemBuilder: (BuildContext context) {
+                                    List<String> list = ["想看", "在看", "看过", "搁置", "抛弃"];
+                                    return list.asMap().entries.map((entry) {
+                                      final index = entry.key;
+                                      final item = entry.value;
+                                      return PopupMenuItem<int>(
+                                        height: 40,
+                                        value: index,
+                                        textStyle: const TextStyle(fontSize: 13),
+                                        child: Center(child: Text(item)), // 显示文本
+                                      );
+                                    }).toList();
+                                  }),
                               Gap(8.w),
-
                               TextButton(
                                   onPressed: onPressed,
                                   style: TextButton.styleFrom(
-                                    backgroundColor: isSelected ?? false
-                                        ? AppThemeColorScheme.top2
-                                        : colorScheme.secondary.withOpacity(1),
+                                    backgroundColor:
+                                        isSelected ?? false ? AppThemeColorScheme.top2 : colorScheme.secondary,
                                   ),
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 25.w),

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/db/database/app_database.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
@@ -97,6 +98,10 @@ class ManageEntriesControllers extends GetxController {
       log("收藏更新");
     } else {
       subjectsStar.status = status;
+      if(subjectsStar.isCollected == true){
+        subjectsStar.isCollected = false;
+        SmartDialog.showToast("取消收藏");
+      }
       await db.subjectsStarDao.updateSubject(subjectsStar);
       log("状态更新");
     }

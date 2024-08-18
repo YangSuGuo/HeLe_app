@@ -62,7 +62,10 @@ class _TrackingTypeState extends State<TrackingType> with AutomaticKeepAliveClie
                           _manageEntriesControllers.updateSubjectsStarStatus(subjectsStar, s);
                           _manageEntriesControllers.getTrackingType();
                         },
-                        edit: () {},
+                        edit: (int index) {
+                          _manageEntriesControllers.updateSubjectsStarStatus(subjectsStar, index);
+                          _manageEntriesControllers.getTrackingType();
+                        },
                         delete: () {
                           _show(_deleteTag(subjectsStar, colorScheme));
                         },

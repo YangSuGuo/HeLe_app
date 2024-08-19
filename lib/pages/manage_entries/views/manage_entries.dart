@@ -19,7 +19,7 @@ class ManageEntries extends StatefulWidget {
 }
 
 class _ManageEntriesState extends State<ManageEntries> with TickerProviderStateMixin {
-  final ManageEntriesControllers _manageEntriesControllers = Get.put(ManageEntriesControllers());
+  final ManageEntriesControllers _manageEntriesControllers = Get.find<ManageEntriesControllers>();
   late TabController? _tabController;
 
   @override
@@ -41,7 +41,7 @@ class _ManageEntriesState extends State<ManageEntries> with TickerProviderStateM
         Container(
             width: double.infinity,
             padding: EdgeInsets.only(left: 30.w, top: 70.h),
-            color: Theme.of(context).colorScheme.surface,
+            color: colorScheme.surface,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -59,22 +59,21 @@ class _ManageEntriesState extends State<ManageEntries> with TickerProviderStateM
                     indicatorWeight: 0,
                     indicatorPadding: const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
                     indicator: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      color: colorScheme.secondaryContainer,
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                     ),
                     indicatorSize: TabBarIndicatorSize.tab,
-                    labelColor: Theme.of(context).colorScheme.onSecondaryContainer,
+                    labelColor: colorScheme.onSecondaryContainer,
                     labelStyle: const TextStyle(fontSize: 13),
                     dividerColor: Colors.transparent,
-                    unselectedLabelColor: Theme.of(context).colorScheme.outline,
+                    unselectedLabelColor: colorScheme.outline,
                     tabAlignment: TabAlignment.start,
                     onTap: (index) {
                       _manageEntriesControllers.tabIndex = index;
                     },
                   ),
                 ),
-                // const Spacer(),
-                SizedBox(
+/*                SizedBox(
                   width: 100.w,
                   height: 32,
                   child: IconButton(
@@ -85,9 +84,42 @@ class _ManageEntriesState extends State<ManageEntries> with TickerProviderStateM
                     icon: Icon(
                       Icons.filter_list_outlined,
                       size: 18,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: colorScheme.primary,
                     ),
                   ),
+                ),*/
+
+                SizedBox(
+                  width: 100.w,
+                  height: 32,
+                  child: PopupMenuButton<int>(
+                      icon: const Icon(
+                        Icons.filter_list_outlined,
+                        size: 23,
+                      ),
+                      offset: const Offset(0, 45),
+                      style: ButtonStyle(
+                        padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        backgroundColor: WidgetStateProperty.all(colorScheme.secondaryContainer.withOpacity(0.1)),
+                      ),
+                      onSelected: (int index) {
+                        _manageEntriesControllers.type.value = index + 1;
+                        _manageEntriesControllers.getTrackingType();
+                        // todo 其他分类
+                      },
+                      itemBuilder: (BuildContext context) {
+                        List<String> list = ["书籍", "动漫", "其他"];
+                        return list.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final item = entry.value;
+                          return PopupMenuItem<int>(
+                            height: 40,
+                            value: index,
+                            textStyle: const TextStyle(fontSize: 13),
+                            child: Center(child: Text(item)), // 显示文本
+                          );
+                        }).toList();
+                      }),
                 ),
                 const Gap(1)
               ],
@@ -97,11 +129,7 @@ class _ManageEntriesState extends State<ManageEntries> with TickerProviderStateM
           child: TabBarView(
             controller: _tabController,
             children: [
-              for (int i in Iterable.generate(5)) ...{
-                TrackingType(
-                  index: i,
-                )
-              }
+              for (int i in Iterable.generate(5)) ...{TrackingType(index: i)}
             ],
           ),
         ),

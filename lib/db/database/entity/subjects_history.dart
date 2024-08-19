@@ -1,7 +1,6 @@
 import 'package:floor/floor.dart';
 import 'package:hele_app/db/database/entity/subjects.dart';
 import 'package:hele_app/model/search/search.dart';
-import 'package:hele_app/model/tag.dart';
 
 @Entity(tableName: 'subjects_history')
 class SubjectsHistory extends Subjects {

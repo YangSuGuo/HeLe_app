@@ -27,6 +27,24 @@ abstract class SubjectsStarDao {
     int offset,
   );
 
+  /// 按照 是否隐藏  查询数据库
+  /// 设置排序规则
+  /// - 默认：按照创建时间进行倒序排序
+  /// - 评分：按照用户评分进行倒序排序
+  @Query('''
+      SELECT * FROM subjects_star
+        WHERE isCollected = :isCollected  
+        AND isHidden = :isHidden
+      ORDER BY :sortBy DESC
+      LIMIT 20 OFFSET :offset;
+  ''')
+  Future<List<SubjectsStar>> queryUserFavorites(
+      bool isCollected,
+      bool isHidden,
+      String sortBy,
+      int offset,
+      );
+
   // 根据 条目ID 查询条目是否存在 返回布尔值
   @Query('SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = :subjectId)')
   Future<bool?> isSubjectExists(int subjectId);

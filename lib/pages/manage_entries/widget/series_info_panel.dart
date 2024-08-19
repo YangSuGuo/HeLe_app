@@ -23,6 +23,8 @@ class SeriesInfoPanel extends StatelessWidget {
     required this.delete,
     required this.onPressed,
     this.isSelected,
+    this.showDeleteButton,
+    this.showEditButton,
   });
 
   final SubjectsStar subjectsStar;
@@ -32,7 +34,8 @@ class SeriesInfoPanel extends StatelessWidget {
   final VoidCallback delete;
   final bool? isSelected;
   final void Function(int index) edit;
-
+  final bool? showDeleteButton;
+  final bool? showEditButton;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +76,7 @@ class SeriesInfoPanel extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // 标题
+                          if (!(showDeleteButton ?? true)) Gap(10.h),
                           Row(children: [
                             Expanded(
                                 child: AutoSizeText(
@@ -86,14 +90,17 @@ class SeriesInfoPanel extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontWeight: FontWeight.bold, color: colorScheme.secondary),
                             )),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.delete_outlined,
-                              ),
-                              color: colorScheme.secondary,
-                              onPressed: delete,
-                            )
+                            // 删除按钮
+                            if (showDeleteButton ?? true)
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.delete_outlined,
+                                ),
+                                color: colorScheme.secondary,
+                                onPressed: delete,
+                              )
                           ]),
+
                           // 评分
                           // if(subjectsStar.rating != 0 && subjectsStar.score != 0)
                           Row(
@@ -122,6 +129,7 @@ class SeriesInfoPanel extends StatelessWidget {
                                       fontSize: 28.sp)),
                             ],
                           ),
+
                           // 标签列表
                           if (tags!.isNotEmpty)
                             SizedBox(
@@ -145,42 +153,54 @@ class SeriesInfoPanel extends StatelessWidget {
                           Row(
                             children: [
                               const Spacer(),
-                              PopupMenuButton<int>(
-                                  icon: const FaIcon(Icons.edit_outlined),
-                                  offset: const Offset(-50, 0),
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        WidgetStateProperty.all(colorScheme.secondaryContainer.withOpacity(0.1)),
-                                  ),
-                                  onSelected: edit,
-                                  itemBuilder: (BuildContext context) {
-                                    List<String> list = ["想看", "在看", "看过", "搁置", "抛弃"];
-                                    return list.asMap().entries.map((entry) {
-                                      final index = entry.key;
-                                      final item = entry.value;
-                                      return PopupMenuItem<int>(
-                                        height: 40,
-                                        value: index,
-                                        textStyle: const TextStyle(fontSize: 13),
-                                        child: Center(child: Text(item)), // 显示文本
-                                      );
-                                    }).toList();
-                                  }),
-                              Gap(8.w),
-                              TextButton(
-                                  onPressed: onPressed,
-                                  style: TextButton.styleFrom(
-                                    backgroundColor:
-                                        isSelected ?? false ? AppThemeColorScheme.top2 : colorScheme.secondary,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 25.w),
-                                    child: AutoSizeText(
-                                      buttonText,
-                                      style: TextStyle(color: colorScheme.onPrimary),
+                              if (showEditButton ?? true)
+                                PopupMenuButton<int>(
+                                    icon: const FaIcon(Icons.edit_outlined),
+                                    offset: const Offset(-50, 0),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          WidgetStateProperty.all(colorScheme.secondaryContainer.withOpacity(0.1)),
                                     ),
-                                  )),
-                              Gap(25.w)
+                                    onSelected: edit,
+                                    itemBuilder: (BuildContext context) {
+                                      List<String> list = ["想看", "在看", "看过", "搁置", "抛弃"];
+                                      return list.asMap().entries.map((entry) {
+                                        final index = entry.key;
+                                        final item = entry.value;
+                                        return PopupMenuItem<int>(
+                                          height: 40,
+                                          value: index,
+                                          textStyle: const TextStyle(fontSize: 13),
+                                          child: Center(child: Text(item)), // 显示文本
+                                        );
+                                      }).toList();
+                                    }),
+                              // Gap(8.w),
+
+                              AnimatedContainer(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOutSine,
+                                  margin: isSelected ?? false
+                                      ? EdgeInsets.only(left: 25.w, right: 25.w)
+                                      : EdgeInsets.only(left: 8.w, right: 25.w),
+                                  child: AnimatedSize(
+                                      duration: const Duration(milliseconds: 150),
+                                      curve: Curves.easeInOutSine,
+                                      child: TextButton(
+                                          onPressed: onPressed,
+                                          style: TextButton.styleFrom(
+                                            backgroundColor:
+                                                isSelected ?? false ? AppThemeColorScheme.top2 : colorScheme.secondary,
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                            // padding: EdgeInsets.zero,
+                                            child: AutoSizeText(
+                                              isSelected ?? false ? "取消收藏" : buttonText,
+                                              style: TextStyle(color: colorScheme.onPrimary),
+                                            ),
+                                          )))),
+                              // Gap(25.w)
                             ],
                           ),
                           Gap(5.h)

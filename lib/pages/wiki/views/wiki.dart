@@ -589,9 +589,9 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                             controller: _tabController,
                             // todo 根据 条目类型 动态设置文字
                             tabs: const [
-                              Tab(text: "想读"),
-                              Tab(text: "在读"),
-                              Tab(text: "读过"),
+                              Tab(text: "想看"),
+                              Tab(text: "在看"),
+                              Tab(text: "看过"),
                               Tab(text: "搁置"),
                               Tab(text: "抛弃"),
                             ],

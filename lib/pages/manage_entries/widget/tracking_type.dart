@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_debounce/easy_throttle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -11,10 +12,7 @@ import 'package:hele_app/pages/manage_entries/widget/series_info_panel.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class TrackingType extends StatefulWidget {
-  const TrackingType({
-    super.key,
-    required this.index,
-  });
+  const TrackingType({super.key, required this.index});
 
   final int index;
 
@@ -23,7 +21,7 @@ class TrackingType extends StatefulWidget {
 }
 
 class _TrackingTypeState extends State<TrackingType> with AutomaticKeepAliveClientMixin {
-  final ManageEntriesControllers _manageEntriesControllers = Get.put(ManageEntriesControllers());
+  final ManageEntriesControllers _manageEntriesControllers = Get.find<ManageEntriesControllers>();
   Future? trackingType;
   late ScrollController scrollController;
 
@@ -34,6 +32,15 @@ class _TrackingTypeState extends State<TrackingType> with AutomaticKeepAliveClie
   void initState() {
     super.initState();
     trackingType = _manageEntriesControllers.getTrackingType();
+    scrollController = _manageEntriesControllers.scrollController;
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 100) {
+        EasyThrottle.throttle('trackingType', const Duration(seconds: 1), () {
+          _manageEntriesControllers.next();
+        });
+      }
+    });
   }
 
   @override

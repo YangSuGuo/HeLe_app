@@ -10,23 +10,20 @@ import 'package:hele_app/pages/manage_entries/model/tracking_type_list.dart';
 class ManageEntriesControllers extends GetxController {
   final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
   ScrollController scrollController = ScrollController();
-  List<String> trackingType = [
-    "想看",
-    "在看",
-    "看过",
-    "搁置",
-    "抛弃",
-  ];
+  TrackingTypeList trackingTypeList = TrackingTypeList([], [], [], [], []);
+  List<String> trackingType = ["想看", "在看", "看过", "搁置", "抛弃"]; // 列表标题
+  late RxList length = [].obs; // 列表长度
+  List<String> buttonList = ["在看", "看过", "收藏", "想看", "想看"]; // 按钮列表
+  List<int> statusList = [1, 2, 5, 0, 0]; // 状态列表
+
+  int tabIndex = 0;
 
   RxInt type = 2.obs;
-  int tabIndex = 0;
   int offset = 0;
   String sortBy = "creationTime";
 
-  TrackingTypeList trackingTypeList = TrackingTypeList([], [], [], [], []);
-  late RxList length = [].obs;
-  List<String> buttonList = ["在看", "看过", "收藏", "想看", "想看"];
-  List<int> statusList = [1, 2, 5, 0, 0];
+  // List<String> list = ["creationTime", "score", "nameCn"];
+  // RxInt currentIndex = 0.obs;
 
   @override
   void onInit() {
@@ -72,7 +69,7 @@ class ManageEntriesControllers extends GetxController {
     return trackingTypeList;
   }
 
-  // 获取当前tab下数据
+  // 获取当前tab 分类下数据
   List<SubjectsStar> getTrackingListByIndex(int index) {
     switch (index) {
       case 0:
@@ -90,6 +87,12 @@ class ManageEntriesControllers extends GetxController {
     }
   }
 
+  Future next() async {
+    offset += 20;
+    log(offset.toString());
+    await getTrackingType();
+  }
+
   // 更新阅读条目
   Future updateSubjectsStarStatus(SubjectsStar subjectsStar, int status) async {
     if (status == 5) {
@@ -98,7 +101,7 @@ class ManageEntriesControllers extends GetxController {
       log("收藏更新");
     } else {
       subjectsStar.status = status;
-      if(subjectsStar.isCollected == true){
+      if (subjectsStar.isCollected == true) {
         subjectsStar.isCollected = false;
         SmartDialog.showToast("取消收藏");
       }

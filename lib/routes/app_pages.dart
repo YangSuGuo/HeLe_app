@@ -4,7 +4,9 @@ import 'package:hele_app/pages/browsing_history/views/browsing_history.dart';
 import 'package:hele_app/pages/home/views/home.dart';
 import 'package:hele_app/pages/main/bindings/main_binding.dart';
 import 'package:hele_app/pages/main/views/main.dart';
+import 'package:hele_app/pages/manage_entries/bindings/manage_entries_bindings.dart';
 import 'package:hele_app/pages/manage_entries/views/manage_entries.dart';
+import 'package:hele_app/pages/my_favorites/bindings/my_favorites_bindings.dart';
 import 'package:hele_app/pages/my_favorites/views/my_favorites.dart';
 import 'package:hele_app/pages/search/bindings/search_binding.dart';
 import 'package:hele_app/pages/search/views/search.dart';
@@ -31,23 +33,23 @@ class AppPages {
       page: () => const MainApp(),
       binding: MainBinding(),
     ),
-    GetPage(
+    GetPage( // 主页
         name: Routes.HOME,
         page: () => const Home(),
         // binding: HomeBinding(),
         children: [
           // tab页面
-          GetPage(
+          GetPage( // 动漫
             name: Routes.ANIME,
             page: () => const Anime(),
             // binding: AnimeBindings(),
           ),
-          GetPage(
+          GetPage( // 漫画
             name: Routes.MANGA,
             page: () => const Manga(),
             // binding: MangaBindings(),
           ),
-          GetPage(
+          GetPage( // 轻小说
             name: Routes.LIGHT_NOVEL,
             page: () => const LightNovel(),
             // binding: LightNovelBindings(),
@@ -67,6 +69,7 @@ class AppPages {
       page: () => const Search(),
       binding: SearchBinding(),
     ),
+
     // 搜索结果页
     GetPage(
       name: Routes.SEARCH_RESULT,
@@ -75,15 +78,15 @@ class AppPages {
     ),
 
     // 我的页面
-    GetPage(
+    GetPage( // 管理条目
       name: Routes.MANAGEENTRIES,
       page: () => const ManageEntries(),
-      // binding: SearchResultBindings(),
+      binding: ManageEntriesBindings(),
     ),
-    GetPage(
+    GetPage( // 我的收藏
       name: Routes.MYFAVORITES,
       page: () => const MyFavorites(),
-      // binding: SearchResultBindings(),
+      binding: MyFavoritesBindings(),
     ),
     GetPage(
       name: Routes.USERTAGS,

@@ -76,6 +76,7 @@ flutter:
 
   assets:
     - assets/images/icon/
+    - assets/images/png/
 
 # 应用图标生成
 flutter_launcher_icons:

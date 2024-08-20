@@ -35,7 +35,9 @@ List listTile = [
   {
     'icon': FontAwesomeIcons.chartColumn,
     'title': '阅读与统计',
-    'onTap': () {},
+    'onTap': () {
+      Get.toNamed(Routes.DATAANDSTATISTICS);
+    },
   }
 ];
 
@@ -57,6 +59,8 @@ List listTile2 = [
   {
     'icon': FontAwesomeIcons.faceSmile,
     'title': '关于APP',
-    'onTap': () {},
+    'onTap': () {
+      Get.toNamed(Routes.ABOUT);
+    },
   }
 ];

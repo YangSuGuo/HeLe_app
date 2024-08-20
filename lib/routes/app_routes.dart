@@ -29,6 +29,7 @@ abstract class Routes {
   static const BROWSINGHISTORY = '/browsingHistory';
   static const APPLYDATA = '/applyData';
   static const SETTING = '/setting';
-  // todo 关于
   static const ABOUTAPPLICATION = '/aboutApplication';
+  static const ABOUT = '/about';
+  static const DATAANDSTATISTICS = '/dataAndStatistics';
 }

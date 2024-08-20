@@ -107,4 +107,6 @@
     <tree path="/lib/db/database/entity/subjects_history.dart" title="历史记录"/>
     <tree path="/lib/db/database/entity/subjects_star.dart" title="标注记录"/>
     <tree path="/lib/db/database/entity/subjects_user_tags.dart" title="用户标签"/>
+    <tree path="/lib/pages/about" title="关于"/>
+    <tree path="/lib/pages/data_and_statistics" title="数据与统计"/>
 </trees>

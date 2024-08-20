@@ -89,7 +89,7 @@ class _SearchState extends State<Search> {
         padding: EdgeInsets.fromLTRB(36.w, 12.h, 20.w, 0),
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemCount: 5,
+          itemCount: 3,
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(width: 20.w);
           },

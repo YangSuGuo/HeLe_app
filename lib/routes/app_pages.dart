@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
+import 'package:hele_app/pages/about/views/about_section.dart';
 import 'package:hele_app/pages/apply_data/views/apply_data.dart';
 import 'package:hele_app/pages/browsing_history/views/browsing_history.dart';
+import 'package:hele_app/pages/data_and_statistics/bindings/data_and_statistics_bingings.dart';
+import 'package:hele_app/pages/data_and_statistics/views/data_and_statistics.dart';
 import 'package:hele_app/pages/home/views/home.dart';
 import 'package:hele_app/pages/main/bindings/main_binding.dart';
 import 'package:hele_app/pages/main/views/main.dart';
@@ -33,23 +36,27 @@ class AppPages {
       page: () => const MainApp(),
       binding: MainBinding(),
     ),
-    GetPage( // 主页
+    GetPage(
+        // 主页
         name: Routes.HOME,
         page: () => const Home(),
         // binding: HomeBinding(),
         children: [
           // tab页面
-          GetPage( // 动漫
+          GetPage(
+            // 动漫
             name: Routes.ANIME,
             page: () => const Anime(),
             // binding: AnimeBindings(),
           ),
-          GetPage( // 漫画
+          GetPage(
+            // 漫画
             name: Routes.MANGA,
             page: () => const Manga(),
             // binding: MangaBindings(),
           ),
-          GetPage( // 轻小说
+          GetPage(
+            // 轻小说
             name: Routes.LIGHT_NOVEL,
             page: () => const LightNovel(),
             // binding: LightNovelBindings(),
@@ -78,32 +85,50 @@ class AppPages {
     ),
 
     // 我的页面
-    GetPage( // 管理条目
+    GetPage(
+      // 管理条目
       name: Routes.MANAGEENTRIES,
       page: () => const ManageEntries(),
       binding: ManageEntriesBindings(),
     ),
-    GetPage( // 我的收藏
+    GetPage(
+      // 我的收藏
       name: Routes.MYFAVORITES,
       page: () => const MyFavorites(),
       binding: MyFavoritesBindings(),
     ),
     GetPage(
+      // 用户标签
       name: Routes.USERTAGS,
       page: () => const UserTags(),
       // binding: SearchResultBindings(),
     ),
     GetPage(
+      // 浏览历史
       name: Routes.BROWSINGHISTORY,
       page: () => const BrowsingHistory(),
       // binding: SearchResultBindings(),
     ),
     GetPage(
+      // 阅读与统计
+      name: Routes.DATAANDSTATISTICS,
+      page: () => const DataAndStatistics(),
+      binding: DataAndStatisticsBinging(),
+    ),
+    GetPage(
+      // 设置
       name: Routes.SETTING, page: () => const Settings(),
       // binding: SearchResultBindings(),
     ),
-    GetPage(name: Routes.APPLYDATA, page: () => const ApplyData()
+    GetPage(
+        // 应用数据
+        name: Routes.APPLYDATA,
+        page: () => const ApplyData()
         // binding: SearchResultBindings(),
         ),
+    GetPage(
+        // 关于
+        name: Routes.ABOUT,
+        page: () => const AboutSection()),
   ];
 }

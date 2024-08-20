@@ -158,7 +158,7 @@ class _RankListState extends State<RankList> with AutomaticKeepAliveClientMixin 
         padding: EdgeInsets.only(bottom: 16.h, top: 8.h),
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemCount: 4,
+          itemCount: 2,
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(width: 20.w);
           },

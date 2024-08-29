@@ -10,11 +10,19 @@ class DataAndStatistics extends StatefulWidget {
 class _DataAndStatisticsState extends State<DataAndStatistics> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return  Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        titleSpacing: 0,
+        title: Text(
+          '阅读与统计',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      body: const Center(
         child: Text(
           "阅读与统计",
-          style: TextStyle(fontSize: 40),
+          style: TextStyle(fontSize: 30),
         ),
       ),
     );

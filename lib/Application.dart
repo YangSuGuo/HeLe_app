@@ -7,9 +7,11 @@ import 'package:get/get.dart';
 import 'package:hele_app/l10n/gen/app_g.dart';
 import 'package:hele_app/providers/application/application.dart';
 import 'package:hele_app/routes/app_pages.dart';
+import 'package:hele_app/routes/initial_binding.dart';
 import 'package:hele_app/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
+// BUG : 未知错误 暂时无法定位，页面频繁闪退！！  （log：空指针解引用）
 class Application extends StatefulWidget {
   const Application({super.key});
 
@@ -43,6 +45,7 @@ class _ApplicationState extends State<Application> {
                     darkTheme: AppTheme(getMultipleThemesMode(context)).multipleThemesDarkMode(),
                     // 路由
                     initialRoute: AppPages.INITIAL,
+                    initialBinding: InitialBinding(),
                     getPages: AppPages.routes,
                     defaultTransition: Transition.cupertino,
                     transitionDuration: const Duration(milliseconds: 500),

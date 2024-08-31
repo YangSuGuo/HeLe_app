@@ -41,6 +41,7 @@ class Wiki extends StatefulWidget {
 // todo 初始化标记数据
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   final WikiController _wikiController = Get.find<WikiController>();
+  // final WikiController _wikiController = Get.put(WikiController());
   late TabController? _tabController;
 
   int subjectId = 0; // 条目id

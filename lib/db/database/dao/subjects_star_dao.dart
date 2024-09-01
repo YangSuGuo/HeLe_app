@@ -39,11 +39,26 @@ abstract class SubjectsStarDao {
       LIMIT 20 OFFSET :offset;
   ''')
   Future<List<SubjectsStar>> queryUserFavorites(
-      bool isCollected,
-      bool isHidden,
-      String sortBy,
-      int offset,
-      );
+    bool isCollected,
+    bool isHidden,
+    String sortBy,
+    int offset,
+  );
+
+  /// 按照 用户阅读状态 查询数据库 统计数量
+  @Query('''
+      SELECT COUNT(*) FROM subjects_star
+        WHERE status = :status
+  ''')
+  Future<int?> countSubjectsByStatus(int status);
+
+  /// 按照 用户阅读状态 作品类型 查询数据库 统计数量
+  @Query('''
+      SELECT COUNT(*) FROM subjects_star
+        WHERE type = :type
+        AND status = :status
+  ''')
+  Future<int?> countSubjectsByStatusAndType(int status, int type);
 
   // 根据 条目ID 查询条目是否存在 返回布尔值
   @Query('SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = :subjectId)')

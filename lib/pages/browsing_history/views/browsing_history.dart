@@ -26,18 +26,13 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme
-        .of(context)
-        .colorScheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
         shape: Border(
           bottom: BorderSide(
-            color: Theme
-                .of(context)
-                .dividerColor
-                .withOpacity(0.08),
+            color: Theme.of(context).dividerColor.withOpacity(0.08),
             width: 1,
           ),
         ),
@@ -45,10 +40,7 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
         centerTitle: false,
         title: Text(
           "浏览历史",
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleMedium,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         actions: [
           Padding(
@@ -68,16 +60,15 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
           future: _history,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Obx(() =>
-                  ListView.builder(
-                      itemCount: _browsingHistoryControllers.subjectsHistoryList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return RankedCardsList(
-                          datum: _browsingHistoryControllers.datumList[index],
-                          index: index,
-                          isRank: false,
-                        );
-                      }));
+              return Obx(() => ListView.builder(
+                  itemCount: _browsingHistoryControllers.subjectsHistoryList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return RankedCardsList(
+                      datum: _browsingHistoryControllers.datumList[index],
+                      index: index,
+                      isRank: false,
+                    );
+                  }));
             } else {
               return Center(
                 child: LoadingAnimationWidget.stretchedDots(

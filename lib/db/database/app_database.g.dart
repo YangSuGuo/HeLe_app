@@ -292,6 +292,25 @@ class _$SubjectsStarDao extends SubjectsStarDao {
   }
 
   @override
+  Future<int?> countSubjectsByStatus(int status) async {
+    return _queryAdapter.query(
+        'SELECT COUNT(*) FROM subjects_star         WHERE status = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [status]);
+  }
+
+  @override
+  Future<int?> countSubjectsByStatusAndType(
+    int status,
+    int type,
+  ) async {
+    return _queryAdapter.query(
+        'SELECT COUNT(*) FROM subjects_star         WHERE type = ?2         AND status = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [status, type]);
+  }
+
+  @override
   Future<bool?> isSubjectExists(int subjectId) async {
     return _queryAdapter.query(
         'SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = ?1)',

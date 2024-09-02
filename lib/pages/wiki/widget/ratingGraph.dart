@@ -8,16 +8,20 @@ class RatingGraph extends StatelessWidget {
   const RatingGraph({
     super.key,
     required this.count,
+    this.dynamic = 50.0,
   });
 
   final Count count;
+  final double? dynamic;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     List<int> ratingCountList = count.toList();
+
+
     // 设置动态
-    double maxY = ratingCountList.reduce((a, b) => a > b ? a : b) + 50;
+    double maxY = ratingCountList.reduce((a, b) => a > b ? a : b) + dynamic!;
 
     return BarChart(
       BarChartData(

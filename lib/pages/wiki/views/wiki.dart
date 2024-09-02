@@ -474,7 +474,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                           interactiveTooltips: true,
                           readOnly: false,
                           onChanged: (double rating) {
-                            _wikiController.userRating.value = rating;
+                            _wikiController.userRating.value = rating * 2;
                             _wikiController.qualityRating.value = EvaluationUtils.getRecommendation(rating);
                           },
                           customFilledIcon: Icons.star,

@@ -130,7 +130,7 @@ class WikiController extends GetxController {
     SubjectsStar subjectsStar = subject.toSubjectsStar(
         isHidden: isHidden.value,
         status: subjectType,
-        userRating: userRating.value,
+        userRating: userRating.value == 0.0 ? subject.rating.score : userRating.value,
         tags: userActiveTag,
         isCollected: isCollected);
     // 更新 or 插入

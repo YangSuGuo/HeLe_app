@@ -43,28 +43,28 @@ class Rating {
 
 ///各分值评分人数
 class Count {
-  int? the1;
-  int? the10;
-  int? the2;
-  int? the3;
-  int? the4;
-  int? the5;
-  int? the6;
-  int? the7;
-  int? the8;
-  int? the9;
+  late int the1;
+  late int the10;
+  late int the2;
+  late int the3;
+  late int the4;
+  late int the5;
+  late int the6;
+  late int the7;
+  late int the8;
+  late int the9;
 
   Count({
-    this.the1,
-    this.the10,
-    this.the2,
-    this.the3,
-    this.the4,
-    this.the5,
-    this.the6,
-    this.the7,
-    this.the8,
-    this.the9,
+    required this.the1,
+    required this.the10,
+    required this.the2,
+    required this.the3,
+    required this.the4,
+    required this.the5,
+    required this.the6,
+    required this.the7,
+    required this.the8,
+    required this.the9,
   });
 
   factory Count.fromRawJson(String str) => Count.fromJson(json.decode(str));

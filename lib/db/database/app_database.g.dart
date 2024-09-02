@@ -311,6 +311,22 @@ class _$SubjectsStarDao extends SubjectsStarDao {
   }
 
   @override
+  Future<List<double>> getScoreByType(int type) async {
+    return _queryAdapter.queryList(
+        'SELECT score FROM subjects_star WHERE type = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as double,
+        arguments: [type]);
+  }
+
+  @override
+  Future<List<double>> getRatingByType(int type) async {
+    return _queryAdapter.queryList(
+        'SELECT rating FROM subjects_star WHERE type = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as double,
+        arguments: [type]);
+  }
+
+  @override
   Future<bool?> isSubjectExists(int subjectId) async {
     return _queryAdapter.query(
         'SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = ?1)',

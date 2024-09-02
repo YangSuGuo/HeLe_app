@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/model/rating.dart';
 import 'package:hele_app/pages/apply_data/widget/common_card.dart';
 import 'package:hele_app/pages/data_and_statistics/controllers/data_and_statistics_controllers.dart';
 import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
@@ -19,9 +18,9 @@ class DataAndStatistics extends StatefulWidget {
 class _DataAndStatisticsState extends State<DataAndStatistics> {
   // final DataAndStatisticsControllers _andStatisticsControllers = Get.put(DataAndStatisticsControllers());
   final DataAndStatisticsControllers _andStatisticsControllers = Get.find<DataAndStatisticsControllers>();
-  Future? _totalSubjects;
-  Future? _totalAnimeSubjects;
-  Future? _totalMangaSubjects;
+  late Future _totalSubjects;
+  late Future _totalAnimeSubjects;
+  late Future _totalMangaSubjects;
 
   @override
   void initState() {
@@ -117,17 +116,8 @@ class _DataAndStatisticsState extends State<DataAndStatistics> {
                                       child: Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                                           child: RatingGraph(
-                                            count: Count(
-                                                the1: 20,
-                                                the2: 50,
-                                                the3: 32,
-                                                the4: 66,
-                                                the5: 88,
-                                                the6: 44,
-                                                the7: 21,
-                                                the8: 11,
-                                                the9: 30,
-                                                the10: 10),
+                                            count: _andStatisticsControllers.animeCount,
+                                            dynamic: 5.0,
                                           )))
                                 ],
                               )),
@@ -179,17 +169,8 @@ class _DataAndStatisticsState extends State<DataAndStatistics> {
                                       child: Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                                           child: RatingGraph(
-                                            count: Count(
-                                                the1: 20,
-                                                the2: 50,
-                                                the3: 32,
-                                                the4: 66,
-                                                the5: 88,
-                                                the6: 44,
-                                                the7: 21,
-                                                the8: 11,
-                                                the9: 30,
-                                                the10: 10),
+                                            count: _andStatisticsControllers.mangaCount,
+                                            dynamic: 5.0,
                                           )))
                                 ],
                               )),
@@ -250,5 +231,26 @@ class _DataAndStatisticsState extends State<DataAndStatistics> {
         borderRadius: BorderRadius.all(Radius.circular(20.r)),
       ),
     );
+  }
+
+  FutureBuilder futureBuilder({required Future? future, required double height, required Widget child}) {
+    return FutureBuilder(
+        future: future,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return CommonCard(
+              radius: 30,
+              onPressed: () {},
+              child: Container(height: height, child: child),
+            );
+          } else {
+            return Center(
+              child: LoadingAnimationWidget.stretchedDots(
+                color: Theme.of(context).colorScheme.primary,
+                size: 140.sp,
+              ),
+            );
+          }
+        });
   }
 }

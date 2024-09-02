@@ -32,4 +32,27 @@ class MathUtils {
     double variance = sumOfSquares / total;
     return sqrt(variance);
   }
+
+  // 评分计数
+  static Count countRating(List<double> ratings) {
+    Count count = Count(the1: 0, the2: 0, the3: 0, the4: 0, the5: 0, the6: 0, the7: 0, the8: 0, the9: 0, the10: 0);
+    List<double> ratingsList = ratings;
+    for (double rating in ratingsList) {
+      int roundedScore = rating.round();
+      if (roundedScore >= 1 && roundedScore <= 10) {
+        count.the1 += roundedScore == 1 ? 1 : 0;
+        count.the2 += roundedScore == 2 ? 1 : 0;
+        count.the3 += roundedScore == 3 ? 1 : 0;
+        count.the4 += roundedScore == 4 ? 1 : 0;
+        count.the5 += roundedScore == 5 ? 1 : 0;
+        count.the6 += roundedScore == 6 ? 1 : 0;
+        count.the7 += roundedScore == 7 ? 1 : 0;
+        count.the8 += roundedScore == 8 ? 1 : 0;
+        count.the9 += roundedScore == 9 ? 1 : 0;
+        count.the10 += roundedScore == 10 ? 1 : 0;
+      }
+    }
+    print("评分分布：${count.toList().toString()}");
+    return count;
+  }
 }

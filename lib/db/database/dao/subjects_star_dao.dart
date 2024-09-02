@@ -60,6 +60,18 @@ abstract class SubjectsStarDao {
   ''')
   Future<int?> countSubjectsByStatusAndType(int status, int type);
 
+  // 按照 条目类型 查询官方评分
+  @Query('''
+     SELECT score FROM subjects_star WHERE type = :type
+  ''')
+  Future<List<double>> getScoreByType(int type);
+
+  // 按照 条目类型 查询用户评分
+  @Query('''
+     SELECT rating FROM subjects_star WHERE type = :type
+  ''')
+  Future<List<double>> getRatingByType(int type);
+
   // 根据 条目ID 查询条目是否存在 返回布尔值
   @Query('SELECT EXISTS(SELECT 1 FROM subjects_star WHERE subjectId = :subjectId)')
   Future<bool?> isSubjectExists(int subjectId);

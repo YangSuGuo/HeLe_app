@@ -89,21 +89,21 @@ class _AboutSectionState extends State<AboutSection> {
           ListTile(
             title: const Text("Telegram"),
             onTap: () {
-              launchUrl(Uri.parse("https://t.me/+iVRFidVxJfk5NGQ1"));
+              // launchUrl(Uri.parse("https://t.me/+iVRFidVxJfk5NGQ1"));
             },
             trailing: const Icon(Icons.launch),
           ),
           ListTile(
             title: const Text("项目地址"),
             onTap: () {
-              launchUrl(Uri.parse("https://github.com/YangSuGuo/HeLe_app"));
+              // launchUrl(Uri.parse("https://github.com/YangSuGuo/HeLe_app"));
             },
             trailing: const Icon(Icons.launch),
           ),
           ListTile(
             title: const Text("问题与反馈"),
             onTap: () {
-              launchUrl(Uri.parse("https://github.com/YangSuGuo/HeLe_app/issues"));
+              // launchUrl(Uri.parse("https://github.com/YangSuGuo/HeLe_app/issues"));
             },
             trailing: const Icon(Icons.launch),
           ),

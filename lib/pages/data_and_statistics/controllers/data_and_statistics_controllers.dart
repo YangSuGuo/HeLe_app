@@ -42,9 +42,9 @@ class DataAndStatisticsControllers extends GetxController {
     List<double> rating = await db.subjectsStarDao.getRatingByType(type) ?? []; // 用户评分
 
     if (type == 1) {
-      mangaCount = MathUtils.countRating(score);
+      mangaCount = MathUtils.countRating(rating);
     } else {
-      animeCount = MathUtils.countRating(score);
+      animeCount = MathUtils.countRating(rating);
     }
 
     return type == 1 ? totalMangaSubjects : totalAnimeSubjects;

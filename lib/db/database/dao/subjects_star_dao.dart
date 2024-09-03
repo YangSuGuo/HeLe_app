@@ -7,7 +7,7 @@ abstract class SubjectsStarDao {
   @Query('SELECT * FROM subjects_star')
   Future<List<SubjectsStar>> findAllSubjectsStar();
 
-  /// 按照 条目类型 条目状态  是否隐藏 是否收藏 查询数据库
+  /// 按照 条目类型 条目状态 是否隐藏 查询数据库
   /// 设置排序规则
   /// - 默认：按照创建时间进行倒序排序
   /// - 评分：按照用户评分进行倒序排序
@@ -26,6 +26,24 @@ abstract class SubjectsStarDao {
     String sortBy,
     int offset,
   );
+
+  /// 按照 条目状态 是否隐藏 查询数据库
+  /// 设置排序规则
+  /// - 默认：按照创建时间进行倒序排序
+  /// - 评分：按照用户评分进行倒序排序
+  @Query('''
+      SELECT * FROM subjects_star
+        WHERE status = :status 
+        AND isHidden = :isHidden
+      ORDER BY :sortBy DESC
+      LIMIT 20 OFFSET :offset;
+  ''')
+  Future<List<SubjectsStar>> findAllSubjects(
+      int status,
+      bool isHidden,
+      String sortBy,
+      int offset,
+      );
 
   /// 按照 是否隐藏  查询数据库
   /// 设置排序规则

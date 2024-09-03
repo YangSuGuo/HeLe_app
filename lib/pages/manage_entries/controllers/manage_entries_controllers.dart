@@ -33,8 +33,9 @@ class ManageEntriesControllers extends GetxController {
 
   // 获取当前tab下数据
   Future getTrackingType() async {
+    List<SubjectsStar> subjectsStar;
     for (int i = 0; i < 5; i++) {
-      List<SubjectsStar> subjectsStar =
+      subjectsStar =
           await db.subjectsStarDao.findSubjectsStarByTypeStatusTagsHidden(type.value, i, false, sortBy, offset);
 
       switch (i) {

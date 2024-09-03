@@ -7,9 +7,7 @@ import 'package:hele_app/pages/manage_entries/controllers/manage_entries_control
 import '../widget/tracking_type.dart';
 
 // todo 自定义头部页
-// todo 监听滚动触底刷新
-// todo 实现筛选，更新，删除，点击事件
-// todo 点击跳转wiki页面
+// todo 默认All
 // todo 不同风格的列表【优先度：极低】
 class ManageEntries extends StatefulWidget {
   const ManageEntries({super.key});

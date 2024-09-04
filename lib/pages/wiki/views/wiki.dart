@@ -41,6 +41,7 @@ class Wiki extends StatefulWidget {
 // todo 初始化标记数据
 class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   final WikiController _wikiController = Get.find<WikiController>();
+
   // final WikiController _wikiController = Get.put(WikiController());
   late TabController? _tabController;
 
@@ -235,7 +236,9 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                   title: characters[index].name,
                                   subtitle: EvaluationUtils.getSubTitle(
                                       characters[index].relation, characters[index].actors ?? []),
-                                  onTap: () {},
+                                  onTap: () {
+                                    Get.toNamed(Routes.WIKI_DETAIL, arguments: {"id": characters[index].id, "type": 1});
+                                  },
                                 );
                               },
                               itemCount: characters.length,
@@ -259,7 +262,9 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                   src: persons[index].images?.medium,
                                   title: persons[index].name,
                                   subtitle: persons[index].relation,
-                                  onTap: () {},
+                                  onTap: () {
+                                    Get.toNamed(Routes.WIKI_DETAIL, arguments: {"id": persons[index].id, "type": 2});
+                                  },
                                 );
                               },
                               itemCount: persons.length,

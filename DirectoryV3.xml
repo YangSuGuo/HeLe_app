@@ -111,4 +111,7 @@
     <tree path="/lib/pages/data_and_statistics" title="数据与统计"/>
     <tree path="/lib/pages/settings/widget/select_dialog.dart" title="选择对话框"/>
     <tree path="/lib/pages/settings/widget/switch_item.dart" title="设置条目"/>
+    <tree path="/lib/pages/extra_info" title="更多信息"/>
+    <tree path="/lib/model/stat.dart" title="评论数量"/>
+    <tree path="/lib/model/wiki_detail.dart" title="更多信息"/>
 </trees>

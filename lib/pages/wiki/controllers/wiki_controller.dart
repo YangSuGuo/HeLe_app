@@ -16,7 +16,6 @@ import 'package:hele_app/model/subjects/subjects.dart';
 
 class WikiController extends GetxController {
   late final LegacySubjectSmall legacySubjectSmall; // 番剧信息
-
   final AppDatabase db = Get.find<AppDatabase>(); // 获取数据库实例
 
   // 组件状态

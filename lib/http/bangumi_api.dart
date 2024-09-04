@@ -20,6 +20,14 @@ class BangumiApi {
   /// /v0/subjects/{subject_id}/subjects
   static const String subject = '/v0/subjects/';
 
+  /// 条目角色信息
+  /// /v0/characters/{character_id}
+  static const String subjectCharactersInfo = '/v0/characters/';
+
+  /// 条目演员信息
+  /// /v0/persons/{person_id}
+  static const String subjectPersonsInfo = '/v0/persons/';
+
   /// 搜索
   /// POST
   /// Query 参数：

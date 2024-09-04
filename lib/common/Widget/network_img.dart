@@ -34,9 +34,7 @@ class NetworkImg extends StatelessWidget {
   Widget build(BuildContext context) {
     // int? memCacheWidth, memCacheHeight;
     // double aspectRatio = (width / height).toDouble();
-    ColorScheme colorScheme = Theme
-        .of(context)
-        .colorScheme;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     // void setMemCacheSizes() {
     //   if (aspectRatio > 1) {
@@ -63,12 +61,12 @@ class NetworkImg extends StatelessWidget {
 
     return src != "" && src != null
         ? ClipRRect(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(
-          Radius.circular(radius ?? 10).x,
-        ),
-        child:
-        /*Container(
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.circular(
+              Radius.circular(radius ?? 10).x,
+            ),
+            child:
+                /*Container(
           width: width,
           height: height,
           child: Image.network(
@@ -80,7 +78,7 @@ class NetworkImg extends StatelessWidget {
           )
         )*/
 
-      CachedNetworkImage(
+                CachedNetworkImage(
               imageUrl: src!,
               width: width,
               height: height,
@@ -93,7 +91,7 @@ class NetworkImg extends StatelessWidget {
               errorWidget: (BuildContext context, String url, Object error) => placeholder(context, colorScheme),
               placeholder: (BuildContext context, String url) => loading(context, colorScheme),
             ),
-    )
+          )
         : placeholder(context, colorScheme);
   }
 
@@ -103,11 +101,7 @@ class NetworkImg extends StatelessWidget {
       height: height,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: Theme
-            .of(context)
-            .colorScheme
-            .onInverseSurface
-            .withOpacity(0.4),
+        color: Theme.of(context).colorScheme.onInverseSurface.withOpacity(0.4),
         borderRadius: BorderRadius.circular(const Radius.circular(10).x),
       ),
       child: Center(
@@ -126,11 +120,7 @@ class NetworkImg extends StatelessWidget {
       height: height,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: Theme
-            .of(context)
-            .colorScheme
-            .onInverseSurface
-            .withOpacity(0.4),
+        color: Theme.of(context).colorScheme.onInverseSurface.withOpacity(0.4),
         borderRadius: BorderRadius.circular(const Radius.circular(10).x),
       ),
       child: Center(
@@ -145,8 +135,6 @@ class NetworkImg extends StatelessWidget {
 
 extension ImageExtension on num {
   int cacheSize(BuildContext context) {
-    return (this * MediaQuery
-        .of(context)
-        .devicePixelRatio).round();
+    return (this * MediaQuery.of(context).devicePixelRatio).round();
   }
 }

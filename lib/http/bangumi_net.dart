@@ -9,6 +9,7 @@ import 'package:hele_app/model/person_career/person_career.dart';
 import 'package:hele_app/model/search/query_parameters.dart';
 import 'package:hele_app/model/search/request_body.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
+import 'package:hele_app/model/wiki_detail.dart';
 
 import 'bangumi_api.dart';
 import 'net/init.dart';
@@ -58,6 +59,30 @@ class BangumiNet {
       List<dynamic> data = res.data;
       List<PersonCareer> persons = data.map((item) => PersonCareer.fromJson(item)).toList();
       return persons;
+    } else {
+      log("报错：$res");
+      throw Exception('获取条目信息数据失败');
+    }
+  }
+
+  // 获取影视条目角色信息
+  static Future<WikiDetail> bangumiCharacterInfo(int id) async {
+    var res = await Request().get("${BangumiApi.subjectCharactersInfo}$id");
+    if (res.statusCode == 200) {
+      WikiDetail wikiDetail = WikiDetail.fromJson(res.data);
+      return wikiDetail;
+    } else {
+      log("报错：$res");
+      throw Exception('获取条目信息数据失败');
+    }
+  }
+
+  // 获取影视条目演员信息
+  static Future<WikiDetail> bangumiPersonsInfo(int id) async {
+    var res = await Request().get("${BangumiApi.subjectPersonsInfo}$id");
+    if (res.statusCode == 200) {
+      WikiDetail wikiDetail = WikiDetail.fromJson(res.data);
+      return wikiDetail;
     } else {
       log("报错：$res");
       throw Exception('获取条目信息数据失败');

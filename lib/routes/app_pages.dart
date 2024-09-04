@@ -4,6 +4,7 @@ import 'package:hele_app/pages/apply_data/views/apply_data.dart';
 import 'package:hele_app/pages/browsing_history/views/browsing_history.dart';
 import 'package:hele_app/pages/data_and_statistics/bindings/data_and_statistics_bingings.dart';
 import 'package:hele_app/pages/data_and_statistics/views/data_and_statistics.dart';
+import 'package:hele_app/pages/extra_info/views/extra_info.dart';
 import 'package:hele_app/pages/home/views/home.dart';
 import 'package:hele_app/pages/main/bindings/main_binding.dart';
 import 'package:hele_app/pages/main/views/main.dart';
@@ -68,6 +69,12 @@ class AppPages {
       name: Routes.WIKI,
       page: () => const Wiki(),
       binding: WikiBindings(),
+    ),
+    // 更多信息（角色，人物）
+    GetPage(
+      name: Routes.WIKI_DETAIL,
+      page: () => const ExtraInfo(),
+      // binding: WikiBindings(),
     ),
 
     // 搜索页

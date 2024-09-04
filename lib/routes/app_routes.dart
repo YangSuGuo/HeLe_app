@@ -17,6 +17,7 @@ abstract class Routes {
 
   // WIKI
   static const WIKI = '/wiki';
+  static const WIKI_DETAIL = '/wikiDetail';
 
   // 搜索页
   static const SEARCH = '/search';

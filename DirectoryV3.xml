@@ -114,4 +114,5 @@
     <tree path="/lib/pages/extra_info" title="更多信息"/>
     <tree path="/lib/model/stat.dart" title="评论数量"/>
     <tree path="/lib/model/wiki_detail.dart" title="更多信息"/>
+    <tree path="/lib/model/character_list/character_involvement.dart" title="角色参与作品"/>
 </trees>

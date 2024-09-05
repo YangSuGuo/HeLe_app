@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:hele_app/common/utils/date_utils.dart';
 import 'package:hele_app/model/calendar/calendar.dart';
+import 'package:hele_app/model/character_list/character_involvement.dart';
 import 'package:hele_app/model/character_list/character_list.dart';
 import 'package:hele_app/model/derivation/related_works_query.dart';
 import 'package:hele_app/model/pagination.dart';
@@ -77,12 +79,38 @@ class BangumiNet {
     }
   }
 
-  // 获取影视条目演员信息
+  // 获取影视条目角色参演作品集
+  static Future<List<CharacterInvolvement>> bangumiCharacterInvolvement(int id) async {
+    var res = await Request().get("${BangumiApi.subjectCharactersInfo}$id/subjects");
+    if (res.statusCode == 200) {
+      final jsonString = jsonEncode(res.data);
+      final characterInvolvementList = characterInvolvementFromJson(jsonString);
+      return characterInvolvementList;
+    } else {
+      log("报错：$res");
+      throw Exception('获取条目信息数据失败');
+    }
+  }
+
+  // 获取影视条目制作人员信息
   static Future<WikiDetail> bangumiPersonsInfo(int id) async {
     var res = await Request().get("${BangumiApi.subjectPersonsInfo}$id");
     if (res.statusCode == 200) {
       WikiDetail wikiDetail = WikiDetail.fromJson(res.data);
       return wikiDetail;
+    } else {
+      log("报错：$res");
+      throw Exception('获取条目信息数据失败');
+    }
+  }
+
+  // 获取影视条目制作人员参演作品集
+  static Future<List<CharacterInvolvement>> bangumiPersonsInvolvement(int id) async {
+    var res = await Request().get("${BangumiApi.subjectCharactersInfo}$id/subjects");
+    if (res.statusCode == 200) {
+      final jsonString = jsonEncode(res.data);
+      final characterInvolvementList = characterInvolvementFromJson(jsonString);
+      return characterInvolvementList;
     } else {
       log("报错：$res");
       throw Exception('获取条目信息数据失败');

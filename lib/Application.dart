@@ -11,7 +11,7 @@ import 'package:hele_app/routes/initial_binding.dart';
 import 'package:hele_app/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
-// BUG : 未知错误 暂时无法定位，页面频繁闪退！！  （log：空指针解引用）
+// BUG : 暂时无法定位，正式打包版页面频繁闪退！！  （log：空指针解引用）
 class Application extends StatefulWidget {
   const Application({super.key});
 

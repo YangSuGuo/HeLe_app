@@ -237,7 +237,11 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                   subtitle: EvaluationUtils.getSubTitle(
                                       characters[index].relation, characters[index].actors ?? []),
                                   onTap: () {
-                                    Get.toNamed(Routes.WIKI_DETAIL, arguments: {"id": characters[index].id, "type": 1});
+                                    Get.toNamed(Routes.WIKI_DETAIL, arguments: {
+                                      "id": characters[index].id,
+                                      "type": 1,
+                                      "name": characters[index].name
+                                    });
                                   },
                                 );
                               },
@@ -263,7 +267,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                                   title: persons[index].name,
                                   subtitle: persons[index].relation,
                                   onTap: () {
-                                    Get.toNamed(Routes.WIKI_DETAIL, arguments: {"id": persons[index].id, "type": 2});
+                                    Get.toNamed(Routes.WIKI_DETAIL,
+                                        arguments: {"id": persons[index].id, "type": 2, "name": persons[index].name});
                                   },
                                 );
                               },
@@ -300,7 +305,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                               },
                               itemCount: derivation.length,
                               scrollDirection: Axis.horizontal,
-                            )))
+                            ))),
+                    SliverGap(60.h),
                   ]);
                 }
 

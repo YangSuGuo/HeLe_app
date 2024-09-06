@@ -222,7 +222,15 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 // 角色信息
                 if (characters.isNotEmpty) {
                   slivers.addAll([
-                    EntryTitle(title: "角色", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                    EntryTitle(
+                        title: "角色",
+                        fontWeight: FontWeight.bold,
+                        size: 42.sp,
+                        child: MoreInformation(
+                          onTap: () {
+                            Get.toNamed(Routes.WIKI_EXTENDED, arguments: {"type": 1, "list": characters});
+                          },
+                        )),
                     SliverGap(16.h),
                     SliverToBoxAdapter(
                         child: SizedBox(
@@ -255,7 +263,15 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 // 制作人员
                 if (persons.isNotEmpty) {
                   slivers.addAll([
-                    EntryTitle(title: "制作人员", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                    EntryTitle(
+                        title: "制作人员",
+                        fontWeight: FontWeight.bold,
+                        size: 42.sp,
+                        child: MoreInformation(
+                          onTap: () {
+                            Get.toNamed(Routes.WIKI_EXTENDED, arguments: {"type": 2, "list": persons});
+                          },
+                        )),
                     SliverGap(16.h),
                     SliverToBoxAdapter(
                         child: SizedBox(
@@ -282,7 +298,15 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                 // 关联作品
                 if (derivation.isNotEmpty) {
                   slivers.addAll([
-                    EntryTitle(title: "相关作品", fontWeight: FontWeight.bold, size: 42.sp, child: const MoreInformation()),
+                    EntryTitle(
+                        title: "相关作品",
+                        fontWeight: FontWeight.bold,
+                        size: 42.sp,
+                        child: MoreInformation(
+                          onTap: () {
+                            Get.toNamed(Routes.WIKI_EXTENDED, arguments: {"type": 3, "list": derivation});
+                          },
+                        )),
                     SliverGap(16.h),
                     SliverToBoxAdapter(
                         child: SizedBox(

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hele_app/common/Widget/entry_title.dart';
 import 'package:hele_app/common/Widget/network_img.dart';
+import 'package:hele_app/model/character_list/character_involvement.dart';
 import 'package:hele_app/pages/extra_info/controllers/extra_info_controllers.dart';
 import 'package:hele_app/pages/wiki/widget/info_subitem.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -129,6 +130,7 @@ class _ExtraInfoState extends State<ExtraInfo> {
                         future: _involvement,
                         builder: (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState == ConnectionState.done) {
+                            List<CharacterInvolvement> s = snapshot.data;
                             return SliverPadding(
                                 padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 8.h, bottom: 50.h),
                                 sliver: SliverToBoxAdapter(
@@ -138,12 +140,12 @@ class _ExtraInfoState extends State<ExtraInfo> {
                                           itemBuilder: (context, index) {
                                             return InfoSubitem(
                                               containerWidth: 200.w,
-                                              src: _infoControllers.involvement[index].image,
+                                              src: s[index].image,
                                               width: 200.w,
                                               height: 230.h,
                                               fit: BoxFit.cover,
-                                              title: _infoControllers.involvement[index].name,
-                                              subtitle: _infoControllers.involvement[index].staff,
+                                              title: s[index].name,
+                                              subtitle: s[index].staff,
                                               onTap: () {},
                                             );
                                           },

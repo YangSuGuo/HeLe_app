@@ -23,6 +23,7 @@ import 'package:hele_app/pages/tabs/manga/views/manga.dart';
 import 'package:hele_app/pages/user_tags/views/user_tags.dart';
 import 'package:hele_app/pages/wiki/bindings/wiki_bindings.dart';
 import 'package:hele_app/pages/wiki/views/wiki.dart';
+import 'package:hele_app/pages/wiki/widget/extended_list.dart';
 
 part 'app_routes.dart';
 
@@ -74,6 +75,11 @@ class AppPages {
     GetPage(
       name: Routes.WIKI_DETAIL,
       page: () => const ExtraInfo(),
+      // binding: WikiBindings(),
+    ),
+    GetPage(
+      name: Routes.WIKI_EXTENDED,
+      page: () => const ExtendedList(),
       // binding: WikiBindings(),
     ),
 

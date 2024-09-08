@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +17,16 @@ import 'package:hele_app/model/derivation/related_works_query.dart';
 import 'package:hele_app/model/person_career/person_career.dart';
 import 'package:hele_app/model/subjects/subjects.dart';
 import 'package:hele_app/pages/home/widget/custom_tabs.dart';
-import 'package:hele_app/pages/search/widget/search_text.dart';
 import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
 import 'package:hele_app/pages/wiki/widget/action_item.dart';
+import 'package:hele_app/pages/wiki/widget/horizontal_rating.dart';
 import 'package:hele_app/pages/wiki/widget/info_subitem.dart';
 import 'package:hele_app/pages/wiki/widget/introduction.dart';
 import 'package:hele_app/pages/wiki/widget/more_information.dart';
+import 'package:hele_app/pages/wiki/widget/popup_header.dart';
 import 'package:hele_app/pages/wiki/widget/ratingGraph.dart';
+import 'package:hele_app/pages/wiki/widget/tab_selector_horizontal.dart';
+import 'package:hele_app/pages/wiki/widget/tag_selection.dart';
 import 'package:hele_app/routes/app_pages.dart';
 import 'package:hele_app/themes/app_style/colors/app_theme_color_scheme.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -85,7 +87,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    // List slivers = [];
     return Scaffold(
         body: Stack(children: [
       // 背景图片
@@ -436,283 +437,105 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
         usePenetrate: false,
         debounce: true,
         onDismiss: () => SmartDialog.config.attach = SmartConfigAttach(),
-        builder: (_) {
-          return Container(
-            width: Get.width * 0.85,
-            height: Get.height * 0.55,
-            padding: EdgeInsets.fromLTRB(36.w, 36.h, 36.w, 24.h),
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(36.r),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // 标题
-                Row(
-                  children: [
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          _wikiController.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 36.sp,
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.secondary,
-                          ),
-                        ),
-                        // 副标题
-                        if (subject.name != "")
-                          Padding(
-                              padding: EdgeInsets.only(top: 6.h, bottom: 16.h),
-                              child: AutoSizeText(
-                                subject.name,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 24.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: colorScheme.secondary.withOpacity(0.7),
-                                ),
-                              )),
-                      ],
-                    )),
-                    // const Spacer(),
-                    InkWell(
-                        onTap: () => SmartDialog.dismiss(force: true),
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: 30.h),
-                          child: FaIcon(FontAwesomeIcons.xmark, size: 66.sp, color: colorScheme.secondary),
-                        ))
-                  ],
-                ),
+        builder: (_) => _popupBody(subject, colorScheme));
+  }
 
-                // 评分项
-                Padding(
-                    padding: EdgeInsets.only(bottom: 16.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // 评分
-                        AnimatedRatingStars(
-                          initialRating: subject.rating.score / 2,
-                          maxRating: 5.0,
-                          minRating: 0.0,
-                          starSize: 64.sp,
-                          filledColor: colorScheme.primary.withOpacity(0.8),
-                          displayRatingValue: false,
-                          interactiveTooltips: true,
-                          readOnly: false,
-                          onChanged: (double rating) {
-                            _wikiController.userRating.value = rating * 2;
-                            _wikiController.qualityRating.value = EvaluationUtils.getRecommendation(rating);
-                          },
-                          customFilledIcon: Icons.star,
-                          customHalfFilledIcon: Icons.star_half,
-                          customEmptyIcon: Icons.star_border,
-                        ),
-                        // 评分描述
-                        Obx(
-                          () => AutoSizeText(
-                            "（${_wikiController.qualityRating.value}）",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.secondary.withOpacity(0.8),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
+  Widget _popupBody(Subjects subject, ColorScheme colorScheme) {
+    return Container(
+      width: Get.width * 0.85,
+      height: Get.height * 0.55,
+      padding: EdgeInsets.fromLTRB(36.w, 36.h, 36.w, 24.h),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(36.r),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // 标题
+          PopupHeader(
+            title: _wikiController.title,
+            subtitle: subject.name,
+            showClose: true,
+          ),
 
-                // 标签选择
-                if (_wikiController.tags.isNotEmpty)
-                  LayoutBuilder(builder: (context, constraints) {
-                    return Container(
-                      width: constraints.maxWidth,
-                      height: Get.height * 0.21,
-                      // color: Colors.teal,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          // 评分项
+          Obx(() => HorizontalRating(
+                score: subject.rating.score / 2,
+                qualityRating: _wikiController.qualityRating.value,
+                onChanged: (double rating) {
+                  _wikiController.userRating.value = rating * 2;
+                  _wikiController.qualityRating.value = EvaluationUtils.getRecommendation(rating);
+                },
+              )),
+
+          // 标签选择
+          if (_wikiController.tags.isNotEmpty) const TagSelection(),
+
+          // 状态
+          TabSelectorHorizontal(
+            tabs: const ["想看", "在看", "看过", "搁置", "抛弃"],
+            tabController: _tabController!,
+            onTap: (int index) {
+              _wikiController.subjectType = index;
+              log(index.toString());
+            },
+          ),
+
+          // 提交
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                  child: MaterialButton(
+                      height: 65.h,
+                      elevation: 0,
+                      color: colorScheme.tertiaryContainer.withOpacity(0.8),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                      textTheme: ButtonTextTheme.primary,
+                      onPressed: () {
+                        _wikiController.save(subject, _wikiController.favorite.value);
+                        SmartDialog.dismiss(force: true);
+                      },
+                      child: const AutoSizeText("确定"))),
+              Padding(
+                  padding: EdgeInsets.only(left: 10.w),
+                  child: Obx(
+                    () => MaterialButton(
+                      height: 65.h,
+                      elevation: 0,
+                      padding: EdgeInsets.zero,
+                      color: _wikiController.isHidden.value
+                          ? colorScheme.secondary.withOpacity(0.7)
+                          : colorScheme.primary.withOpacity(0.7),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+                      textTheme: ButtonTextTheme.primary,
+                      onPressed: () {
+                        _wikiController.isHidden.value = !_wikiController.isHidden.value;
+                      },
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Wrap(
-                              alignment: WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                AutoSizeText(
-                                  "标签",
-                                  style: TextStyle(
-                                      fontSize: 34.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.secondary.withOpacity(0.8)),
-                                ),
-                                AutoSizeText(
-                                  "（右划用户标签）",
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.secondary.withOpacity(0.8)),
-                                ),
-                              ]),
-                          SizedBox(
-                              height: Get.height * 0.17,
-                              child: PageView(children: [
-                                ListView(
-                                  padding: EdgeInsets.zero,
-                                  children: [
-                                    Wrap(
-                                        spacing: 8,
-                                        runSpacing: 8,
-                                        direction: Axis.horizontal,
-                                        textDirection: TextDirection.ltr,
-                                        children: [
-                                          for (int i = 0; i < _wikiController.tags.length; i++)
-                                            Obx(
-                                              () => SearchText(
-                                                searchText: _wikiController.tags[i],
-                                                isSelected: _wikiController.isTags[i],
-                                                onSelect: (value) {
-                                                  _wikiController.addTag(false, i);
-                                                },
-                                              ),
-                                            ),
-                                        ]),
-                                  ],
-                                ),
-                                if (_wikiController.userTags.isNotEmpty)
-                                  ListView(
-                                    padding: EdgeInsets.zero,
-                                    children: [
-                                      Wrap(
-                                          spacing: 8,
-                                          runSpacing: 8,
-                                          direction: Axis.horizontal,
-                                          textDirection: TextDirection.ltr,
-                                          children: [
-                                            for (int i = 0; i < _wikiController.userTags.length; i++)
-                                              Obx(() => SearchText(
-                                                    searchText: _wikiController.userTags[i].tag,
-                                                    isSelected: _wikiController.isUserTags[i],
-                                                    onSelect: (value) {
-                                                      _wikiController.addTag(true, i);
-                                                    },
-                                                  ))
-                                          ]),
-                                    ],
-                                  )
-                              ])),
+                          FaIcon(
+                            _wikiController.isHidden.value ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
+                            size: 35.sp,
+                            color: colorScheme.onPrimary,
+                          ),
+                          Gap(20.w),
+                          AutoSizeText(
+                            _wikiController.isHidden.value ? "私密" : "公开",
+                            minFontSize: 12,
+                          )
                         ],
                       ),
-                    );
-                  }),
-
-                // 状态
-                LayoutBuilder(builder: (context, constraints) {
-                  return Padding(
-                      padding: EdgeInsets.only(top: 26.h, bottom: 16.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TabBar(
-                            controller: _tabController,
-                            // todo 根据 条目类型 动态设置文字
-                            tabs: const [
-                              Tab(text: "想看"),
-                              Tab(text: "在看"),
-                              Tab(text: "看过"),
-                              Tab(text: "搁置"),
-                              Tab(text: "抛弃"),
-                            ],
-                            isScrollable: false,
-                            splashFactory: NoSplash.splashFactory,
-                            padding: EdgeInsets.zero,
-                            automaticIndicatorColorAdjustment: true,
-                            indicatorPadding: EdgeInsets.zero,
-                            indicatorWeight: 0,
-                            // indicatorPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                            indicator: BoxDecoration(
-                              color: colorScheme.primary.withOpacity(0.8),
-                              borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                            ),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            labelColor: colorScheme.onSecondaryContainer,
-                            labelStyle: TextStyle(fontSize: 28.sp),
-                            labelPadding: EdgeInsets.zero,
-                            dividerColor: Colors.transparent,
-                            unselectedLabelColor: colorScheme.outline,
-                            // tabAlignment: TabAlignment.start,
-                            onTap: (index) {
-                              _wikiController.subjectType = index;
-                              log(index.toString());
-                            },
-                          ),
-                        ],
-                      ));
-                }),
-
-                // 提交
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: MaterialButton(
-                            height: 65.h,
-                            elevation: 0,
-                            color: colorScheme.tertiaryContainer.withOpacity(0.8),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-                            textTheme: ButtonTextTheme.primary,
-                            onPressed: () {
-                              _wikiController.save(subject, _wikiController.favorite.value);
-                              SmartDialog.dismiss(force: true);
-                            },
-                            child: const AutoSizeText("确定"))),
-                    Padding(
-                        padding: EdgeInsets.only(left: 10.w),
-                        child: Obx(
-                          () => MaterialButton(
-                            height: 65.h,
-                            elevation: 0,
-                            padding: EdgeInsets.zero,
-                            color: _wikiController.isHidden.value
-                                ? colorScheme.secondary.withOpacity(0.7)
-                                : colorScheme.primary.withOpacity(0.7),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-                            textTheme: ButtonTextTheme.primary,
-                            onPressed: () {
-                              _wikiController.isHidden.value = !_wikiController.isHidden.value;
-                            },
-                            child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                FaIcon(
-                                  _wikiController.isHidden.value ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye,
-                                  size: 35.sp,
-                                  color: colorScheme.onPrimary,
-                                ),
-                                Gap(20.w),
-                                AutoSizeText(
-                                  _wikiController.isHidden.value ? "私密" : "公开",
-                                  minFontSize: 12,
-                                )
-                              ],
-                            ),
-                          ),
-                        ))
-                  ],
-                )
-              ],
-            ),
-          );
-        });
+                    ),
+                  ))
+            ],
+          )
+        ],
+      ),
+    );
   }
 
   // 剧集列表

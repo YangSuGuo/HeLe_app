@@ -117,4 +117,8 @@
     <tree path="/lib/model/character_list/character_involvement.dart" title="角色参与作品"/>
     <tree path="/lib/pages/extended_list" title="更多列表"/>
     <tree path="/lib/pages/wiki/widget/extended_list.dart" title="更多列表"/>
+    <tree path="/lib/pages/wiki/widget/popup_header.dart" title="弹框头部"/>
+    <tree path="/lib/pages/wiki/widget/horizontal_rating.dart" title="水平评分描述"/>
+    <tree path="/lib/pages/wiki/widget/tag_selection.dart" title="标签页选择"/>
+    <tree path="/lib/pages/wiki/widget/tab_selector_horizontal.dart" title="水平状态选择"/>
 </trees>

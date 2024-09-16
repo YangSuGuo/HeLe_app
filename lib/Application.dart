@@ -23,46 +23,42 @@ class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
     // 状态管理
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => ApplicationProvider()),
-        ],
-        builder: (context, child) {
-          final watchApplicationProvider = context.watch<ApplicationProvider>();
+    return ScreenUtilInit(
+        // 屏幕适配
+        designSize: const Size(750.0, 1334.0),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) => MultiProvider(
+            providers: [ChangeNotifierProvider(create: (_) => ApplicationProvider())],
+            builder: (context, child) {
+              final watchApplicationProvider = context.watch<ApplicationProvider>();
 
-          return ScreenUtilInit(
-              // 屏幕适配
-              designSize: const Size(750.0, 1334.0),
-              minTextAdapt: true,
-              splitScreenMode: true,
-              builder: (context, child) {
-                return GetMaterialApp(
-                    // APP 配置
-                    title: "HeLe",
-                    // 主题
-                    themeMode: watchApplicationProvider.themeMode,
-                    theme: AppTheme(getMultipleThemesMode(context)).multipleThemesLightMode(),
-                    darkTheme: AppTheme(getMultipleThemesMode(context)).multipleThemesDarkMode(),
-                    // 路由
-                    initialRoute: AppPages.INITIAL,
-                    initialBinding: InitialBinding(),
-                    getPages: AppPages.routes,
-                    defaultTransition: Transition.cupertino,
-                    transitionDuration: const Duration(milliseconds: 500),
-                    // 国际化
-                    supportedLocales: S.supportedLocales,
-                    localizationsDelegates: S.localizationsDelegates,
-                    locale: watchApplicationProvider.localeSystem ? null : watchApplicationProvider.locale,
-                    localeListResolutionCallback: (locales, supportedLocales) {
-                      log('当前地区语言$locales');
-                      log('设备支持的地区语言$supportedLocales');
-                      return null;
-                    },
-                    // 弹框提示
-                    navigatorObservers: [FlutterSmartDialog.observer],
-                    builder: FlutterSmartDialog.init(),
-                    debugShowCheckedModeBanner: false);
-              });
-        });
+              return GetMaterialApp(
+                  // APP 配置
+                  title: "HeLe",
+                  // 主题
+                  themeMode: watchApplicationProvider.themeMode,
+                  theme: AppTheme(getMultipleThemesMode(context)).multipleThemesLightMode(),
+                  darkTheme: AppTheme(getMultipleThemesMode(context)).multipleThemesDarkMode(),
+                  // 路由
+                  initialRoute: AppPages.INITIAL,
+                  initialBinding: InitialBinding(),
+                  getPages: AppPages.routes,
+                  defaultTransition: Transition.cupertino,
+                  transitionDuration: const Duration(milliseconds: 500),
+                  // 国际化
+                  supportedLocales: S.supportedLocales,
+                  localizationsDelegates: S.localizationsDelegates,
+                  locale: watchApplicationProvider.localeSystem ? null : watchApplicationProvider.locale,
+                  localeListResolutionCallback: (locales, supportedLocales) {
+                    log('当前地区语言$locales');
+                    log('设备支持的地区语言$supportedLocales');
+                    return null;
+                  },
+                  // 弹框提示
+                  navigatorObservers: [FlutterSmartDialog.observer],
+                  builder: FlutterSmartDialog.init(),
+                  debugShowCheckedModeBanner: false);
+            }));
   }
 }

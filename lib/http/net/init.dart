@@ -23,20 +23,11 @@ class Request {
       //请求基地址,可以包含子路径
       baseUrl: HttpString.apiBaseUrl,
       //连接服务器超时时间
-      connectTimeout: const Duration(milliseconds: 12000),
+      connectTimeout: HttpString.connectTimeout,
       //响应流上前后两次接受到数据的间隔
-      receiveTimeout: const Duration(milliseconds: 12000),
+      receiveTimeout: HttpString.connectTimeout,
       //Http请求头.
-      headers: {
-        'Host': 'api.bgm.tv',
-        'User-Agent':
-            'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'app-id': 'bgm3063662e1d8747988',
-        'app-secret': '427cfed140895351b35c06d45c1ef6e6',
-        // 'Authorization': 'Bearer 427cfed140895351b35c06d45c1ef6e6',
-      },
+      headers: HttpString.headers,
     );
     dio = Dio(options);
     //添加拦截器
@@ -51,8 +42,7 @@ class Request {
 
     dio.transformer = BackgroundTransformer();
     dio.options.validateStatus = (int? status) {
-      return status! >= 200 && status < 300 ||
-          HttpString.validateStatusCodes.contains(status);
+      return status! >= 200 && status < 300 || HttpString.validateStatusCodes.contains(status);
     };
   }
 
@@ -69,15 +59,7 @@ class Request {
         options.headers = {'User-Agent': headerUa(type: extra['ua'])};
       }
     }
-    options.headers = {
-      'Host': 'api.bgm.tv',
-      'User-Agent':
-          'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
-      'Accept': 'application/json',
-      // 'app-id': 'bgm3063662e1d8747988',
-      // 'app-secret': '427cfed140895351b35c06d45c1ef6e6',
-      // 'Authorization': 'Bearer 427cfed140895351b35c06d45c1ef6e6',
-    };
+    options.headers = HttpString.headers;
     options.responseType = resType;
 
     try {
@@ -102,7 +84,6 @@ class Request {
    * post请求
    */
   post(url, {data, queryParameters, options, cancelToken, extra}) async {
-    // print('post-data: $data');
     Response response;
     try {
       response = await dio.post(
@@ -112,13 +93,10 @@ class Request {
         options: options,
         cancelToken: cancelToken,
       );
-      // print('post success: ${response.data}');
       return response;
     } on DioException catch (e) {
       Response errResponse = Response(
-        data: {
-          'message': await ApiInterceptor.dioError(e)
-        }, // 将自定义 Map 数据赋值给 Response 的 data 属性
+        data: {'message': await ApiInterceptor.dioError(e)}, // 将自定义 Map 数据赋值给 Response 的 data 属性
         statusCode: 200,
         requestOptions: RequestOptions(),
       );
@@ -132,8 +110,7 @@ class Request {
   downloadFile(urlPath, savePath) async {
     Response response;
     try {
-      response = await dio.download(urlPath, savePath,
-          onReceiveProgress: (int count, int total) {
+      response = await dio.download(urlPath, savePath, onReceiveProgress: (int count, int total) {
         //进度
         // print("$count $total");
       });
@@ -160,11 +137,9 @@ class Request {
     String headerUa = '';
     if (type == 'mob') {
       if (Platform.isIOS) {
-        headerUa =
-            'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
+        headerUa = 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
       } else {
-        headerUa =
-            'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
+        headerUa = 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';
       }
     } else {
       headerUa = 'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)';

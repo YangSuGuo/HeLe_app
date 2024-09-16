@@ -1,4 +1,4 @@
-class BangumiApi {
+abstract class BangumiApi {
   ///SubjectType，条目类型
   ///- `1` 为 书籍
   ///- `2` 为 动画

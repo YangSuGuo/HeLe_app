@@ -75,12 +75,10 @@ class AppPages {
     GetPage(
       name: Routes.WIKI_DETAIL,
       page: () => const ExtraInfo(),
-      // binding: WikiBindings(),
     ),
     GetPage(
       name: Routes.WIKI_EXTENDED,
       page: () => const ExtendedList(),
-      // binding: WikiBindings(),
     ),
 
     // 搜索页
@@ -131,14 +129,11 @@ class AppPages {
     GetPage(
       // 设置
       name: Routes.SETTING, page: () => const Settings(),
-      // binding: SearchResultBindings(),
     ),
     GetPage(
         // 应用数据
         name: Routes.APPLYDATA,
-        page: () => const ApplyData()
-        // binding: SearchResultBindings(),
-        ),
+        page: () => const ApplyData()),
     GetPage(
         // 关于
         name: Routes.ABOUT,

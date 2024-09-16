@@ -2,19 +2,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import 'constants.dart';
+
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers = {
-      'Host': 'api.bgm.tv',
-      'User-Agent':
-          'YangSuGuo/HeLe/1.0.0 (https://github.com/YangSuGuo/HeLe_app)',
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'app-id': 'bgm3063662e1d8747988',
-      'app-secret': '427cfed140895351b35c06d45c1ef6e6',
-      // 'Authorization': 'Bearer ',
-    };
+    options.headers = HttpString.headers;
     handler.next(options);
   }
 
@@ -26,7 +19,6 @@ class ApiInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     // 处理网络请求错误
-    // handler.next(err);
     String url = err.requestOptions.uri.toString();
     if (!url.contains('heartBeat')) {
       SmartDialog.showToast(
@@ -60,8 +52,7 @@ class ApiInterceptor extends Interceptor {
   }
 
   static Future<String> checkConnect() async {
-    final List<ConnectivityResult> connectivityResult =
-        await Connectivity().checkConnectivity();
+    final List<ConnectivityResult> connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult.contains(ConnectivityResult.mobile)) {
       return '正在使用移动流量';
     } else if (connectivityResult.contains(ConnectivityResult.wifi)) {

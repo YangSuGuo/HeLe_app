@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -45,7 +44,6 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   final WikiController _wikiController = Get.find<WikiController>();
 
   // final WikiController _wikiController = Get.put(WikiController());
-  late TabController? _tabController;
 
   int subjectId = 0; // 条目id
   late Future _future;
@@ -53,27 +51,18 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
     subjectId = _wikiController.subjectId;
-
     List<Future<dynamic>> futureList = [
       _wikiController.querySubjectDetails(subjectId),
       _wikiController.querySubjectCharacterList(subjectId),
       _wikiController.querySubjectPersons(subjectId),
       _wikiController.querySubjectDerivation(subjectId)
     ];
-
     try {
       _future = Future.wait(futureList);
     } catch (error) {
       print('Error: $error');
     }
-
-    _tabController = TabController(
-      vsync: this,
-      length: 5,
-      initialIndex: 2,
-    );
   }
 
   @override
@@ -404,6 +393,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                   icon: const Icon(FontAwesomeIcons.star),
                   selectIcon: const Icon(FontAwesomeIcons.solidStar),
                   onTap: () {
+                    // todo 收藏逻辑与后续逻辑冲突
                     if (_wikiController.mark.value) {
                       _wikiController.favorite.value = !_wikiController.favorite.value;
                       _wikiController.save(subject, _wikiController.favorite.value);
@@ -473,14 +463,7 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
           if (_wikiController.tags.isNotEmpty) const TagSelection(),
 
           // 状态
-          TabSelectorHorizontal(
-            tabs: const ["想看", "在看", "看过", "搁置", "抛弃"],
-            tabController: _tabController!,
-            onTap: (int index) {
-              _wikiController.subjectType = index;
-              log(index.toString());
-            },
-          ),
+          const TabSelectorHorizontal(),
 
           // 提交
           Row(
@@ -491,7 +474,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                   child: MaterialButton(
                       height: 65.h,
                       elevation: 0,
-                      color: colorScheme.tertiaryContainer.withOpacity(0.8),
+                      color: colorScheme.primaryContainer,
+                      // colorScheme.tertiaryContainer.withOpacity(0.8),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                       textTheme: ButtonTextTheme.primary,
                       onPressed: () {
@@ -507,8 +491,8 @@ class _WikiState extends State<Wiki> with TickerProviderStateMixin {
                       elevation: 0,
                       padding: EdgeInsets.zero,
                       color: _wikiController.isHidden.value
-                          ? colorScheme.secondary.withOpacity(0.7)
-                          : colorScheme.primary.withOpacity(0.7),
+                          ? colorScheme.secondary.withOpacity(0.9)
+                          : colorScheme.primary.withOpacity(0.65),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
                       textTheme: ButtonTextTheme.primary,
                       onPressed: () {

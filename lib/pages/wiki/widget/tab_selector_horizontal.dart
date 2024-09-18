@@ -1,17 +1,37 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:hele_app/pages/wiki/controllers/wiki_controller.dart';
 
-class TabSelectorHorizontal extends StatelessWidget {
-  const TabSelectorHorizontal({
-    super.key,
-    required this.tabs,
-    required this.tabController,
-    required this.onTap,
-  });
+class TabSelectorHorizontal extends StatefulWidget {
+  const TabSelectorHorizontal({super.key});
 
-  final List<String> tabs;
-  final TabController tabController;
-  final Function(int index) onTap;
+  @override
+  State<TabSelectorHorizontal> createState() => _TabSelectorHorizontalState();
+}
+
+class _TabSelectorHorizontalState extends State<TabSelectorHorizontal> with TickerProviderStateMixin {
+  final WikiController _wikiController = Get.find<WikiController>();
+  late TabController tabController;
+  List<String> tabs = ["想看", "在看", "看过", "搁置", "抛弃"];
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+      vsync: this,
+      length: 5,
+      initialIndex: _wikiController.subjectType,
+    );
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +56,8 @@ class TabSelectorHorizontal extends StatelessWidget {
                 indicatorWeight: 0,
                 // indicatorPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                 indicator: BoxDecoration(
-                  color: colorScheme.primary.withOpacity(0.8),
+                  color: colorScheme.primaryContainer.withOpacity(0.8),
+                  // colorScheme.primary.withOpacity(0.8),
                   borderRadius: BorderRadius.all(Radius.circular(20.r)),
                 ),
                 indicatorSize: TabBarIndicatorSize.tab,
@@ -46,7 +67,9 @@ class TabSelectorHorizontal extends StatelessWidget {
                 dividerColor: Colors.transparent,
                 unselectedLabelColor: colorScheme.outline,
                 // tabAlignment: TabAlignment.start,
-                onTap: onTap,
+                onTap: (int index) {
+                  _wikiController.subjectType = index;
+                },
               ),
             ],
           ));

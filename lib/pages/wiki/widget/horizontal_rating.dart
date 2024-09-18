@@ -29,7 +29,7 @@ class HorizontalRating extends StatelessWidget {
               maxRating: 5.0,
               minRating: 0.0,
               starSize: 64.sp,
-              filledColor: colorScheme.primary.withOpacity(0.8),
+              filledColor: colorScheme.primaryContainer.withOpacity(0.9),
               displayRatingValue: false,
               interactiveTooltips: true,
               readOnly: false,

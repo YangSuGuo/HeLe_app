@@ -129,14 +129,18 @@ class _SearchState extends State<Search> {
                 )
               ],
             ),
-          Obx(() =>
-              Wrap(spacing: 8, runSpacing: 8, direction: Axis.horizontal, textDirection: TextDirection.ltr, children: [
-                for (int i = 0; i < _searchController.historyList.length; i++)
-                  SearchText(
-                    searchText: _searchController.historyList[i],
-                    onSelect: (value) => _searchController.onTagClick(value),
-                  )
-              ]))
+          Obx(() => Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              direction: Axis.horizontal,
+              textDirection: TextDirection.ltr,
+              children: List.generate(_searchController.historyList.length, (index) {
+                return SearchText(
+                  searchText: _searchController.historyList[index],
+                  onSelect: (value) => _searchController.onTagClick(value),
+                  colors: Theme.of(context).colorScheme.primary.withAlpha(20),
+                );
+              })))
         ])));
   }
 }

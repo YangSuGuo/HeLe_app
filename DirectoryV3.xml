@@ -121,4 +121,5 @@
     <tree path="/lib/pages/wiki/widget/horizontal_rating.dart" title="水平评分描述"/>
     <tree path="/lib/pages/wiki/widget/tag_selection.dart" title="标签页选择"/>
     <tree path="/lib/pages/wiki/widget/tab_selector_horizontal.dart" title="水平状态选择"/>
+    <tree path="/lib/common/Widget/flexible_space_bar.dart" title="可变大小的顶部栏"/>
 </trees>

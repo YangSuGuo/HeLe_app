@@ -35,6 +35,7 @@ class _TagSelectionState extends State<TagSelection> {
                     return Obx(() => SearchText(
                           searchText: _wikiController.tags[index],
                           isSelected: _wikiController.isTags[index],
+                          colors: colorScheme.primaryContainer.withOpacity(0.25),
                           onSelect: (value) {
                             _wikiController.addTag(false, index);
                           },
@@ -45,6 +46,7 @@ class _TagSelectionState extends State<TagSelection> {
                       return Obx(() => SearchText(
                             searchText: _wikiController.userTags[index].tag,
                             isSelected: _wikiController.isUserTags[index],
+                            colors: colorScheme.primaryContainer.withOpacity(0.25),
                             onSelect: (value) {
                               _wikiController.addTag(true, index);
                             },

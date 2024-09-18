@@ -6,6 +6,7 @@ class SearchText extends StatelessWidget {
   final bool? isSelected;
   final Function? onSelect;
   final Function? onLongSelect;
+  final Color colors;
 
   const SearchText({
     super.key,
@@ -13,14 +14,13 @@ class SearchText extends StatelessWidget {
     this.isSelected,
     this.onSelect,
     this.onLongSelect,
+    this.colors = Colors.blueGrey,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isSelected ?? false
-          ? Theme.of(context).colorScheme.primary.withAlpha(120)
-          : Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+      color: isSelected ?? false ? colors : Theme.of(context).colorScheme.secondary.withOpacity(0.1),
       borderRadius: BorderRadius.circular(6),
       child: Padding(
         padding: EdgeInsets.zero,

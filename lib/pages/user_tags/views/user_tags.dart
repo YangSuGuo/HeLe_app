@@ -5,6 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/utils/empty.dart';
 import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/pages/user_tags/controllers/user_tags_controllers.dart';
 import 'package:hele_app/pages/user_tags/widget/edit_popup.dart';
@@ -50,11 +51,17 @@ class _UserTagsState extends State<UserTags> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 // todo 统一空数据展示
-                return Obx(() => ListView.builder(
-                    itemCount: _userTagsControllers.tags.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return tagCard(_userTagsControllers.tags[index], colorScheme);
-                    }));
+                return Obx(() {
+                  if (_userTagsControllers.tags.isNotEmpty) {
+                    return ListView.builder(
+                        itemCount: _userTagsControllers.tags.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return tagCard(_userTagsControllers.tags[index], colorScheme);
+                        });
+                  } else {
+                    return const Empty();
+                  }
+                });
               } else {
                 return Center(
                   child: LoadingAnimationWidget.stretchedDots(

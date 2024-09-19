@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/utils/empty.dart';
 import 'package:hele_app/pages/browsing_history/controllers/browsing_history_controllers.dart';
 import 'package:hele_app/pages/rank_list/widget/ranked_cards_list.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -60,15 +61,21 @@ class _BrowsingHistoryState extends State<BrowsingHistory> {
           future: _history,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Obx(() => ListView.builder(
-                  itemCount: _browsingHistoryControllers.subjectsHistoryList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return RankedCardsList(
-                      datum: _browsingHistoryControllers.datumList[index],
-                      index: index,
-                      isRank: false,
-                    );
-                  }));
+              return Obx(() {
+                if (_browsingHistoryControllers.subjectsHistoryList.isNotEmpty) {
+                  return ListView.builder(
+                      itemCount: _browsingHistoryControllers.subjectsHistoryList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return RankedCardsList(
+                          datum: _browsingHistoryControllers.datumList[index],
+                          index: index,
+                          isRank: false,
+                        );
+                      });
+                } else {
+                  return const Empty();
+                }
+              });
             } else {
               return Center(
                 child: LoadingAnimationWidget.stretchedDots(

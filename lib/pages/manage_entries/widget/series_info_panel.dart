@@ -108,7 +108,8 @@ class SeriesInfoPanel extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               AnimatedRatingStars(
-                                initialRating: subjectsStar.rating == 0 ? subjectsStar.score! / 2 : subjectsStar.rating,
+                                initialRating:
+                                    subjectsStar.rating == 0 ? subjectsStar.score! / 2 : subjectsStar.rating,
                                 maxRating: 5.0,
                                 minRating: 0.0,
                                 starSize: 16.sp,
@@ -122,7 +123,9 @@ class SeriesInfoPanel extends StatelessWidget {
                                 customEmptyIcon: Icons.star_border,
                               ),
                               Gap(10.w),
-                              AutoSizeText("${subjectsStar.rating == 0 ? subjectsStar.score : subjectsStar.rating * 2}",
+                              AutoSizeText("${subjectsStar.rating == 0
+                                  ? subjectsStar.score
+                                  : subjectsStar.rating}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: colorScheme.primary.withOpacity(0.6),

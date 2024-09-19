@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/utils/empty.dart';
 import 'package:hele_app/common/utils/evaluation_utils.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/pages/manage_entries/controllers/manage_entries_controllers.dart';
@@ -34,8 +35,7 @@ class _TrackingTypeState extends State<TrackingType> with AutomaticKeepAliveClie
     trackingType = _manageEntriesControllers.getTrackingType();
     scrollController = _manageEntriesControllers.scrollController;
     scrollController.addListener(() async {
-      if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent - 100) {
+      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent - 100) {
         EasyThrottle.throttle('trackingType', const Duration(seconds: 1), () {
           _manageEntriesControllers.next();
         });
@@ -79,23 +79,7 @@ class _TrackingTypeState extends State<TrackingType> with AutomaticKeepAliveClie
                       );
                     });
               } else {
-                return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    AutoSizeText(
-                      ":(",
-                      style: TextStyle(fontSize: 100.sp, color: colorScheme.secondary),
-                    ),
-                    Gap(10.h),
-                    AutoSizeText(
-                      "暂无数据",
-                      style: TextStyle(fontSize: 30.sp, color: colorScheme.secondary),
-                    ),
-                    Gap(150.h),
-                  ],
-                ));
+                return const Empty();
               }
             });
           } else {

@@ -1,8 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:hele_app/common/utils/empty.dart';
 import 'package:hele_app/common/utils/evaluation_utils.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/pages/manage_entries/widget/series_info_panel.dart';
@@ -18,8 +17,6 @@ class MyFavorites extends StatefulWidget {
 
 class _MyFavoritesState extends State<MyFavorites> {
   final MyFavoritesControllers _myFavoritesControllers = Get.find<MyFavoritesControllers>();
-
-  // final MyFavoritesControllers _myFavoritesControllers = Get.put(MyFavoritesControllers());
   Future? _userFavorites;
 
   @override
@@ -76,23 +73,7 @@ class _MyFavoritesState extends State<MyFavorites> {
                       });
                 });
               } else {
-                return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    AutoSizeText(
-                      ":(",
-                      style: TextStyle(fontSize: 100.sp, color: colorScheme.secondary),
-                    ),
-                    Gap(10.h),
-                    AutoSizeText(
-                      "暂无数据",
-                      style: TextStyle(fontSize: 30.sp, color: colorScheme.secondary),
-                    ),
-                    Gap(150.h),
-                  ],
-                ));
+                return const Empty();
               }
             } else {
               return Center(

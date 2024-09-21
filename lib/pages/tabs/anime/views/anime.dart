@@ -41,16 +41,14 @@ class _AnimeState extends State<Anime> with AutomaticKeepAliveClientMixin {
     _futureBuilderFuture = _animeController.queryBangumiCalendarFeed();
     _getRecommendations = _animeController.getRecommendations();
     scrollController = _animeController.scrollController;
-    scrollController.addListener(
-      () async {
-        final ScrollDirection direction = scrollController.position.userScrollDirection;
-        if (direction == ScrollDirection.forward) {
-          searchBarStream.add(true);
-        } else if (direction == ScrollDirection.reverse) {
-          searchBarStream.add(false);
-        }
-      },
-    );
+    scrollController.addListener(() async {
+      final ScrollDirection direction = scrollController.position.userScrollDirection;
+      if (direction == ScrollDirection.forward) {
+        searchBarStream.add(true);
+      } else if (direction == ScrollDirection.reverse) {
+        searchBarStream.add(false);
+      }
+    });
   }
 
   @override

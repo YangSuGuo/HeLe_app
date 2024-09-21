@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,20 +10,34 @@ class RatingGraph extends StatelessWidget {
   const RatingGraph({
     super.key,
     required this.count,
-    this.dynamic = 50.0,
   });
 
   final Count count;
-  final double? dynamic;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     List<int> ratingCountList = count.toList();
 
+    // 设置动态范围
+    int max = ratingCountList.reduce((a, b) => a > b ? a : b);
+    int min = ratingCountList.reduce((a, b) => a < b ? a : b);
+    int range = max - min;
+    double ratio;
 
-    // 设置动态
-    double maxY = ratingCountList.reduce((a, b) => a > b ? a : b) + dynamic!;
+    if (range <= 100) {
+      ratio = 0.3;
+    } else if (range <= 500) {
+      ratio = 0.15;
+    } else if (range <= 1000) {
+      ratio = 0.075;
+    } else {
+      ratio = 0.05;
+    }
+
+    double dynamic = (max - min) * ratio;
+    double maxY = max + dynamic <= 0 ? 5.0 : max + dynamic;
+    log(maxY.toString());
 
     return BarChart(
       BarChartData(

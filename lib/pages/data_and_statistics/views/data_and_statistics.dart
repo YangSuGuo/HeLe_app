@@ -117,7 +117,6 @@ class _DataAndStatisticsState extends State<DataAndStatistics> {
                                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                                           child: RatingGraph(
                                             count: _andStatisticsControllers.animeCount,
-                                            dynamic: 5.0,
                                           )))
                                 ],
                               )),
@@ -170,7 +169,6 @@ class _DataAndStatisticsState extends State<DataAndStatistics> {
                                           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                                           child: RatingGraph(
                                             count: _andStatisticsControllers.mangaCount,
-                                            dynamic: 5.0,
                                           )))
                                 ],
                               )),

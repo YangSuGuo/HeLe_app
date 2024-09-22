@@ -75,11 +75,13 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
             context.dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>()!;
         assert(
           settings != null,
-          'A FlexibleSpaceBar must be wrapped in the widget returned by FlexibleSpaceBar.createSettings().',
+          'FlexibleSpaceBar 必须包装在 FlexibleSpaceBar.createSettings（） 返回的 widget 中。',
         );
         final List<Widget> children = <Widget>[];
+        // 滑动大小
         final double deltaExtent = settings.maxExtent - settings.minExtent;
         final double t = clampDouble(1.0 - (settings.currentExtent - settings.minExtent) / deltaExtent, 0.0, 1.0);
+
         // background
         if (widget.background != null) {
           final double fadeStart = math.max(0.0, 1.0 - kToolbarHeight / deltaExtent);
@@ -170,18 +172,22 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
                 );
             final double scaleValue = Tween<double>(begin: widget.expandedTitleScale, end: 1.0).transform(t);
             final Matrix4 scaleTransform = Matrix4.identity()..scale(scaleValue, scaleValue, 1.0);
+
+            // 标题位置
             final Alignment titleAlignment = _getTitleAlignment(effectiveCenterTitle);
             final Matrix4 translateTransform = Matrix4.identity()..scale(scaleValue, scaleValue, 1.0);
-            final double subtitleFadeProgress = 1 - t > 0.2 ? 1.0 : 0.0;
-            double easeIn = pow(t, 3).toDouble();
+
+            // 副标题消失点
+            final double subtitleFadeProgress = 1 - t >= 0.3 ? 1.0 : 0.0;
+            double easeIn = pow(t, 3).toDouble(); // 缓动函数
             children.add(
               Container(
                 padding: padding,
                 decoration: BoxDecoration(
-                  color: theme.colorScheme.surfaceContainerLow.withOpacity(easeIn),
+                  color: theme.colorScheme.surface.withOpacity(easeIn),
                   borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(9),
+                    bottomRight: Radius.circular(9),
                   ),
                 ),
                 child: Column(
@@ -197,7 +203,7 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
                                 style: titleStyle,
                                 child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
                                   return Container(
-                                    width: constraints.maxWidth / scaleValue,
+                                      width: constraints.maxWidth / scaleValue,
                                       alignment: titleAlignment,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -206,15 +212,15 @@ class _ExtendedFlexibleSpaceState extends State<ExtendedFlexibleSpace> {
                                         children: [title!, if (widget.iconBuilder != null) widget.iconBuilder!(t)],
                                       ));
                                 })))),
-                    if (t < 0.8 && widget.subtitle != null)
-                      // todo 动画
-                      AnimatedOpacity(
-                          duration: const Duration(milliseconds: 500), // 淡入淡出持续时间
-                          opacity: subtitleFadeProgress,
-                          child: Padding(
-                              padding: const EdgeInsets.only(top: 3),
-                              child: Transform(
-                                  alignment: titleAlignment, transform: translateTransform, child: widget.subtitle!)))
+                    if (t < subtitleFadeProgress && widget.subtitle != null)
+                      Opacity(
+                        opacity: 1 - t,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 3),
+                          child: Transform(
+                              alignment: titleAlignment, transform: translateTransform, child: widget.subtitle!),
+                        ),
+                      )
                   ],
                 ),
               ),

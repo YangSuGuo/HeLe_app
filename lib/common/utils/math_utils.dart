@@ -8,18 +8,7 @@ class MathUtils {
     if (total == null || total == 0 || count == null || averageScore == null) return 0.0;
 
     // 评分分布转换为List，用于计算
-    List<int> scoresDistribution = [
-      count.the1 ?? 0,
-      count.the2 ?? 0,
-      count.the3 ?? 0,
-      count.the4 ?? 0,
-      count.the5 ?? 0,
-      count.the6 ?? 0,
-      count.the7 ?? 0,
-      count.the8 ?? 0,
-      count.the9 ?? 0,
-      count.the10 ?? 0,
-    ];
+    List<int> scoresDistribution = count.toList();
 
     double sumOfSquares = 0;
     for (int i = 0; i < scoresDistribution.length; i++) {

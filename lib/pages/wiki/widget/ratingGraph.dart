@@ -25,6 +25,7 @@ class RatingGraph extends StatelessWidget {
     int range = max - min;
     double ratio;
 
+    // 动态比例
     if (range <= 100) {
       ratio = 0.3;
     } else if (range <= 500) {
@@ -35,7 +36,8 @@ class RatingGraph extends StatelessWidget {
       ratio = 0.05;
     }
 
-    double dynamic = (max - min) * ratio;
+    // 动态最大值
+    double dynamic = range * ratio;
     double maxY = max + dynamic <= 0 ? 5.0 : max + dynamic;
     log(maxY.toString());
 
@@ -49,6 +51,7 @@ class RatingGraph extends StatelessWidget {
             colorScheme: colorScheme,
           );
         }),
+        maxY: maxY,
         barTouchData: BarTouchData(
           touchTooltipData: BarTouchTooltipData(
             tooltipRoundedRadius: 12.sp,
@@ -57,7 +60,6 @@ class RatingGraph extends StatelessWidget {
           // 触摸回调
           touchCallback: (FlTouchEvent event, barTouchResponse) {},
         ),
-        maxY: maxY,
         titlesData: const FlTitlesData(
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),

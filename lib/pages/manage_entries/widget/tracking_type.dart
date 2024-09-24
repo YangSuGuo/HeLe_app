@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/common/utils/empty.dart';
+import 'package:hele_app/common/Widget/empty.dart';
 import 'package:hele_app/common/utils/evaluation_utils.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/pages/manage_entries/controllers/manage_entries_controllers.dart';

@@ -2,14 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'constants.dart';
 import 'interceptor.dart';
 
 class Request {
   static final Request _instance = Request._internal();
-  static late CookieManager cookieManager;
   static late final Dio dio;
 
   factory Request() => _instance;

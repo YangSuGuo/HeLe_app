@@ -1,7 +1,7 @@
 name: hele_app
 description: "A new Flutter project."
 publish_to: 'none'
-version: 1.0.2
+version: 1.2.0
 environment:
   sdk: '>=3.4.0 <4.0.0'
 
@@ -28,18 +28,9 @@ dependencies:
   fl_chart: ^0.69.0 # 图表
   gap: ^3.0.1 # 间隔
 
-  #  flutter_slidable: ^3.1.1 # 滑动控制
-
-  #  flutter_tilt: ^3.0.0 # 倾斜视差
-  #  skeletonizer: ^1.2.0 # 骨架屏
-
   # 网络请求
-  dio_cookie_manager: ^3.1.1
   connectivity_plus: ^6.0.5
   dio: ^5.6.0 # 网络请求
-
-  #  cookie_jar: ^4.0.8
-  #  dio_http2_adapter: ^2.3.1+1
 
   # 开发工具
   cached_network_image: ^3.4.1 # 图片缓存
@@ -48,9 +39,6 @@ dependencies:
   easy_debounce: ^2.0.3 # 防抖
   share_plus: ^10.0.2 # 分享
   nil: ^1.1.1 # 占位符
-
-  #  flutter_svg: ^2.0.10+1 # svg显示
-  #  logger: ^2.3.0 # log
 
   # 状态管理
   get: ^4.6.6 # 路由 & 状态管理

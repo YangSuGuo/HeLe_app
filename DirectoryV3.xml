@@ -123,4 +123,5 @@
     <tree path="/lib/pages/wiki/widget/tab_selector_horizontal.dart" title="水平状态选择"/>
     <tree path="/lib/common/Widget/flexible_space_bar.dart" title="可变大小的顶部栏"/>
     <tree path="/lib/common/utils/empty.dart" title="空状态"/>
+    <tree path="/lib/common/Widget/empty.dart" title="空状态"/>
 </trees>

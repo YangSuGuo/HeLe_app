@@ -145,6 +145,12 @@ class _SettingsState extends State<Settings> {
               },
             ),
             const SetSwitchItem(
+              title: '私密模式',
+              subTitle: '可查看已隐藏的内容「未实现」',
+              setKey: "incognitoMode",
+              defaultVal: false,
+            ),
+            const SetSwitchItem(
               title: '无痕模式',
               subTitle: '暂停记录浏览历史「未实现」',
               setKey: "incognitoMode",

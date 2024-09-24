@@ -5,7 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/common/utils/empty.dart';
+import 'package:hele_app/common/Widget/empty.dart';
 import 'package:hele_app/db/database/entity/subjects_user_tags.dart';
 import 'package:hele_app/pages/user_tags/controllers/user_tags_controllers.dart';
 import 'package:hele_app/pages/user_tags/widget/edit_popup.dart';

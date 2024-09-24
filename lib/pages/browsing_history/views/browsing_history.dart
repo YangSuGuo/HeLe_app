@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/common/utils/empty.dart';
+import 'package:hele_app/common/Widget/empty.dart';
 import 'package:hele_app/pages/browsing_history/controllers/browsing_history_controllers.dart';
 import 'package:hele_app/pages/rank_list/widget/ranked_cards_list.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hele_app/common/utils/empty.dart';
+import 'package:hele_app/common/Widget/empty.dart';
 import 'package:hele_app/common/utils/evaluation_utils.dart';
 import 'package:hele_app/db/database/entity/subjects_star.dart';
 import 'package:hele_app/pages/manage_entries/widget/series_info_panel.dart';

@@ -13,51 +13,51 @@ dependencies:
   # 国际化
   flutter_localizations: # 国际化
     sdk: flutter
-  intl: ^0.19.0 # 国际化
+  intl: any # 国际化
 
   # 界面UI
-  custom_sliding_segmented_control: ^1.8.3 # 分段器
-  scroll_datetime_picker: ^0.1.2 # 滑动时间选择
-  loading_animation_widget: ^1.2.1 # 加载动画
-  animated_rating_stars: ^1.0.1 # 评分星标
-  flutter_smart_dialog: ^4.9.8 # 弹窗
-  font_awesome_flutter: ^10.7.0 # icon
-  auto_size_text: ^3.0.0 # 文本自适应
-  expand_widget: ^3.1.1 # 文本折叠
-  cupertino_icons: ^1.0.8 # icon
-  fl_chart: ^0.69.0 # 图表
-  gap: ^3.0.1 # 间隔
+  custom_sliding_segmented_control: any # 分段器
+  scroll_datetime_picker: any # 滑动时间选择
+  loading_animation_widget: any # 加载动画
+  animated_rating_stars: any # 评分星标
+  flutter_smart_dialog: any # 弹窗
+  font_awesome_flutter: any # icon
+  auto_size_text: any # 文本自适应
+  expand_widget: any # 文本折叠
+  cupertino_icons: any # icon
+  fl_chart: any # 图表
+  gap: any # 间隔
 
   # 网络请求
-  connectivity_plus: ^6.0.5
-  dio: ^5.6.0 # 网络请求
+  connectivity_plus: any
+  dio: any # 网络请求
 
   # 开发工具
-  cached_network_image: ^3.4.1 # 图片缓存
-  flutter_screenutil: ^5.9.3 # 屏幕适配
-  url_launcher: ^6.3.0 # url跳转
-  easy_debounce: ^2.0.3 # 防抖
-  share_plus: ^10.0.2 # 分享
-  nil: ^1.1.1 # 占位符
+  cached_network_image: any # 图片缓存
+  flutter_screenutil: any # 屏幕适配
+  url_launcher: any # url跳转
+  easy_debounce: any # 防抖
+  share_plus: any # 分享
+  nil: any # 占位符
 
   # 状态管理
-  get: ^4.6.6 # 路由 & 状态管理
-  provider: ^6.1.2 # 状态管理
+  get: any # 路由 & 状态管理
+  provider: any # 状态管理
 
   # 本地存储
-  shared_preferences: ^2.3.2 # 本地状态存储
-  floor: ^1.5.0 # 本地数据库
+  shared_preferences: any # 本地状态存储
+  floor: any # 本地数据库
 
 # 开发环境依赖
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: any
 
-  flutter_launcher_icons: ^0.13.1 # 应用图标生成
+  flutter_launcher_icons: any # 应用图标生成
   # 本地数据库
-  floor_generator: ^1.5.0
-  build_runner: ^2.4.12
+  floor_generator: any
+  build_runner: any
 
 flutter:
   uses-material-design: true

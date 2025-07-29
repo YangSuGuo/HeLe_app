@@ -42,8 +42,8 @@ class _ApplicationState extends State<Application> {
                   darkTheme: AppTheme(getMultipleThemesMode(context)).multipleThemesDarkMode(),
                   // 路由
                   initialRoute: AppPages.INITIAL,
-                  initialBinding: InitialBinding(),
                   getPages: AppPages.routes,
+                  initialBinding: InitialBinding(),
                   defaultTransition: Transition.cupertino,
                   transitionDuration: const Duration(milliseconds: 500),
                   // 国际化

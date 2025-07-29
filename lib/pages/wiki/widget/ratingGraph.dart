@@ -54,7 +54,8 @@ class RatingGraph extends StatelessWidget {
         maxY: maxY,
         barTouchData: BarTouchData(
           touchTooltipData: BarTouchTooltipData(
-            tooltipRoundedRadius: 12.sp,
+            // bug 不适配
+            // tooltipRoundedRadius: 12.sp,
             getTooltipColor: (_) => colorScheme.primary,
           ),
           // 触摸回调
